@@ -16,12 +16,15 @@ class MyDocument extends Document {
     return (
       <Html lang='en'>
         <Head>
+          <link rel='preconnect' href='https://fonts.googleapis.com' />
           <link
-            rel='preload'
-            href='/fonts/inter-var-latin.woff2'
-            as='font'
-            type='font/woff2'
+            rel='preconnect'
+            href='https://fonts.gstatic.com'
             crossOrigin='anonymous'
+          />
+          <link
+            href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap'
+            rel='stylesheet'
           />
         </Head>
         <body>

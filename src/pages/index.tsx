@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import Container from '@/components/layout/Container';
 import Layout from '@/components/layout/Layout';
 import ArrowLink from '@/components/links/ArrowLink';
 import ButtonLink from '@/components/links/ButtonLink';
@@ -16,10 +17,6 @@ import Seo from '@/components/Seo';
  */
 import Vercel from '~/svg/Vercel.svg';
 
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
-
 export default function HomePage() {
   return (
     <Layout>
@@ -28,7 +25,10 @@ export default function HomePage() {
 
       <main>
         <section className='bg-white'>
-          <div className='layout flex min-h-screen flex-col items-center justify-center text-center'>
+          <Container
+            level={3}
+            className='flex min-h-screen flex-col items-center justify-center border-2 border-red-400 text-center'
+          >
             <Vercel className='text-5xl' />
             <h1 className='mt-4'>
               Next.js + Tailwind CSS + TypeScript Starter
@@ -66,7 +66,7 @@ export default function HomePage() {
                 Theodorus Clarence
               </UnderlineLink>
             </footer>
-          </div>
+          </Container>
         </section>
       </main>
     </Layout>

@@ -38,10 +38,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         type='button'
         disabled={disabled}
         className={clsxm(
-          'inline-flex items-center rounded px-4 py-2 font-semibold',
+          'inline-flex items-center rounded-full rounded-tr-none px-4 py-2 font-semibold hover:rounded-tr-full hover:rounded-br-none',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'shadow-sm',
-          'transition-colors duration-75',
+          'transition-all duration-200',
           //#region  //*=========== Variants ===========
           [
             variant === 'primary' && [
