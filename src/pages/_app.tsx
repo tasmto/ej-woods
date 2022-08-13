@@ -1,6 +1,11 @@
+import { Provider } from 'jotai';
 import { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
+
+import CartOverlay from '@/features/cart/components/CartOverlay';
+import Header from '@/features/navigation/components/Header';
+import MobileNav from '@/features/navigation/components/MobileNav';
 
 /**
  * !STARTERCONF info
@@ -8,7 +13,17 @@ import '@/styles/globals.css';
  */
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Provider>
+        <Header />
+        <CartOverlay />
+        <MobileNav />
+
+        <Component {...pageProps} />
+      </Provider>
+    </>
+  );
 }
 
 export default MyApp;

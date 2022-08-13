@@ -33,6 +33,12 @@ const ShopPage = ({ products }: Props) => {
     );
   }, [products, selected]);
 
+  useEffect(() => {
+    if (router.query.category) {
+      setSelected(router.query.category as 'furniture' | 'wood');
+    }
+  }, [router.query.category]);
+
   const variants = {
     hidden: {
       scaleX: 0,
@@ -92,7 +98,7 @@ const ShopPage = ({ products }: Props) => {
           >
             Furniture
           </D2>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence>
             {selected === 'furniture' && (
               <motion.span
                 variants={variants}
@@ -151,23 +157,21 @@ const ShopPage = ({ products }: Props) => {
           You have currently selected to only view our {selected} furnitures.{' '}
         </h1>
 
-        <AnimatePresence exitBeforeEnter>
-          {filteredProducts?.map((product, i) => (
-            <motion.div
-              key={product?.id || i}
-              initial={{ opacity: 0, x: '-5%' }}
-              animate={{ opacity: 1, x: '0' }}
-              exit={{ opacity: 0, x: '5%', transition: { duration: 0.2 } }}
-              transition={{
-                ease: 'backInOut',
-                duration: 0.3,
-                delay: i * 0.05,
-              }}
-            >
-              <ProductCard product={product} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+        {filteredProducts?.map((product, i) => (
+          <motion.div
+            key={product?.id || i}
+            initial={{ opacity: 0, x: '-5%' }}
+            animate={{ opacity: 1, x: '0' }}
+            exit={{ opacity: 0, x: '5%', transition: { duration: 0.2 } }}
+            transition={{
+              ease: 'backInOut',
+              duration: 0.3,
+              delay: i * 0.05,
+            }}
+          >
+            <ProductCard product={product} />
+          </motion.div>
+        ))}
       </Container>
     </Layout>
   );

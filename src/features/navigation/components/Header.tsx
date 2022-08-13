@@ -4,6 +4,7 @@ import {
   useScroll,
   useTransform,
 } from 'framer-motion';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import * as React from 'react';
@@ -13,7 +14,10 @@ import resolveIcon from '@/lib/iconResolver';
 
 import Container from '@/components/layout/Container';
 import UnstyledLink from '@/components/links/UnstyledLink';
-import { P2 } from '@/components/typography/Typography';
+import { Caption, P2 } from '@/components/typography/Typography';
+
+import { cartOverlayOpen } from '@/features/cart/components/CartOverlay';
+import { useCartStore } from '@/features/cart/state/CartContext';
 
 import EjWoodsLogo from '~/svg/ej-woods-logo.svg';
 
@@ -27,6 +31,15 @@ const links = [
 export default function Header() {
   const router = useRouter();
 
+  const [cartOpen, setCartOpen] = useAtom(cartOverlayOpen);
+  const { cart, totalItemsInCart } = useCartStore((state) => state);
+  const [itemsInCart, setItemsInCart] = React.useState(totalItemsInCart());
+
+  // Check if cart has changed and update state
+  React.useEffect(() => {
+    setItemsInCart(totalItemsInCart());
+  }, [cart]);
+
   const { scrollYProgress } = useScroll();
   const navBG = useTransform(
     scrollYProgress,
@@ -37,7 +50,7 @@ export default function Header() {
   // todo: sticky mobile nav: https://blog.logrocket.com/react-scroll-animations-framer-motion/
 
   return (
-    <header className='sr-only bg-transparent sm:not-sr-only sm:fixed sm:top-1 sm:z-50 sm:!w-full'>
+    <div className='sr-only bg-transparent sm:not-sr-only sm:fixed sm:top-1 sm:z-30 sm:!w-full'>
       <Container level={1}>
         <AnimatePresence>
           <motion.div
@@ -46,23 +59,23 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className='mx-2 flex h-14 items-center justify-between rounded-3xl px-4 backdrop-blur-sm sm:py-2'
+            className='flex h-14 items-center justify-between rounded-3xl px-4 backdrop-blur-sm sm:py-2 '
             style={{ backgroundColor: navBG }}
           >
             <UnstyledLink href='/' className='font-bold hover:text-gray-600'>
               <EjWoodsLogo className='h-20 w-full md:h-24' />
             </UnstyledLink>
-            <nav>
+            <nav className='flex items-center justify-end  divide-x divide-slate-300'>
               <ul className='flex items-center justify-between'>
                 {links.map(({ href, label }, i) => (
                   <li key={i}>
                     <UnstyledLink
                       href={href}
                       className={clsxm(
-                        'mx-[2px] rounded-xl px-3 py-2 text-primary-600 hover:bg-primary-50/50 hover:text-primary-300',
+                        'max-[1px] rounded-xl px-2 py-2 text-primary-600 hover:bg-primary-50/50 hover:text-primary-300 md:mx-[2px] md:px-3',
                         [
                           router.asPath === href &&
-                            'bg-primary-50 text-primary-300 hover:bg-primary-50/90',
+                            'bg-primary-100 text-slate-200 hover:bg-primary-100/90 hover:text-slate-200',
                         ]
                       )}
                     >
@@ -70,33 +83,57 @@ export default function Header() {
                     </UnstyledLink>
                   </li>
                 ))}
+              </ul>
+              <ul className='ml-2 flex items-center justify-between gap-1 pl-1'>
                 <li>
-                  <UnstyledLink
-                    href='/shop/cart'
-                    className='ml-2 flex items-center rounded-2xl bg-primary-100  px-2 py-1 text-white hover:bg-primary-200 hover:text-slate-200 '
+                  <button
+                    className={clsxm(
+                      'flex items-center gap-1 rounded-2xl px-2 py-1 hover:bg-primary-50/50 ',
+                      [
+                        cartOpen &&
+                          'bg-primary-100 text-slate-200 hover:bg-primary-100/90',
+                      ]
+                    )}
                     title='Cart'
+                    onClick={() => setCartOpen(!cartOpen)}
                   >
-                    <Image
-                      src={
-                        resolveIcon('🛒', true)?.[
-                          router.pathname === '/shop/cart' ? 'active' : 'icon'
-                        ] || ''
-                      }
-                      layout='intrinsic'
-                      className='shadow-xl shadow-black transition-all duration-200'
-                      height={30}
-                      width={30}
-                      alt=''
-                    />
-                    <P2 as='span' weight='bold'>
-                      Cart
-                    </P2>
-                  </UnstyledLink>
+                    <div className='relative'>
+                      <Image
+                        src={
+                          resolveIcon(
+                            '🛒',
+                            router.pathname === '/shop/cart' || cartOpen
+                          )?.['active'] || ''
+                        }
+                        layout='intrinsic'
+                        className='shadow-xl shadow-black transition-all duration-200'
+                        height={30}
+                        width={30}
+                        alt=''
+                      />
+                      {itemsInCart > 0 && (
+                        <Caption
+                          as='figcaption'
+                          className={clsxm([
+                            'absolute right-[-10px] top-[-7px] h-5 w-5 rounded-full p-1 ',
+                            'text-xs text-[10px] font-bold leading-tight text-white',
+                            'bg-primary-200 ',
+                          ])}
+                        >
+                          <span>{itemsInCart > 5 ? '5+' : itemsInCart}</span>
+                          <span className='sr-only'>
+                            Items currently in your cart
+                          </span>
+                        </Caption>
+                      )}
+                    </div>
+                    <P2 as='span'>Cart</P2>
+                  </button>
                 </li>
                 <li>
                   <UnstyledLink
                     href='/shop/cart'
-                    className='ml-2 flex items-center rounded-2xl bg-gray-300 px-2 py-1 text-white hover:bg-gray-400 hover:text-slate-200'
+                    className=' flex items-center gap-1 rounded-2xl  px-2 py-1  hover:bg-primary-50/50 '
                     title='Search'
                   >
                     <Image
@@ -107,12 +144,15 @@ export default function Header() {
                       width={35}
                       alt=''
                     />
+                    <P2 as='span' className='sr-only '>
+                      Search
+                    </P2>
                   </UnstyledLink>
                 </li>
                 <li>
                   <UnstyledLink
                     href='/contact'
-                    className='ml-2 flex items-center rounded-2xl bg-gray-300  px-2 py-1 hover:bg-gray-400'
+                    className='flex items-center gap-1 rounded-2xl  px-2 py-1  hover:bg-primary-50/50 '
                     title='Contact'
                   >
                     <Image
@@ -123,6 +163,9 @@ export default function Header() {
                       width={30}
                       alt=''
                     />
+                    <P2 as='span' className='sr-only'>
+                      Contact
+                    </P2>
                   </UnstyledLink>
                 </li>
               </ul>
@@ -130,6 +173,6 @@ export default function Header() {
           </motion.div>
         </AnimatePresence>
       </Container>
-    </header>
+    </div>
   );
 }

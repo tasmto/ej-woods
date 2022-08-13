@@ -8,6 +8,7 @@ interface CartState {
   addToCart: (product: ProductType | CrossSellType, quantity: number) => void;
   removeItemFromCart: (product: ProductType | CrossSellType) => void;
   howManyInCart: (product: ProductType | CrossSellType) => number;
+  totalItemsInCart: () => number;
 }
 
 export interface CartProductType extends Omit<ProductType, 'crossSells'> {
@@ -53,6 +54,9 @@ const useCartStore = create<CartState>()(
       // * Helper function to get how many of a product is in cart
       howManyInCart: (product) =>
         get().cart.find((item) => item.id === product.id)?.quantity ?? 0,
+
+      totalItemsInCart: () =>
+        get().cart.reduce((acc, item) => acc + item.quantity, 0) ?? 0,
     }))
   )
 );

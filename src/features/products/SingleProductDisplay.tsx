@@ -17,7 +17,7 @@ const SingleProductDisplay = ({ product }: Props) => {
     <Container
       as='section'
       level={1}
-      className='relative grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 md:gap-8  lg:gap-16 '
+      className='relative grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 md:gap-8 lg:gap-10 '
     >
       <Container className='overflow-y-none  sticky top-0 order-last grid h-full max-h-[550px] min-h-[350px] w-full content-end overflow-x-visible p-8 sm:p-10 md:order-first md:min-h-[450px] lg:p-12'>
         <div className='img-full-w-curve--left children-h-full children-w-full h-full w-full'>

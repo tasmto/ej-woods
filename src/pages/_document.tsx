@@ -27,7 +27,7 @@ class MyDocument extends Document {
             rel='stylesheet'
           />
         </Head>
-        <body>
+        <body className='custom-scrollbar overflow-y-scroll'>
           <Main />
           <NextScript />
         </body>

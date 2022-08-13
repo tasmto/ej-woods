@@ -28,7 +28,7 @@ const AddToCartSection = ({ product }: Props) => {
       ? addToCart(product, howMany)
       : removeItemFromCart(product);
 
-    setHowMany(howManyInCart(product));
+    setHowMany(howManyInCart(product) || 1);
   };
 
   // Check if product and  is in cart (every time cart changes)
@@ -37,7 +37,7 @@ const AddToCartSection = ({ product }: Props) => {
   }, [cart, product, howManyInCart]);
 
   React.useEffect(() => {
-    setHowMany(howManyInCart(product));
+    setHowMany(howManyInCart(product) || 1);
   }, []);
 
   return (

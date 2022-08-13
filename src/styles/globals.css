@@ -128,3 +128,24 @@
     transform: translateX(100%);
   }
 }
+
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px;
+  padding: 0px 4px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #cfcfcf;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

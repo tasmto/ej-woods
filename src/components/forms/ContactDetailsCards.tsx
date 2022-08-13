@@ -58,9 +58,7 @@ const ContactDetailsCards = ({ contactInfo }: Props) => {
             <Typography as='p' size='body3' className='flex gap-3'>
               <span>{phoneNumber}</span>
               <span>|</span>
-              <ArrowLink href={whatsAppLink}>
-                Click Here to Open WhatsApp
-              </ArrowLink>
+              <ArrowLink href={whatsAppLink}>WhatsApp us</ArrowLink>
             </Typography>
           </div>
         </article>
