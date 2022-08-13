@@ -49,7 +49,7 @@ export default function ComponentsPage() {
             <div className='mt-8 flex flex-wrap gap-2'>
               <Button
                 onClick={toggleMode}
-                variant={mode === 'dark' ? 'light' : 'dark'}
+                variant={mode === 'dark' ? 'light' : 'light'}
               >
                 Set to {mode === 'dark' ? 'light' : 'dark'}
               </Button>
@@ -180,7 +180,7 @@ export default function ComponentsPage() {
                   <ArrowLink
                     as={ButtonLink}
                     variant='light'
-                    className='inline-flex items-center'
+                    className='inline-flex flex-nowrap items-center'
                     href='/'
                   >
                     Polymorphic
@@ -213,12 +213,7 @@ export default function ComponentsPage() {
                   >
                     Ghost Variant
                   </ButtonLink>
-                  <ButtonLink
-                    variant='dark'
-                    href='https://theodorusclarence.com'
-                  >
-                    Dark Variant
-                  </ButtonLink>
+
                   <ButtonLink
                     variant='light'
                     href='https://theodorusclarence.com'
@@ -240,7 +235,7 @@ export default function ComponentsPage() {
                   <Button variant='ghost' isDarkBg={mode === 'dark'}>
                     Ghost Variant
                   </Button>
-                  <Button variant='dark'>Dark Variant</Button>
+
                   <Button variant='light'>Light Variant</Button>
                 </div>
                 <div className='flex flex-wrap gap-2'>
@@ -253,9 +248,7 @@ export default function ComponentsPage() {
                   <Button disabled variant='ghost' isDarkBg={mode === 'dark'}>
                     Disabled
                   </Button>
-                  <Button disabled variant='dark'>
-                    Disabled
-                  </Button>
+
                   <Button disabled variant='light'>
                     Disabled
                   </Button>
@@ -274,9 +267,7 @@ export default function ComponentsPage() {
                   <Button isLoading variant='ghost' isDarkBg={mode === 'dark'}>
                     Disabled
                   </Button>
-                  <Button isLoading variant='dark'>
-                    Disabled
-                  </Button>
+
                   <Button isLoading variant='light'>
                     Disabled
                   </Button>
