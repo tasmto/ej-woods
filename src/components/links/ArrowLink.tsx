@@ -24,7 +24,7 @@ export default function ArrowLink<C extends React.ElementType>({
     <Component
       {...rest}
       className={clsxm(
-        'group gap-[0.25em]',
+        'group flex gap-[0.25em]',
         direction === 'left' && 'flex-row-reverse',
         className
       )}

@@ -8,7 +8,7 @@ type NextImageProps = {
   imgClassName?: string;
   blurClassName?: string;
   alt: string;
-  width: string | number;
+  width?: string | number;
 } & (
   | { width: string | number; height: string | number }
   | { layout: 'fill'; width?: string | number; height?: string | number }
@@ -39,7 +39,7 @@ export default function NextImage({
   return (
     <figure
       style={!widthIsSet ? { width: `${width}px` } : undefined}
-      className={className}
+      className={clsxm(className)}
     >
       <Image
         className={clsxm(

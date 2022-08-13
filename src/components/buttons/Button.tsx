@@ -1,20 +1,26 @@
+import Image from 'next/image';
 import * as React from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 
 import clsxm from '@/lib/clsxm';
+import resolveIcon, { Icons } from '@/lib/iconResolver';
 
 enum ButtonVariant {
   'primary',
   'outline',
   'ghost',
   'light',
-  'dark',
 }
 
 type ButtonProps = {
   isLoading?: boolean;
   isDarkBg?: boolean;
   variant?: keyof typeof ButtonVariant;
+  curve?: 'top' | 'bottom' | 'topLeft' | 'topRight';
+  icon?: keyof typeof Icons;
+  iconPosition?: 'start' | 'end';
+  alwaysActive?: boolean;
+  isoView?: boolean;
 } & React.ComponentPropsWithRef<'button'>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -22,46 +28,56 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       children,
       className,
+      curve = 'topRight',
+      icon,
+      iconPosition = 'start',
       disabled: buttonDisabled,
       isLoading,
       variant = 'primary',
       isDarkBg = false,
+      alwaysActive,
+      isoView = false,
       ...rest
     },
     ref
   ) => {
     const disabled = isLoading || buttonDisabled;
+    const [iconActive, setIconActive] = React.useState(alwaysActive || false);
 
     return (
       <button
         ref={ref}
+        onMouseEnter={() => setIconActive(true)}
+        onMouseLeave={() => setIconActive(alwaysActive || false)}
         type='button'
         disabled={disabled}
         className={clsxm(
-          'inline-flex items-center rounded-full rounded-tr-none px-4 py-2 font-semibold hover:rounded-tr-full hover:rounded-br-none',
+          'inline-flex items-center gap-3 rounded-3xl  px-4 font-semibold',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'shadow-sm',
           'transition-all duration-200',
+          [icon && iconPosition === 'end' && 'flex-row-reverse'],
+          [icon ? 'py-2' : 'py-[0.65rem]'],
           //#region  //*=========== Variants ===========
           [
             variant === 'primary' && [
               'bg-primary-500 text-white',
               'border border-primary-600',
-              'hover:bg-primary-600 hover:text-white',
+              'hover:bg-primary-400 hover:text-slate-200',
               'active:bg-primary-500',
-              'disabled:bg-primary-400 disabled:hover:bg-primary-400',
+              'disabled:bg-primary-200 disabled:hover:bg-primary-300',
             ],
             variant === 'outline' && [
               'text-primary-500',
-              'border border-primary-500',
-              'hover:bg-primary-50 active:bg-primary-100 disabled:bg-primary-100',
+              'border-2 border-primary-500',
+              'hover:bg-primary-500 hover:text-white active:bg-primary-400 disabled:bg-primary-100',
               isDarkBg &&
                 'hover:bg-gray-900 active:bg-gray-800 disabled:bg-gray-800',
             ],
             variant === 'ghost' && [
               'text-primary-500',
               'shadow-none',
-              'hover:bg-primary-50 active:bg-primary-100 disabled:bg-primary-100',
+              'hover:bg-primary-50/50 active:bg-primary-100 disabled:bg-primary-100',
               isDarkBg &&
                 'hover:bg-gray-900 active:bg-gray-800 disabled:bg-gray-800',
             ],
@@ -71,16 +87,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'hover:bg-gray-100 hover:text-dark',
               'active:bg-white/80 disabled:bg-gray-200',
             ],
-            variant === 'dark' && [
-              'bg-gray-900 text-white',
-              'border border-gray-600',
-              'hover:bg-gray-800 active:bg-gray-700 disabled:bg-gray-700',
-            ],
           ],
           //#endregion  //*======== Variants ===========
+
+          //#region  //*=========== Curves ===========
+          [
+            curve === 'top' && ['rounded-t-none hover:rounded-t-3xl'],
+            curve === 'bottom' && ['rounded-b-none hover:rounded-b-3xl'],
+            curve === 'topRight' && ['rounded-tr-none hover:rounded-tr-3xl'],
+            curve === 'topLeft' && ['rounded-tl-none hover:rounded-tl-3xl'],
+          ],
+          //#endregion  //*======== Curves ===========
+
           'disabled:cursor-not-allowed',
           isLoading &&
-            'relative text-transparent transition-none hover:text-transparent disabled:cursor-wait',
+            'relative rounded-full text-transparent transition-none hover:text-transparent disabled:cursor-wait',
           className
         )}
         {...rest}
@@ -99,7 +120,22 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <ImSpinner2 className='animate-spin' />
           </div>
         )}
-        {children}
+
+        {icon && (
+          <Image
+            src={
+              resolveIcon(icon, isoView)?.[
+                (disabled && !alwaysActive && 'icon') ||
+                  (iconActive ? 'active' : 'icon')
+              ] || ''
+            }
+            layout='intrinsic'
+            height={30}
+            width={30}
+            alt=''
+          />
+        )}
+        <span>{children}</span>
       </button>
     );
   }
