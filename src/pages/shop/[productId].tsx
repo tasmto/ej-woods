@@ -1,6 +1,9 @@
+import Error from 'next/error';
 import React from 'react';
 
 import clsxm from '@/lib/clsxm';
+
+import products from '@/data/products';
 
 import Container from '@/components/layout/Container';
 import Layout from '@/components/layout/Layout';
@@ -9,26 +12,20 @@ import Seo from '@/components/Seo';
 import { D2 } from '@/components/typography/Typography';
 
 import ProductCard from '@/features/products/components/Card';
-import {
-  fetchAllProducts,
-  fetchProductById,
-  ProductReturnType,
-} from '@/features/products/lib/fetchProduct';
 import SingleProductDisplay from '@/features/products/SingleProductDisplay';
+import { ProductType } from '@/features/products/types';
 
-type Props = { product: ProductReturnType };
+type Props = { product: ProductType };
 
 const ProductPage = ({ product }: Props) => {
-  if (!product?.data) return null; // todo - handle error
-
-  const { data: item, error } = product;
-
+  if (!product) return <Error statusCode={404} />;
   return (
     <Layout>
-      <Seo templateTitle={item.name || 'Product'} />
+      <Seo templateTitle={product.name || 'Product'} />
 
-      <SingleProductDisplay product={item} />
-      {item?.crossSells?.length > 0 && (
+      <SingleProductDisplay product={product} />
+      {/* @ts-expect-error: name may not exist */}
+      {product?.crossSells?.length > 0 && product?.crossSells[0]?.name && (
         <Container as='section' level={1} className='grid gap-4  sm:gap-8'>
           <div className='flex justify-between gap-4'>
             <D2>You may also like</D2>
@@ -39,12 +36,12 @@ const ProductPage = ({ product }: Props) => {
           <Container
             as='div'
             className={clsxm('grid gap-5 sm:grid-cols-2', [
-              item.crossSells.length === 3 && 'lg:grid-cols-3',
+              product.crossSells.length === 3 && 'lg:grid-cols-3',
             ])}
           >
-            {item.crossSells?.map((product, i) => (
+            {product?.crossSells?.map((item, i) => (
               // @ts-expect-error: Cross sells could be strings based on type (but wont be)
-              <ProductCard key={i} product={product} />
+              <ProductCard key={i} product={item} />
             ))}
           </Container>
         </Container>
@@ -53,20 +50,24 @@ const ProductPage = ({ product }: Props) => {
   );
 };
 
-export const getStaticPaths = async () => {
-  // Get the paths we want to prerender based on products
-  const idList: { id: string }[] = await fetchAllProducts({ select: ['id'] });
-  const paths = idList.map((item) => ({
-    params: { productId: item.id },
-  }));
+export const getServerSideProps = async ({ query }: any) => {
+  const { productId } = query;
+  const product = await products.find((item) => item.id === productId);
+  if (product) {
+    const crossSells = product.crossSells.map((cs) =>
+      products.find((item) => item.id === cs)
+    );
+    // @ts-expect-error: types man
+    product.crossSells = crossSells ?? null;
+  }
 
-  return { paths, fallback: true };
+  // console.log(product);
+
+  return { props: { product: product ?? null } };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const { productId } = params;
-  const product = await fetchProductById(productId, true);
-  return { props: { product: product } };
+ProductPage.defaultProps = {
+  product: null,
 };
 
 export default ProductPage;

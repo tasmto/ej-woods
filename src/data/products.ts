@@ -1,6 +1,6 @@
 import { ProductType } from '@/features/products/types';
 
-const furnitures: ProductType[] = [
+const products: ProductType[] = [
   {
     id: '1',
     name: 'Mopane Chunks/ Knuckles (Namibian Hardwood) Knuckles',
@@ -163,4 +163,4 @@ const furnitures: ProductType[] = [
   },
 ];
 
-export default furnitures;
+export default products;

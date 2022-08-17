@@ -17,22 +17,23 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
 
   // Attach product cross-sells
 
-  const crossSellProducts = attachCrossSells
-    ? data.crossSells.map((id) => {
-        const product = products.find((product) => product.id === id);
-        if (product)
-          return {
-            name: product?.name,
-            id: product?.id,
-            price: product?.price,
-            primaryImage: product?.primaryImage,
-            type: product?.type,
-            weight: product?.weight,
-            crossSell: true,
-            countInStock: product?.countInStock,
-          };
-      })
-    : data.crossSells;
+  const crossSellProducts =
+    attachCrossSells === 'true'
+      ? data.crossSells.map((id) => {
+          const product = products.find((product) => product.id === id);
+          if (product)
+            return {
+              name: product?.name,
+              id: product?.id,
+              price: product?.price,
+              primaryImage: product?.primaryImage,
+              type: product?.type,
+              weight: product?.weight,
+              crossSell: true,
+              countInStock: product?.countInStock,
+            };
+        })
+      : data.crossSells;
 
   res.status(200).json({ ...data, crossSells: crossSellProducts });
 };

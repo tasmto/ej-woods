@@ -58,14 +58,18 @@ const GalleryPage = () => {
   return (
     <Layout>
       <Container
-        as='section'
+        as='div'
+        level={1}
+        className='col-span-full mb-[-2.5rem] flex items-center justify-between gap-3'
+      >
+        <D2 className=' max-w-[600px] md:max-w-full'>Gallery</D2>
+        <P2>{images.length} images.</P2>
+      </Container>
+      <Container
+        as='div'
         level={1}
         className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'
       >
-        <div className='col-span-full mb-2 flex items-center justify-between gap-3'>
-          <D2 className=' max-w-[600px] md:max-w-full'>Gallery</D2>
-          <P2>{images.length} images.</P2>
-        </div>
         {images?.map(({ image, title }, i) => (
           <figure
             key={i}

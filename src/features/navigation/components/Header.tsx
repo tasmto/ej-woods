@@ -120,7 +120,7 @@ export default function Header() {
                             'bg-primary-200 ',
                           ])}
                         >
-                          <span>{itemsInCart > 5 ? '5+' : itemsInCart}</span>
+                          <span>{itemsInCart > 10 ? '9+' : itemsInCart}</span>
                           <span className='sr-only'>
                             Items currently in your cart
                           </span>

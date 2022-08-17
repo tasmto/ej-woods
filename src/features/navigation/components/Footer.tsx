@@ -47,10 +47,6 @@ const Footer = () => {
       title: 'Orders & Returns',
       links: [
         {
-          title: 'My account',
-          href: '/account',
-        },
-        {
           title: 'Frequently asked questions',
           href: 'shop/frequently-asked-questions',
         },
@@ -67,7 +63,7 @@ const Footer = () => {
       <Container level={1} as='footer' className='grid  gap-10'>
         <FooterCTA />
         <div className='grid gap-5 border-t border-primary-100/40 py-8 text-primary-300 sm:grid-cols-3 md:gap-6'>
-          <article className='col-span-full grid gap-8 sm:grid-cols-3  md:gap-6'>
+          <article className='col-span-full grid items-start gap-8 sm:grid-cols-3  md:gap-6'>
             {links.map((link, index) => (
               <ul
                 key={index}
@@ -107,7 +103,14 @@ const Footer = () => {
           size='body3'
           className='mt-[-35px] border-t border-primary-100/40 py-4 text-center  text-primary-100'
         >
-          © 2022 ej-woods
+          © 2022 ej-woods | Designed and developed by{' '}
+          <a
+            rel='noreferrer'
+            href='https://tasmto.com?utm_source=ej-woods'
+            target='_blank'
+          >
+            Tashinga
+          </a>
         </Typography>
       </Container>
     </div>

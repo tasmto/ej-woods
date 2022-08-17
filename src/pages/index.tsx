@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { FormatCurrency } from '@/lib/FormatNumber';
+
 import ContactDetailsCards from '@/components/forms/ContactDetailsCards';
 import Container from '@/components/layout/Container';
 import Layout from '@/components/layout/Layout';
@@ -52,9 +54,11 @@ export default function HomePage({ contactInfo, products }: Props) {
         <Container className='overflow-y-none relative grid h-full min-h-[300px] w-full content-end overflow-x-visible bg-gray-200 p-8 sm:p-10 md:min-h-[300px] md:rounded-l-3xl lg:col-span-3 lg:p-12'>
           <div className='align-self-end z-10 text-white'>
             <D2 as='h2' weight='semiBold' className='drop-shadow-md'>
-              The Name of the product
+              {products[0].name}
             </D2>
-            <P1 className='mt-2 drop-shadow-md md:mt-3'>R250.00 per kg</P1>
+            <P1 className='mt-2 drop-shadow-md md:mt-3'>
+              {FormatCurrency(products[0].price)} per kg
+            </P1>
           </div>
           <div
             className='img-full-w-curve--right after:absolute after:top-0 after:block after:h-full after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/0
@@ -62,7 +66,7 @@ export default function HomePage({ contactInfo, products }: Props) {
           >
             <NextImage
               layout='fill'
-              src='/images/sample-product-image-large.jpg'
+              src={products[0].primaryImage}
               alt=''
               className='h-full w-full md:rounded-l-3xl'
               imgClassName='md:rounded-l-3xl object-cover w-full'
@@ -197,7 +201,7 @@ export default function HomePage({ contactInfo, products }: Props) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const products = await fetchAllProducts({ limit: 6 }); // todo: abso-freakinlutely not static props (handle through react query)
   return {
     props: {

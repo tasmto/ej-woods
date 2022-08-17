@@ -28,7 +28,7 @@ const fetchProductById = async (
 ) => {
   const data = fetch(
     `${API}/products/${productId}?attachCrossSells=${
-      attachCrossSells || false
+      attachCrossSells ?? false
     }`,
     {
       method: 'GET',
@@ -67,7 +67,7 @@ const fetchAllProducts = async (
     );
     const data: ProductType[] = await res.json();
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return error;
   }
 };

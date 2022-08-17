@@ -15,7 +15,7 @@ type Props = {
   product: ProductType | CrossSellType;
 };
 const ProductCard = ({ product }: Props) => {
-  if (!product) return null;
+  if (!product || !product?.name) return null;
 
   const { name, price, type, primaryImage, id } = product;
 

@@ -9,6 +9,7 @@ import resolveIcon from '@/lib/iconResolver';
 import ButtonLink from '@/components/links/ButtonLink';
 import { Caption, H3, P2 } from '@/components/typography/Typography';
 
+import QuantitySelector from '@/features/cart/components/QuantitySelector';
 import { useCartStore } from '@/features/cart/state/CartContext';
 import { ProductType } from '@/features/products/types';
 
@@ -62,60 +63,12 @@ const AddToCartSection = ({ product }: Props) => {
         </P2>
       </H3>
       <div className='flex flex-wrap gap-6'>
-        <fieldset className='flex gap-1'>
-          <input
-            disabled={product.countInStock === 0}
-            type='number'
-            max={product.countInStock}
-            min={1}
-            maxLength={5}
-            value={howMany}
-            onChange={(e) => setHowMany(Number(e.target.value))}
-            className={clsxm(
-              'font-lg w-24 rounded-l-full border border-slate-400 bg-slate-200 py-4 px-4 text-center focus-within:border-primary-200 focus-within:ring-primary-200 md:text-xl',
-              [product.countInStock === 0 && 'cursor-not-allowed']
-            )}
-          />
+        <QuantitySelector
+          quantity={howMany}
+          onChange={setHowMany}
+          product={product}
+        />
 
-          <select
-            disabled={product.countInStock === 0}
-            defaultValue={`${howMany}`}
-            onChange={(e) => setHowMany(Number(e.target.value))}
-            className={clsxm(
-              'md:text-x h-full rounded-r-full border border-slate-400  bg-gray-300 bg-center py-4 px-6 pr-8 text-transparent focus-within:border-primary-200 focus-within:ring-primary-200',
-              [product.countInStock === 0 && 'cursor-not-allowed']
-            )}
-          >
-            {product.countInStock !== 'unlimited' &&
-              Array(product.countInStock)
-                .fill(0)
-                .map((_, i) => (
-                  <option key={i + 1} value={i + 1} className='text-slate-700'>
-                    {1 + i}
-                  </option>
-                ))}
-            {product.countInStock === 'unlimited' && (
-              <>
-                {Array(8)
-                  .fill(0)
-                  .map((_, i) => (
-                    <option
-                      key={i + 1}
-                      value={i + 1}
-                      className='text-slate-700'
-                    >
-                      {1 + i}
-                    </option>
-                  ))}
-                {[10, 12, 15, 20, 25].map((i) => (
-                  <option key={i} value={i} className='text-slate-700'>
-                    {i}
-                  </option>
-                ))}
-              </>
-            )}
-          </select>
-        </fieldset>
         <button
           onClick={handleAddToCart}
           disabled={product.countInStock === 0}
