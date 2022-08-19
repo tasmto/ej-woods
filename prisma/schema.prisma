@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String @unique @default(uuid()) // @unique means indexable
+  email String @unique
+  name  String
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt()
+  LoginToken LoginToken[]
+  Post       Post[]
+}
+
+model LoginToken {
+  id        String   @unique @default(uuid())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  userId   String
+  redirect String @default("/")
+}
+
+model Post {
+  id    String @unique @default(uuid())
+  title String
+  body  String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  updatedAt DateTime @updatedAt()
+  createdAt DateTime @default(now())
+}
+
+// * Shop Schemas -------------------
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  price  Int @default(200)
+  weight Int @default(0)
+
+  type ProductTypes @default(WOOD)
+
+  name        String
+  description String
+  images      String[] @default(["/images/placeholder-product-image.jpg"])
+
+  countInStock Int @default(0)
+
+  published  Boolean @default(true)
+  crossSells Int[]
+
+  // todo: Figure out cross-sells: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations#one-to-many-self-relations
+  // related  Product @relation("related",fields: [crossSells], references: [id])
+}
+
+enum ProductTypes {
+  WOOD
+  FURNITURE
+}

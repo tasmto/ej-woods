@@ -4,11 +4,17 @@ module.exports = {
     dirs: ['src'],
   },
 
+  swcMinify: true,
   reactStrictMode: true,
 
   // Uncoment to add domain whitelist
   images: {
     domains: ['images.unsplash.com'],
+  },
+
+  experimental: {
+    // Enables the styled-components SWC transform
+    styledComponents: true,
   },
 
   // SVGR
@@ -25,8 +31,8 @@ module.exports = {
           },
         },
       ],
-    });
+    })
 
-    return config;
+    return config
   },
-};
+}

@@ -1,26 +1,26 @@
-import Error from 'next/error';
-import React from 'react';
+import Error from 'next/error'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
-import products from '@/data/products';
+import products from '@/data/products'
 
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import ArrowLink from '@/components/links/ArrowLink';
-import Seo from '@/components/Seo';
-import { D2 } from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import ArrowLink from '@/components/links/ArrowLink'
+import Seo from '@/components/Seo'
+import { D2 } from '@/components/typography/Typography'
 
-import ProductCard from '@/features/products/components/Card';
-import SingleProductDisplay from '@/features/products/SingleProductDisplay';
-import { ProductType } from '@/features/products/types';
+import ProductCard from '@/features/products/components/Card'
+import SingleProductDisplay from '@/features/products/SingleProductDisplay'
+import { ProductType } from '@/features/products/types'
+import ShopLayout from '@/features/shop/components/ShopLayout'
 
-type Props = { product: ProductType };
+type Props = { product: ProductType }
 
 const ProductPage = ({ product }: Props) => {
-  if (!product) return <Error statusCode={404} />;
+  if (!product) return <Error statusCode={404} />
   return (
-    <Layout>
+    <ShopLayout>
       <Seo templateTitle={product.name || 'Product'} />
 
       <SingleProductDisplay product={product} />
@@ -46,28 +46,28 @@ const ProductPage = ({ product }: Props) => {
           </Container>
         </Container>
       )}
-    </Layout>
-  );
-};
+    </ShopLayout>
+  )
+}
 
 export const getServerSideProps = async ({ query }: any) => {
-  const { productId } = query;
-  const product = await products.find((item) => item.id === productId);
+  const { productId } = query
+  const product = await products.find((item) => item.id === productId)
   if (product) {
     const crossSells = product.crossSells.map((cs) =>
       products.find((item) => item.id === cs)
-    );
+    )
     // @ts-expect-error: types man
-    product.crossSells = crossSells ?? null;
+    product.crossSells = crossSells ?? null
   }
 
   // console.log(product);
 
-  return { props: { product: product ?? null } };
-};
+  return { props: { product: product ?? null } }
+}
 
 ProductPage.defaultProps = {
   product: null,
-};
+}
 
-export default ProductPage;
+export default ProductPage

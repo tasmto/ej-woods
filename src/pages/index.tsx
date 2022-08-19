@@ -1,80 +1,101 @@
-import * as React from 'react';
+import dynamic from 'next/dynamic'
+import * as React from 'react'
 
-import { FormatCurrency } from '@/lib/FormatNumber';
+import clsxm from '@/lib/clsxm'
+import { FormatCurrency } from '@/lib/FormatNumber'
 
-import ContactDetailsCards from '@/components/forms/ContactDetailsCards';
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import RegionMap from '@/components/maps/RegionMap';
-import NextImage from '@/components/NextImage';
-import Seo from '@/components/Seo';
-import { D1, D2, H2, P1, P2 } from '@/components/typography/Typography';
+import ContactDetailsCards from '@/components/forms/ContactDetailsCards'
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import ArrowLink from '@/components/links/ArrowLink'
+import ButtonLink from '@/components/links/ButtonLink'
+import RegionMap from '@/components/maps/RegionMap'
+import NextImage from '@/components/NextImage'
+import Seo from '@/components/Seo'
+import { D1, D2, H1, H2, P1, P2 } from '@/components/typography/Typography'
 
-import ContactForm from '@/features/forms/ContactForm';
-import ProductCard from '@/features/products/components/Card';
-import { fetchAllProducts } from '@/features/products/lib/fetchProduct';
-import { ProductType } from '@/features/products/types';
-import ServiceCards from '@/features/services/components/Cards';
+import { apiUrl } from '@/constants/constants'
+import ProductCard from '@/features/products/components/Card'
+import ServiceCards from '@/features/services/components/Cards'
+import { trpc } from '@/utils/trpc'
 
 type Props = {
-  products: ProductType[];
   contactInfo: {
-    openingHours: string;
-    phoneNumber: string;
-    email: string;
-    whatsAppLink: string;
-    location: string;
-  };
-};
+    openingHours: string
+    phoneNumber: string
+    email: string
+    whatsAppLink: string
+    location: string
+  }
+}
+const AddToCartButton = dynamic(
+  () => import('@/features/cart/components/AddToCartButton'),
+  {
+    ssr: false,
+  }
+)
 
-export default function HomePage({ contactInfo, products }: Props) {
+export default function HomePage({ contactInfo }: Props) {
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = trpc.useQuery(['products.multiple-products', { limit: 7 }])
+  const featuredProduct = products?.at(0) ?? undefined
+
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
       <Seo />
-
       <Container
         as='section'
         level={1}
-        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 lg:grid-cols-5 lg:gap-20 '
+        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 md:gap-12 lg:grid-cols-5 '
       >
         <Container
           as='article'
           className='grid justify-items-start gap-6 pt-10 pb-0 md:gap-8 md:pt-20 md:pb-16 lg:col-span-2'
         >
-          <D1 className='max-w-[600px] md:max-w-full'>
-            Your friendly and reliable neighbor-hood carpenter
+          <D1 className=''>
+            Lorem ipsum dolor sit amet consec tetur adipisicing elit. Animi quod
+            minus.
           </D1>
           <ButtonLink variant='outline' href='/contact'>
             Request a call back
           </ButtonLink>
         </Container>
-        <Container className='overflow-y-none relative grid h-full min-h-[300px] w-full content-end overflow-x-visible bg-gray-200 p-8 sm:p-10 md:min-h-[300px] md:rounded-l-3xl lg:col-span-3 lg:p-12'>
-          <div className='align-self-end z-10 text-white'>
-            <D2 as='h2' weight='semiBold' className='drop-shadow-md'>
-              {products[0].name}
-            </D2>
-            <P1 className='mt-2 drop-shadow-md md:mt-3'>
-              {FormatCurrency(products[0].price)} per kg
-            </P1>
-          </div>
+        <Container className='overflow-y-none relative grid h-full min-h-[300px] w-full content-end overflow-x-visible bg-gray-200 p-8 sm:p-10 md:min-h-[300px] md:rounded-l-3xl lg:col-span-3 lg:p-12 lg:pb-10'>
+          {(!isLoading || featuredProduct) && (
+            <div className='align-self-end z-10 flex items-center justify-between gap-4 text-white '>
+              <div>
+                <H1 weight='bold' className='drop-shadow-md'>
+                  {featuredProduct?.name}
+                </H1>
+                <P1 className='drop-shadow-md'>
+                  {FormatCurrency(featuredProduct?.price)} per kg
+                </P1>
+              </div>
+              <AddToCartButton product={featuredProduct} />
+            </div>
+          )}
           <div
-            className='img-full-w-curve--right after:absolute after:top-0 after:block after:h-full after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/0
-              after:to-black/0'
+            className={clsxm('img-full-w-curve--right', [
+              featuredProduct &&
+                'after:absolute after:bottom-0 after:block after:h-1/2 after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/50 after:to-black/0',
+            ])}
           >
             <NextImage
               layout='fill'
-              src={products[0].primaryImage}
-              alt=''
-              className='h-full w-full md:rounded-l-3xl'
-              imgClassName='md:rounded-l-3xl object-cover w-full'
+              src={
+                featuredProduct?.images?.at(0) ??
+                '/images/homepage-hero-cover-image.jpg'
+              }
+              alt={featuredProduct ? `An image of ${featuredProduct.name}` : ''}
+              className='skeleton h-full w-full bg-slate-500'
+              imgClassName='object-cover'
             />
           </div>
         </Container>
       </Container>
-
       <Container as='section' level={1} aria-hidden='true'>
         <Container
           as='div'
@@ -106,8 +127,8 @@ export default function HomePage({ contactInfo, products }: Props) {
         level={1}
         className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {products?.map((product, i) => (
-          <ProductCard key={i} product={product} />
+        {products?.slice(1)?.map((product, i) => (
+          <ProductCard position={i} key={i} product={product} />
         ))}
         <ArrowLink
           className='col-span-full mt-3 justify-self-start md:mt-4'
@@ -119,7 +140,7 @@ export default function HomePage({ contactInfo, products }: Props) {
       <Container
         level={1}
         as='section'
-        className='relative grid gap-5 md:grid-cols-2 md:gap-14  lg:gap-20'
+        className='relative grid gap-5 md:grid-cols-2 md:gap-14 '
       >
         <div className='grid gap-8 self-center'>
           <D2 as='h2' weight='normal'>
@@ -137,24 +158,23 @@ export default function HomePage({ contactInfo, products }: Props) {
           height={456}
         />
       </Container>
-
       <Container
         as='section'
         level={1}
-        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2  lg:gap-20 '
+        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 md:gap-32 lg:grid-cols-5 lg:gap-14'
       >
-        <Container className='overflow-y-none relative order-last grid h-full min-h-[300px] w-full content-end overflow-x-visible p-8 sm:p-10 md:order-first'>
+        <Container className='overflow-y-none relative order-last grid h-full min-h-[300px] w-full content-end overflow-x-visible p-8 sm:p-10 md:order-first lg:col-span-3'>
           <div className='img-full-w-curve--left'>
             <NextImage
               layout='fill'
               src='https://images.unsplash.com/photo-1504624720567-64a41aa25d70?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2076&q=80'
               alt=''
-              className='h-full w-full md:rounded-r-3xl'
+              className='h-full md:rounded-r-3xl'
               imgClassName='md:rounded-r-3xl object-cover w-full'
             />
           </div>
         </Container>
-        <article className='grid justify-items-start  gap-4 sm:gap-6 '>
+        <article className='grid justify-items-start gap-4 sm:gap-6 lg:col-span-2 '>
           <D2 className='max-w-[600px] md:max-w-full'>
             Your bones dont break, mine do. Thats clear.
           </D2>
@@ -182,30 +202,40 @@ export default function HomePage({ contactInfo, products }: Props) {
           <ServiceCards include='all' />
         </div>
       </Container>
-
       <Container
         as='section'
         level={1}
-        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2  lg:gap-20'
+        className='grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 '
       >
         <div className='grid justify-items-start gap-8  '>
           <D2 className='max-w-[600px] md:max-w-full'>
             Fill in the form below if you have any questions and we will get
             right back to you.
           </D2>
-          <ContactForm />
+          {/* <ContactForm /> */}
         </div>
         <RegionMap />
       </Container>
     </Layout>
-  );
+  )
 }
 
-export const getServerSideProps = async () => {
-  const products = await fetchAllProducts({ limit: 6 }); // todo: abso-freakinlutely not static props (handle through react query)
+export const getStaticProps = async () => {
+  const req = await fetch(
+    `${apiUrl}/products.multiple-products?batch=1&input=%7B"0"%3A%7B"json"%3A%7B"limit"%3A7%7D%7D%7D`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+
+  const data = await req.json()
+  const product = data?.at(0)?.result?.data ?? undefined
+
   return {
     props: {
-      products,
       contactInfo: {
         openingHours:
           'Open 6am/10pm Monday - Friday & 8am - 6pm Saturday- Sunday',
@@ -215,5 +245,5 @@ export const getServerSideProps = async () => {
         location: '0000 Street Name, City, Province, Country',
       },
     },
-  };
-};
+  }
+}

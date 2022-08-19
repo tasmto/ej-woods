@@ -1,34 +1,53 @@
-import Link from 'next/link';
-import React from 'react';
+import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
-import { trimString } from '@/lib/FormatString';
+import clsxm from '@/lib/clsxm'
+import { trimString } from '@/lib/FormatString'
 
-import NextImage from '@/components/NextImage';
-import { H3, P1 } from '@/components/typography/Typography';
+import NextImage from '@/components/NextImage'
+import { H3, P1 } from '@/components/typography/Typography'
 
-import AddToCartButton from '@/features/cart/components/AddToCartButton';
-import { FormatCurrency } from '@/features/products/lib/formatNumber';
-import { CrossSellType, ProductType } from '@/features/products/types';
+import { FormatCurrency } from '@/features/products/lib/formatNumber'
+
+import { InferQueryOutput } from '../../accounts/state/userState'
+
+const AddToCartButton = dynamic(
+  () => import('@/features/cart/components/AddToCartButton'),
+  {
+    ssr: false,
+  }
+)
 
 type Props = {
-  product: ProductType | CrossSellType;
-};
-const ProductCard = ({ product }: Props) => {
-  if (!product || !product?.name) return null;
+  product: InferQueryOutput<'products.single-product'>
+  position: number
+}
+const ProductCard = ({ product, position }: Props) => {
+  if (!product || !product?.name) return null
 
-  const { name, price, type, primaryImage, id } = product;
+  const { name, price, type, images, id } = product
 
   return (
     <Link href={`/shop/${id}`}>
-      <a>
+      <motion.a
+        initial={{ opacity: 0, x: '-5%' }}
+        animate={{ opacity: 1, x: '0' }}
+        exit={{ opacity: 0, x: '5%', transition: { duration: 0.2 } }}
+        transition={{
+          ease: 'backInOut',
+          duration: 0.3,
+          delay: position * 0.05,
+        }}
+      >
         <article
           className={clsxm([
             'content-stretch relative grid h-80 w-full content-end items-stretch justify-items-stretch overflow-hidden rounded-xl  bg-gray-400 text-slate-50 after:absolute after:bottom-0 after:block after:h-2/3 after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/60 after:to-black/0 md:h-[24rem]',
           ])}
         >
           <NextImage
-            src={primaryImage}
+            src={images.at(0) ?? ''}
             alt={name}
             quality={50}
             useSkeleton
@@ -42,15 +61,31 @@ const ProductCard = ({ product }: Props) => {
               </H3>
 
               <P1 className='mt-2 drop-shadow-md'>
-                {FormatCurrency(price)} {type === 'wood' ? ' per kg' : 'each'}
+                {FormatCurrency(price)} {type === 'WOOD' ? ' per kg' : 'each'}
               </P1>
             </div>
             <AddToCartButton product={product} />
           </div>
         </article>
-      </a>
+      </motion.a>
     </Link>
-  );
-};
+  )
+}
 
-export default ProductCard;
+const ProductCardSkeleton = () => {
+  return (
+    <div
+      role='presentation'
+      className={clsxm([
+        'content-stretch skeleton relative grid h-80 w-full content-end items-stretch justify-items-stretch overflow-hidden rounded-xl bg-cover text-slate-50  md:h-[24rem]',
+      ])}
+    ></div>
+  )
+}
+
+ProductCard.defaultProps = {
+  position: 1,
+}
+
+export default ProductCard
+export { ProductCardSkeleton }

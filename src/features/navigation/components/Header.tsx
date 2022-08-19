@@ -1,51 +1,41 @@
-import {
-  AnimatePresence,
-  motion,
-  useScroll,
-  useTransform,
-} from 'framer-motion';
-import { useAtom } from 'jotai';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import * as React from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import * as React from 'react'
 
-import clsxm from '@/lib/clsxm';
-import resolveIcon from '@/lib/iconResolver';
+import clsxm from '@/lib/clsxm'
+import resolveIcon from '@/lib/iconResolver'
 
-import Container from '@/components/layout/Container';
-import UnstyledLink from '@/components/links/UnstyledLink';
-import { Caption, P2 } from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import UnstyledLink from '@/components/links/UnstyledLink'
+import { P2 } from '@/components/typography/Typography'
 
-import { cartOverlayOpen } from '@/features/cart/components/CartOverlay';
-import { useCartStore } from '@/features/cart/state/CartContext';
-
-import EjWoodsLogo from '~/svg/ej-woods-logo.svg';
+import EjWoodsLogo from '~/svg/ej-woods-logo.svg'
 
 const links = [
   { href: '/shop', label: 'Shop' },
   { href: '/shop?category=furniture', label: 'Furniture' },
   { href: '/shop?category=wood', label: 'Wood' },
   { href: '/gallery', label: 'Our Work' },
-];
+]
+
+const CartIndicatorButton = dynamic(
+  () => import('../../cart/components/CartIndicator'),
+  {
+    ssr: false,
+  }
+)
 
 export default function Header() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [cartOpen, setCartOpen] = useAtom(cartOverlayOpen);
-  const { cart, totalItemsInCart } = useCartStore((state) => state);
-  const [itemsInCart, setItemsInCart] = React.useState(totalItemsInCart());
-
-  // Check if cart has changed and update state
-  React.useEffect(() => {
-    setItemsInCart(totalItemsInCart());
-  }, [cart]);
-
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll()
   const navBG = useTransform(
     scrollYProgress,
     [0, 0.03],
     ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.9)']
-  );
+  )
 
   // todo: sticky mobile nav: https://blog.logrocket.com/react-scroll-animations-framer-motion/
 
@@ -86,49 +76,7 @@ export default function Header() {
               </ul>
               <ul className='ml-2 flex items-center justify-between gap-1 pl-1'>
                 <li>
-                  <button
-                    className={clsxm(
-                      'flex items-center gap-1 rounded-2xl px-2 py-1 hover:bg-primary-50/50 ',
-                      [
-                        cartOpen &&
-                          'bg-primary-100 text-slate-200 hover:bg-primary-100/90',
-                      ]
-                    )}
-                    title='Cart'
-                    onClick={() => setCartOpen(!cartOpen)}
-                  >
-                    <div className='relative'>
-                      <Image
-                        src={
-                          resolveIcon(
-                            '🛒',
-                            router.pathname === '/shop/cart' || cartOpen
-                          )?.['active'] || ''
-                        }
-                        layout='intrinsic'
-                        className='shadow-xl shadow-black transition-all duration-200'
-                        height={30}
-                        width={30}
-                        alt=''
-                      />
-                      {itemsInCart > 0 && (
-                        <Caption
-                          as='figcaption'
-                          className={clsxm([
-                            'absolute right-[-10px] top-[-7px] h-5 w-5 rounded-full p-1 ',
-                            'text-xs text-[10px] font-bold leading-tight text-white',
-                            'bg-primary-200 ',
-                          ])}
-                        >
-                          <span>{itemsInCart > 10 ? '9+' : itemsInCart}</span>
-                          <span className='sr-only'>
-                            Items currently in your cart
-                          </span>
-                        </Caption>
-                      )}
-                    </div>
-                    <P2 as='span'>Cart</P2>
-                  </button>
+                  <CartIndicatorButton />
                 </li>
                 <li>
                   <UnstyledLink
@@ -174,5 +122,5 @@ export default function Header() {
         </AnimatePresence>
       </Container>
     </div>
-  );
+  )
 }

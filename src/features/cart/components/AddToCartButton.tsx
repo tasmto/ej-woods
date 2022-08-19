@@ -1,43 +1,43 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
-import React from 'react';
+import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
-import resolveIcon from '@/lib/iconResolver';
+import clsxm from '@/lib/clsxm'
+import resolveIcon from '@/lib/iconResolver'
 
-import { Caption } from '@/components/typography/Typography';
+import { Caption } from '@/components/typography/Typography'
 
-import { useCartStore } from '@/features/cart/state/CartContext';
-import { CrossSellType, ProductType } from '@/features/products/types';
+import { useCartStore } from '@/features/cart/state/CartContext'
+
+import { InferQueryOutput } from '../../accounts/state/userState'
 
 type Props = {
-  product: ProductType | CrossSellType;
-  className?: string;
-};
+  product?: InferQueryOutput<'products.single-product'>
+  className?: string
+}
 
 const AddToCartButton = ({ product }: Props) => {
   const { cart, addToCart, removeItemFromCart, howManyInCart } = useCartStore(
     (state) => state
-  );
-  const [countInCart, setCountInCart] = React.useState(0);
-  const [hover, setHover] = React.useState(false);
+  )
+  const [countInCart, setCountInCart] = React.useState(0)
+  const [hover, setHover] = React.useState(false)
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    howManyInCart(product)
-      ? removeItemFromCart(product)
-      : addToCart(product, 1);
+    howManyInCart(product) ? removeItemFromCart(product) : addToCart(product, 1)
 
-    e.stopPropagation();
-    e.preventDefault();
-  };
+    e.stopPropagation()
+    e.preventDefault()
+  }
 
   // Check if product and  is in cart (every time cart changes)
   React.useEffect(() => {
-    setCountInCart(howManyInCart(product));
-  }, [cart, howManyInCart, product]);
+    setCountInCart(howManyInCart(product))
+  }, [cart, howManyInCart, product])
 
+  if (!product) return null
   return (
     <button
       onClick={handleAddToCart}
@@ -128,7 +128,7 @@ const AddToCartButton = ({ product }: Props) => {
         )}
       </figure>
     </button>
-  );
-};
+  )
+}
 
-export default AddToCartButton;
+export default AddToCartButton

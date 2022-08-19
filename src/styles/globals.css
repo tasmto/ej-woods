@@ -53,12 +53,15 @@
     @apply min-h-[calc(100vh-56px)];
   }
 
+  .img-full-w-curve {
+    @apply absolute top-0 left-0 h-full w-full overflow-hidden rounded-md md:w-[50vw] md:rounded-none lg:w-[55vw] 2xl:w-full;
+  }
   /* Image full-w curve */
   .img-full-w-curve--right {
-    @apply absolute top-0 left-0 h-full w-full md:w-[50vw] md:rounded-l-3xl after:md:rounded-l-3xl lg:w-[55vw] 2xl:w-full;
+    @apply img-full-w-curve md:rounded-l-3xl;
   }
   .img-full-w-curve--left {
-    @apply absolute top-0 right-0 h-full w-full md:w-[50vw] md:rounded-r-3xl after:md:rounded-r-3xl lg:w-[55vw] 2xl:w-full;
+    @apply img-full-w-curve md:rounded-r-3xl;
   }
 
   .ej-form-input {
@@ -99,33 +102,32 @@
   .animated-underline:focus-visible {
     background-size: 0 2px, 100% 2px;
   }
-}
-
-.skeleton {
-  position: relative;
-  overflow: hidden;
-  background-color: #d0d6df;
-}
-.skeleton::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  transform: translateX(-100%);
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.2) 20%,
-    rgba(255, 255, 255, 0.5) 60%,
-    rgba(255, 255, 255, 0)
-  );
-  animation: shimmer 2s infinite;
-  content: '';
-}
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #d0d6df;
+  }
+  .skeleton::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 2s infinite;
+    content: '';
+  }
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
 }
 

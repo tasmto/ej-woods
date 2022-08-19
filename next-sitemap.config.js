@@ -4,7 +4,7 @@
  */
 module.exports = {
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  siteUrl: 'https://ej-woods.co.za',
+  siteUrl: 'https://ejwoods.co.za',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],
