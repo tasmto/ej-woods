@@ -14,7 +14,8 @@
     "format:check": "prettier -c .",
     "release": "standard-version",
     "push-release": "git push --follow-tags origin main",
-    "postbuild": "next-sitemap --config next-sitemap.config.js"
+    "postbuild": "next-sitemap --config next-sitemap.config.js",
+    "prebuild": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
