@@ -1,11 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
-
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import NextImage from '@/components/NextImage';
-import { D2, P1, P2 } from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import NextImage from '@/components/NextImage'
+import { D2, P1, P2 } from '@/components/typography/Typography'
+import clsxm from '@/lib/clsxm'
 
 const GalleryPage = () => {
   const images = [
@@ -54,7 +53,7 @@ const GalleryPage = () => {
       image:
         'https://images.unsplash.com/photo-1617410225897-c9d260e3055e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fHdvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
     },
-  ];
+  ]
   return (
     <Layout>
       <Container
@@ -92,7 +91,7 @@ const GalleryPage = () => {
         ))}
       </Container>
     </Layout>
-  );
-};
+  )
+}
 
-export default GalleryPage;
+export default GalleryPage

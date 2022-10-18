@@ -1,18 +1,15 @@
+import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
-import React from 'react'
-
-import clsxm from '@/lib/clsxm'
-import resolveIcon from '@/lib/iconResolver'
 
 import { Caption } from '@/components/typography/Typography'
-
 import { useCartStore } from '@/features/cart/state/CartContext'
-
-import { InferQueryOutput } from '../../accounts/state/userState'
+import clsxm from '@/lib/clsxm'
+import resolveIcon from '@/lib/iconResolver'
+import { SingleProductType } from '@/schema/product.schema'
 
 type Props = {
-  product?: InferQueryOutput<'products.single-product'>
+  product?: SingleProductType
   className?: string
 }
 
@@ -26,6 +23,8 @@ const AddToCartButton = ({ product }: Props) => {
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    if (!product) return
+
     howManyInCart(product) ? removeItemFromCart(product) : addToCart(product, 1)
 
     e.stopPropagation()

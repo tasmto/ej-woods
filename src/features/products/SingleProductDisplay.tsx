@@ -1,16 +1,15 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import React from 'react'
+import { motion } from 'framer-motion'
 
-import Container from '@/components/layout/Container';
-import NextImage from '@/components/NextImage';
-import Typography from '@/components/typography/Typography';
-
-import AddToCartSection from '@/features/cart/components/AddToCartSection';
-import { ProductType } from '@/features/products/types';
+import Container from '@/components/layout/Container'
+import NextImage from '@/components/NextImage'
+import Typography from '@/components/typography/Typography'
+import AddToCartSection from '@/features/cart/components/AddToCartSection'
+import { SingleProductType } from '@/schema/product.schema'
 
 type Props = {
-  product: ProductType;
-};
+  product: SingleProductType
+}
 
 const SingleProductDisplay = ({ product }: Props) => {
   return (
@@ -25,7 +24,7 @@ const SingleProductDisplay = ({ product }: Props) => {
             layout='intrinsic'
             width={1000}
             height={500}
-            src={product.primaryImage}
+            src={product.images[0] ?? ''}
             alt=''
             quality={100}
             className='skeleton relative h-full w-full  object-cover md:rounded-r-3xl'
@@ -57,7 +56,7 @@ const SingleProductDisplay = ({ product }: Props) => {
         </Typography>
       </motion.article>
     </Container>
-  );
-};
+  )
+}
 
-export default SingleProductDisplay;
+export default SingleProductDisplay

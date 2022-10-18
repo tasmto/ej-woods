@@ -1,17 +1,14 @@
+import React from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import React from 'react'
-
-import clsxm from '@/lib/clsxm'
-import { trimString } from '@/lib/FormatString'
 
 import NextImage from '@/components/NextImage'
 import { H3, P1 } from '@/components/typography/Typography'
-
 import { FormatCurrency } from '@/features/products/lib/formatNumber'
-
-import { InferQueryOutput } from '../../accounts/state/userState'
+import clsxm from '@/lib/clsxm'
+import { trimString } from '@/lib/FormatString'
+import { SingleProductType } from '@/schema/product.schema'
 
 const AddToCartButton = dynamic(
   () => import('@/features/cart/components/AddToCartButton'),
@@ -21,7 +18,7 @@ const AddToCartButton = dynamic(
 )
 
 type Props = {
-  product: InferQueryOutput<'products.single-product'>
+  product: SingleProductType
   position: number
 }
 const ProductCard = ({ product, position }: Props) => {
@@ -40,6 +37,7 @@ const ProductCard = ({ product, position }: Props) => {
           duration: 0.3,
           delay: position * 0.05,
         }}
+        className='cursor-pointer'
       >
         <article
           className={clsxm([

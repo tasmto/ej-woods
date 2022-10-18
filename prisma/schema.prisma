@@ -45,7 +45,7 @@ datasource db {
 // * Shop Schemas -------------------
 
 model Product {
-  id Int @id @default(autoincrement())
+  id Int @id @unique @default(autoincrement())
 
   price  Int @default(200)
   weight Int @default(0)
@@ -54,10 +54,17 @@ model Product {
 
   name        String
   description String
-  images      String[] @default(["/images/placeholder-product-image.jpg"])
+  images      String[] @default(["/images/placeholder-product-imag.jpg"])
 
-  countInStock Int     @default(0)
-  published    Boolean @default(true)
+  countInStock     Int     @default(0)
+  hasInfiniteStock Boolean @default(false)
+  published        Boolean @default(true)
+
+  crossSells Product[] @relation("cross_sells")
+  relatedTo  Product[] @relation("cross_sells")
+
+  updatedAt DateTime @default(now()) @updatedAt()
+  createdAt DateTime @default(now())
 }
 
 enum ProductTypes {

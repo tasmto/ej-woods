@@ -1,45 +1,43 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
-import React from 'react';
+import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
 
-import clsxm from '@/lib/clsxm';
-import { FormatCurrency } from '@/lib/FormatNumber';
-import resolveIcon from '@/lib/iconResolver';
-
-import ButtonLink from '@/components/links/ButtonLink';
-import { Caption, H3, P2 } from '@/components/typography/Typography';
-
-import QuantitySelector from '@/features/cart/components/QuantitySelector';
-import { useCartStore } from '@/features/cart/state/CartContext';
-import { ProductType } from '@/features/products/types';
+import ButtonLink from '@/components/links/ButtonLink'
+import { Caption, H3, P2 } from '@/components/typography/Typography'
+import QuantitySelector from '@/features/cart/components/QuantitySelector'
+import { useCartStore } from '@/features/cart/state/CartContext'
+import clsxm from '@/lib/clsxm'
+import { FormatCurrency } from '@/lib/FormatNumber'
+import resolveIcon from '@/lib/iconResolver'
+import { SingleProductType } from '@/schema/product.schema'
 
 type Props = {
-  product: ProductType;
-};
+  product: SingleProductType
+}
 
 const AddToCartSection = ({ product }: Props) => {
   const { cart, addToCart, removeItemFromCart, howManyInCart } = useCartStore(
     (state) => state
-  );
-  const [howMany, setHowMany] = React.useState<number>(1);
-  const [countInCart, setCountInCart] = React.useState(0);
+  )
+  const [howMany, setHowMany] = React.useState<number>(1)
+  const [countInCart, setCountInCart] = React.useState(0)
 
   const handleAddToCart = () => {
     howManyInCart(product) !== howMany
       ? addToCart(product, howMany)
-      : removeItemFromCart(product);
+      : removeItemFromCart(product)
 
-    setHowMany(howManyInCart(product) || 1);
-  };
+    setHowMany(howManyInCart(product) || 1)
+  }
 
   // Check if product and  is in cart (every time cart changes)
   React.useEffect(() => {
-    setCountInCart(howManyInCart(product));
-  }, [cart, product, howManyInCart]);
+    setCountInCart(howManyInCart(product))
+  }, [cart, product, howManyInCart])
 
   React.useEffect(() => {
-    setHowMany(howManyInCart(product) || 1);
-  }, []);
+    setHowMany(howManyInCart(product) || 1)
+  }, [])
 
   return (
     <div className='flex w-full flex-wrap gap-4'>
@@ -55,7 +53,7 @@ const AddToCartSection = ({ product }: Props) => {
         ) : (
           <>
             <b>{FormatCurrency(product.price * howMany ?? 1)}</b> — for{' '}
-            {product.weight.value * howMany ?? 1} {product.weight.unit}
+            {product.weight * howMany ?? 1} {"kg's"}
           </>
         )}
         <P2 as='span' className='ml-4 text-primary-200'>
@@ -145,7 +143,7 @@ const AddToCartSection = ({ product }: Props) => {
         )}
       </AnimatePresence>
     </div>
-  );
-};
+  )
+}
 
-export default AddToCartSection;
+export default AddToCartSection

@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import * as React from 'react';
-import { ImSpinner2 } from 'react-icons/im';
+import Image from 'next/image'
+import * as React from 'react'
+import { ImSpinner2 } from 'react-icons/im'
 
-import clsxm from '@/lib/clsxm';
-import resolveIcon, { Icons } from '@/lib/iconResolver';
+import clsxm from '@/lib/clsxm'
+import resolveIcon, { Icons } from '@/lib/iconResolver'
 
 enum ButtonVariant {
   'primary',
@@ -13,15 +13,15 @@ enum ButtonVariant {
 }
 
 type ButtonProps = {
-  isLoading?: boolean;
-  isDarkBg?: boolean;
-  variant?: keyof typeof ButtonVariant;
-  curve?: 'top' | 'bottom' | 'topLeft' | 'topRight';
-  icon?: keyof typeof Icons;
-  iconPosition?: 'start' | 'end';
-  alwaysActive?: boolean;
-  isoView?: boolean;
-} & React.ComponentPropsWithRef<'button'>;
+  isLoading?: boolean
+  isDarkBg?: boolean
+  variant?: keyof typeof ButtonVariant
+  curve?: 'top' | 'bottom' | 'topLeft' | 'topRight'
+  icon?: keyof typeof Icons
+  iconPosition?: 'start' | 'end'
+  alwaysActive?: boolean
+  isoView?: boolean
+} & React.ComponentPropsWithRef<'button'>
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -41,8 +41,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const disabled = isLoading || buttonDisabled;
-    const [iconActive, setIconActive] = React.useState(alwaysActive || false);
+    const disabled = isLoading || buttonDisabled
+    const [iconActive, setIconActive] = React.useState(alwaysActive || false)
 
     return (
       <button
@@ -137,8 +137,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         <span>{children}</span>
       </button>
-    );
+    )
   }
-);
+)
 
-export default Button;
+export default Button

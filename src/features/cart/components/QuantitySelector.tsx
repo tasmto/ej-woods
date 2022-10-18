@@ -1,16 +1,15 @@
-import React from 'react';
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
-
-import { CartProductType } from '@/features/cart/state/CartContext';
-import { ProductType } from '@/features/products/types';
+import { CartProductType } from '@/features/cart/state/CartContext'
+import clsxm from '@/lib/clsxm'
+import { SingleProductType } from '@/schema/product.schema'
 
 type Props = {
-  product: ProductType | CartProductType;
-  onChange: (howMany: number) => void;
-  quantity: number;
-  size: 'small' | 'large';
-};
+  product: SingleProductType | CartProductType
+  onChange: (howMany: number) => void
+  quantity: number
+  size: 'small' | 'large'
+}
 
 const QuantitySelector = ({ product, onChange, quantity, size }: Props) => {
   return (
@@ -48,7 +47,7 @@ const QuantitySelector = ({ product, onChange, quantity, size }: Props) => {
           [size === 'large' && 'font-lg py-4 px-6 pr-8 md:text-xl']
         )}
       >
-        {product.countInStock !== 'unlimited' &&
+        {!product.hasInfiniteStock &&
           Array(product.countInStock)
             .fill(0)
             .map((_, i) => (
@@ -56,7 +55,7 @@ const QuantitySelector = ({ product, onChange, quantity, size }: Props) => {
                 {1 + i}
               </option>
             ))}
-        {product.countInStock === 'unlimited' && (
+        {product.hasInfiniteStock && (
           <>
             {Array(8)
               .fill(0)
@@ -74,11 +73,11 @@ const QuantitySelector = ({ product, onChange, quantity, size }: Props) => {
         )}
       </select>
     </fieldset>
-  );
-};
+  )
+}
 
 QuantitySelector.defaultProps = {
   size: 'large',
-};
+}
 
-export default QuantitySelector;
+export default QuantitySelector

@@ -1,8 +1,5 @@
-import dynamic from 'next/dynamic'
 import * as React from 'react'
-
-import clsxm from '@/lib/clsxm'
-import { FormatCurrency } from '@/lib/FormatNumber'
+import dynamic from 'next/dynamic'
 
 import ContactDetailsCards from '@/components/forms/ContactDetailsCards'
 import Container from '@/components/layout/Container'
@@ -13,10 +10,10 @@ import RegionMap from '@/components/maps/RegionMap'
 import NextImage from '@/components/NextImage'
 import Seo from '@/components/Seo'
 import { D1, D2, H1, H2, P1, P2 } from '@/components/typography/Typography'
-
-import { apiUrl } from '@/constants/constants'
 import ProductCard from '@/features/products/components/Card'
 import ServiceCards from '@/features/services/components/Cards'
+import clsxm from '@/lib/clsxm'
+import { FormatCurrency } from '@/lib/FormatNumber'
 import { trpc } from '@/utils/trpc'
 
 type Props = {
@@ -35,7 +32,8 @@ const AddToCartButton = dynamic(
   }
 )
 
-export default function HomePage({ contactInfo }: Props) {
+const HomePage = ({ contactInfo }: Props) => {
+  // @ts-ex
   const {
     data: products,
     isLoading,
@@ -220,20 +218,9 @@ export default function HomePage({ contactInfo }: Props) {
   )
 }
 
+export default HomePage
+
 export const getStaticProps = async () => {
-  const req = await fetch(
-    `${apiUrl}/products.multiple-products?batch=1&input=%7B"0"%3A%7B"json"%3A%7B"limit"%3A7%7D%7D%7D`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )
-
-  const data = await req.json()
-  const product = data?.at(0)?.result?.data ?? undefined
-
   return {
     props: {
       contactInfo: {

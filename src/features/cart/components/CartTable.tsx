@@ -1,26 +1,22 @@
-import Image from 'next/image';
-import React from 'react';
+import React from 'react'
+import Image from 'next/image'
 
-import clsxm from '@/lib/clsxm';
-import { FormatCurrency } from '@/lib/FormatNumber';
-import { trimString } from '@/lib/FormatString';
-
-import { H3, P3 } from '@/components/typography/Typography';
-
-import QuantitySelector from '@/features/cart/components/QuantitySelector';
+import { H3, P3 } from '@/components/typography/Typography'
+import QuantitySelector from '@/features/cart/components/QuantitySelector'
 import {
   CartProductType,
   useCartStore,
-} from '@/features/cart/state/CartContext';
+} from '@/features/cart/state/CartContext'
+import clsxm from '@/lib/clsxm'
+import { FormatCurrency } from '@/lib/FormatNumber'
+import { trimString } from '@/lib/FormatString'
 
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 const CartTable = ({ className }: Props) => {
-  const { cart, removeItemFromCart, addToCart } = useCartStore(
-    (state) => state
-  );
+  const { cart, removeItemFromCart, addToCart } = useCartStore((state) => state)
   return (
     <>
       {cart.length > 0 ? (
@@ -39,7 +35,7 @@ const CartTable = ({ className }: Props) => {
             )}
           >
             {cart.map((product: CartProductType, i) => {
-              const { id, name, quantity, primaryImage, price, type } = product;
+              const { id, name, quantity, images, price, type } = product
               return (
                 <tr
                   key={id}
@@ -50,7 +46,7 @@ const CartTable = ({ className }: Props) => {
                 >
                   <td className='w-[15%]'>
                     <Image
-                      src={primaryImage ?? ''}
+                      src={images[0] ?? ''}
                       layout='responsive'
                       className='skeleton w-full rounded-lg bg-gray-400 object-cover shadow-black transition-all duration-200'
                       height={70}
@@ -65,11 +61,9 @@ const CartTable = ({ className }: Props) => {
                     </H3>
                     <P3 className='text-primary-200'>
                       <b>{FormatCurrency(quantity * price) ?? 0}</b>
-                      {type === 'furniture'
+                      {type === 'FURNITURE'
                         ? ` — for ${quantity}.`
-                        : ` — for ${product.weight.value * quantity ?? 1} ${
-                            product.weight.unit
-                          }`}
+                        : ` — for ${product.weight * quantity ?? 1} ${"kg's"}`}
                     </P3>
                   </td>
                   <td className='flex  justify-end gap-1 sm:w-[35%]'>
@@ -90,7 +84,7 @@ const CartTable = ({ className }: Props) => {
                     </button>
                   </td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
@@ -98,11 +92,11 @@ const CartTable = ({ className }: Props) => {
         <div className='flex items-center justify-center'></div>
       )}
     </>
-  );
-};
+  )
+}
 
 CartTable.defaultProps = {
   className: '',
-};
+}
 
-export default CartTable;
+export default CartTable

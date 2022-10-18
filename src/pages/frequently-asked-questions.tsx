@@ -1,13 +1,12 @@
-import React from 'react';
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import NextImage from '@/components/NextImage';
-import { D2, P2 } from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import NextImage from '@/components/NextImage'
+import { D2, P2 } from '@/components/typography/Typography'
+import ServiceCards from '@/features/services/components/Cards'
 
-import ServiceCards from '@/features/services/components/Cards';
-
-const OrdersAndReturnsPage = () => {
+const FAQPage = () => {
   return (
     <Layout>
       <Container
@@ -82,7 +81,7 @@ const OrdersAndReturnsPage = () => {
         </div>
       </Container>
     </Layout>
-  );
-};
+  )
+}
 
-export default OrdersAndReturnsPage;
+export default FAQPage

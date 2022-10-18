@@ -1,11 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import RegionMap from '@/components/maps/RegionMap';
-import { D2 } from '@/components/typography/Typography';
-
-import ContactForm from '@/features/forms/ContactForm';
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import RegionMap from '@/components/maps/RegionMap'
+import { D2 } from '@/components/typography/Typography'
+import ContactForm from '@/features/forms/ContactForm'
 
 const ContactPage = () => {
   return (
@@ -25,7 +24,7 @@ const ContactPage = () => {
         <RegionMap />
       </Container>
     </Layout>
-  );
-};
+  )
+}
 
-export default ContactPage;
+export default ContactPage

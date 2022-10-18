@@ -12,7 +12,7 @@ module.exports = {
     domains: ['images.unsplash.com'],
   },
 
-  experimental: {
+  compiler: {
     // Enables the styled-components SWC transform
     styledComponents: true,
   },

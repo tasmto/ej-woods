@@ -1,20 +1,18 @@
-import { atom } from 'jotai';
-import React from 'react';
+import React from 'react'
+import { atom } from 'jotai'
 
-import { FormatCurrency } from '@/lib/FormatNumber';
+import Container from '@/components/layout/Container'
+import Seo from '@/components/Seo'
+import { D2, H1, P1 } from '@/components/typography/Typography'
+import CartTable from '@/features/cart/components/CartTable'
+import { useCartStore } from '@/features/cart/state/CartContext'
+import CheckoutLayout from '@/features/checkout/components/Layout'
+import ContactForm from '@/features/forms/ContactForm'
+import { FormatCurrency } from '@/lib/FormatNumber'
 
-import Container from '@/components/layout/Container';
-import Seo from '@/components/Seo';
-import { D2, H1, P1 } from '@/components/typography/Typography';
-
-import CartTable from '@/features/cart/components/CartTable';
-import { useCartStore } from '@/features/cart/state/CartContext';
-import CheckoutLayout from '@/features/checkout/components/Layout';
-import ContactForm from '@/features/forms/ContactForm';
-
-const checkoutStage = atom(0);
+const checkoutStage = atom(0)
 const CheckoutPage = () => {
-  const { totalItemsInCart, cartValue } = useCartStore((state) => state);
+  const { totalItemsInCart, cartValue } = useCartStore((state) => state)
 
   return (
     <CheckoutLayout>
@@ -41,7 +39,7 @@ const CheckoutPage = () => {
         </aside>
       </Container>
     </CheckoutLayout>
-  );
-};
+  )
+}
 
-export default CheckoutPage;
+export default CheckoutPage

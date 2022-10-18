@@ -1,15 +1,13 @@
+import * as React from 'react'
 import { useAtom } from 'jotai'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import * as React from 'react'
-
-import clsxm from '@/lib/clsxm'
-import resolveIcon from '@/lib/iconResolver'
 
 import { Caption, P2 } from '@/components/typography/Typography'
-
 import { cartOverlayOpen } from '@/features/cart/components/CartOverlay'
 import { useCartStore } from '@/features/cart/state/CartContext'
+import clsxm from '@/lib/clsxm'
+import resolveIcon from '@/lib/iconResolver'
 
 const CartIndicatorButton = () => {
   const router = useRouter()

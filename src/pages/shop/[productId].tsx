@@ -1,24 +1,18 @@
-import Error from 'next/error'
-import { motion } from 'framer-motion'
 import React from 'react'
-
-import clsxm from '@/lib/clsxm'
-
-import products from '@/data/products'
+import { motion } from 'framer-motion'
+import { useRouter } from 'next/router'
 
 import Container from '@/components/layout/Container'
 import ArrowLink from '@/components/links/ArrowLink'
+import NextImage from '@/components/NextImage'
 import Seo from '@/components/Seo'
 import { D1, D2, P2 } from '@/components/typography/Typography'
 import AddToCartSection from '@/features/cart/components/AddToCartSection'
-
 import ProductCard from '@/features/products/components/Card'
-import SingleProductDisplay from '@/features/products/SingleProductDisplay'
-import { ProductType } from '@/features/products/types'
 import ShopLayout from '@/features/shop/components/ShopLayout'
+import clsxm from '@/lib/clsxm'
+import { omitKeyFromObject } from '@/lib/ObjectHelpers'
 import { trpc } from '@/utils/trpc'
-import { useRouter } from 'next/router'
-import NextImage from '@/components/NextImage'
 
 type Props = {}
 
@@ -61,7 +55,7 @@ const ProductPage = () => {
               layout='intrinsic'
               width={1000}
               height={500}
-              src={product?.images?.at(0)}
+              src={product?.images?.at(0) as string}
               alt=''
               quality={100}
               className='skeleton relative h-full w-full  object-cover md:rounded-r-3xl'
@@ -75,7 +69,9 @@ const ProductPage = () => {
             <D1 className='max-w-[600px] md:max-w-full'>{product.name}</D1>
           </div>
 
-          <AddToCartSection product={product} />
+          <AddToCartSection
+            product={omitKeyFromObject('crossSells', product) as any}
+          />
 
           <P2 className='tracking-tight text-primary-300'>
             <b>Description: </b>
@@ -101,7 +97,6 @@ const ProductPage = () => {
             ])}
           >
             {product?.crossSells?.map((item, i) => (
-              // @ts-expect-error: Cross sells could be strings based on type (but wont be)
               <ProductCard key={i} product={item} />
             ))}
           </Container>

@@ -18,6 +18,9 @@ const productRouter = createRouter()
         where: {
           id: input.productId,
         },
+        include: {
+          crossSells: true,
+        },
       })
       if (!item)
         throw new trpc.TRPCError({
@@ -30,6 +33,12 @@ const productRouter = createRouter()
       //     code: 'UNAUTHORIZED',
       //     message: 'This item is currently unavailable...',
       //   })
+
+      // const crossSells = await  ctx.prisma.product.findMany({
+      //   where: {
+      //     id: {in: item.crossSells}
+      //   }
+      // })
 
       return item
     },

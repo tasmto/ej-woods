@@ -1,26 +1,18 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-import { InferQueryOutput } from '../../accounts/state/userState'
+import { SingleProductType } from '@/schema/product.schema'
 
 interface CartState {
   cart: CartProductType[] // CartProductType[] | [];
-  addToCart: (
-    product: InferQueryOutput<'products.single-product'> | undefined,
-    quantity: number
-  ) => void
-  removeItemFromCart: (
-    product?: InferQueryOutput<'products.single-product'>
-  ) => void
-  howManyInCart: (
-    product?: InferQueryOutput<'products.single-product'>
-  ) => number
+  addToCart: (product: SingleProductType | undefined, quantity: number) => void
+  removeItemFromCart: (product?: SingleProductType) => void
+  howManyInCart: (product?: SingleProductType) => number
   totalItemsInCart: () => number
   cartValue: () => number
 }
 
-export interface CartProductType
-  extends InferQueryOutput<'products.single-product'> {
+export interface CartProductType extends SingleProductType {
   quantity: number
 }
 
