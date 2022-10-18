@@ -17,16 +17,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     </Provider>
   )
 }
-
+const defaultLinkOptions = httpBatchLink({
+  maxBatchSize: 10,
+  url: apiUrl,
+})
 export default withTRPC<AppRouter>({
   config({ ctx }) {
-    const links = [
-      loggerLink(),
-      httpBatchLink({
-        maxBatchSize: 10,
-        url: apiUrl,
-      }),
-    ]
+    const links =
+      process.env.NODE_ENV !== 'production'
+        ? [(loggerLink(), defaultLinkOptions)]
+        : [defaultLinkOptions]
 
     return {
       queryClientConfig: {
