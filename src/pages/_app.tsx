@@ -5,12 +5,12 @@ import { Provider } from 'jotai'
 import type { AppProps } from 'next/app'
 import superjson from 'superjson' // allows us to use native dates, maps and sets
 
-import '../styles/globals.css'
-
 import { apiUrl } from '../constants/constants'
 import { AppRouter } from '../server/route/app.router'
 
-function MyApp({ Component, pageProps }: AppProps) {
+import '../styles/globals.css'
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider>
       <Component {...pageProps} />
