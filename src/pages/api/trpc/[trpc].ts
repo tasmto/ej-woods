@@ -15,3 +15,16 @@ export default trpcNext.createNextApiHandler({
     }
   },
 })
+
+// create context based of incoming request
+// set as optional here so it can also be re-used for `getStaticProps()`
+export const createClientContext = async (
+  opts?: trpcNext.CreateNextContextOptions
+) => {
+  return {
+    req: opts?.req,
+    res: opts?.res,
+    prisma,
+    user: null,
+  }
+}

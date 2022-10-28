@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+const nextConfig = {
   eslint: {
     dirs: ['src'],
   },
@@ -36,3 +36,6 @@ module.exports = {
     return config
   },
 }
+
+const { withSuperjson } = require('next-superjson')
+module.exports = withSuperjson()(nextConfig)

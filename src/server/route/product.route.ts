@@ -45,10 +45,10 @@ const productRouter = createRouter()
   })
   .query('multiple-products', {
     input: getMultipleProductsSchema,
-    resolve({ input, ctx }) {
+    async resolve({ input, ctx }) {
       const { type, limit, name, page } = input
 
-      const products = ctx.prisma.product.findMany({
+      const products = await ctx.prisma.product.findMany({
         where: {
           AND: [
             { type: type ?? undefined },

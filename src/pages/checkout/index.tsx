@@ -1,18 +1,27 @@
 import React from 'react'
-import { atom } from 'jotai'
+import { atom, useAtom } from 'jotai'
+import dynamic from 'next/dynamic'
 
 import Container from '@/components/layout/Container'
 import Seo from '@/components/Seo'
 import { D2, H1, P1 } from '@/components/typography/Typography'
-import CartTable from '@/features/cart/components/CartTable'
 import { useCartStore } from '@/features/cart/state/CartContext'
+import CheckoutForm from '@/features/checkout/components/CheckoutForm'
 import CheckoutLayout from '@/features/checkout/components/Layout'
-import ContactForm from '@/features/forms/ContactForm'
 import { FormatCurrency } from '@/lib/FormatNumber'
 
-const checkoutStage = atom(0)
+const CartTable = dynamic(
+  () => import('@/features/cart/components/CartTable'),
+  {
+    ssr: false,
+  }
+)
+
+export const checkoutStage = atom(0)
+export const numberOfCheckoutStages = atom(2)
 const CheckoutPage = () => {
   const { totalItemsInCart, cartValue } = useCartStore((state) => state)
+  const [step] = useAtom(checkoutStage)
 
   return (
     <CheckoutLayout>
@@ -22,8 +31,13 @@ const CheckoutPage = () => {
         className='grid grid-cols-1 items-start justify-center gap-14 md:grid-cols-2 lg:gap-20'
       >
         <article className=' grid  justify-items-start gap-8'>
-          <D2 className=''>Ready to checkout?</D2>
-          <ContactForm />
+          <div className='grid gap-2'>
+            <D2 className=''>Ready to checkout?</D2>
+            <P1>
+              Step <strong>{step + 1} of 3</strong>
+            </P1>
+          </div>
+          <CheckoutForm />
         </article>
         <aside className='grid gap-4'>
           <div>

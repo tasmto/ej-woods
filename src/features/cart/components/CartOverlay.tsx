@@ -1,24 +1,26 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { atom, useAtom } from 'jotai';
-import Image from 'next/image';
-import React from 'react';
+import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { atom, useAtom } from 'jotai'
+import Image from 'next/image'
 
-import { FormatCurrency } from '@/lib/FormatNumber';
-import resolveIcon from '@/lib/iconResolver';
+import Container from '@/components/layout/Container'
+import ButtonLink from '@/components/links/ButtonLink'
+import { H1, P1 } from '@/components/typography/Typography'
+import {
+  GO_TO_CHECKOUT,
+  HERE_IS_WHAT_IS_IN_YOUR_CART,
+} from '@/constants/standardNames'
+import CartTable from '@/features/cart/components/CartTable'
+import { useCartStore } from '@/features/cart/state/CartContext'
+import { FormatCurrency } from '@/lib/FormatNumber'
+import resolveIcon from '@/lib/iconResolver'
 
-import Container from '@/components/layout/Container';
-import ButtonLink from '@/components/links/ButtonLink';
-import { H1, P1 } from '@/components/typography/Typography';
-
-import CartTable from '@/features/cart/components/CartTable';
-import { useCartStore } from '@/features/cart/state/CartContext';
-
-export const cartOverlayOpen = atom<boolean>(false);
+export const cartOverlayOpen = atom<boolean>(false)
 
 const CartOverlay = () => {
-  const [cartOpen, setCartOpen] = useAtom(cartOverlayOpen);
+  const [cartOpen, setCartOpen] = useAtom(cartOverlayOpen)
   const { cart, removeItemFromCart, addToCart, totalItemsInCart, cartValue } =
-    useCartStore((state) => state);
+    useCartStore((state) => state)
 
   const menuAnimation = {
     enter: {
@@ -37,12 +39,12 @@ const CartOverlay = () => {
       x: 0,
       transition: { duration: 0.2, type: 'spring', damping: 10 },
     },
-  };
+  }
   const overlayAnimation = {
     enter: { opacity: 0 },
     exit: { opacity: 0 },
     present: { opacity: 1, y: 0, transition: { duration: 1 } },
-  };
+  }
 
   return (
     <AnimatePresence>
@@ -64,7 +66,7 @@ const CartOverlay = () => {
             >
               <div className='grid gap-1'>
                 <div className='flex items-center justify-between gap-3'>
-                  <H1>Here is what is in your cart</H1>
+                  <H1>{HERE_IS_WHAT_IS_IN_YOUR_CART}</H1>
                   <button
                     onClick={() => setCartOpen(false)}
                     className='rounded-xl bg-slate-200 px-1 py-[1px] hover:bg-slate-300'
@@ -95,10 +97,11 @@ const CartOverlay = () => {
                 iconPosition='start'
                 curve='top'
               >
-                Go to Checkout
+                {GO_TO_CHECKOUT}
               </ButtonLink>
             </motion.div>
           </Container>
+          {/* Overlay on background */}
           <motion.button
             role='button'
             onClick={(e) => e.currentTarget === e.target && setCartOpen(false)}
@@ -108,11 +111,13 @@ const CartOverlay = () => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             variants={overlayAnimation}
             className='fixed top-0 z-30 h-screen w-screen cursor-pointer bg-primary-500/50 backdrop-blur-md'
-          ></motion.button>
+          >
+            <div className='sr-only'>Close cart overlay</div>
+          </motion.button>
         </div>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default CartOverlay;
+export default CartOverlay

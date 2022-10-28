@@ -35,8 +35,20 @@ const ProductPage = () => {
     { staleTime: Infinity }
   )
 
-  if (isLoading) return <D1>Loading...</D1>
-  if (error || !product) return <D1>Loading...</D1>
+  if (isLoading)
+    return (
+      <ShopLayout>
+        <D1>Loading...</D1>
+      </ShopLayout>
+    )
+  if (error || !product) {
+    console.log(error)
+    return (
+      <ShopLayout>
+        <D1>error</D1>
+      </ShopLayout>
+    )
+  }
 
   return (
     <ShopLayout>

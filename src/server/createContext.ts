@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+
 import { verifyJWT } from '../utils/jwt'
 import { prisma } from '../utils/prisma'
 

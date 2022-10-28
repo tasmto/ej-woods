@@ -1,5 +1,8 @@
 import * as React from 'react'
+import { createSSGHelpers } from '@trpc/react/ssg'
+import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
+import superjson from 'superjson'
 
 import ContactDetailsCards from '@/components/forms/ContactDetailsCards'
 import Container from '@/components/layout/Container'
@@ -14,17 +17,9 @@ import ProductCard from '@/features/products/components/Card'
 import ServiceCards from '@/features/services/components/Cards'
 import clsxm from '@/lib/clsxm'
 import { FormatCurrency } from '@/lib/FormatNumber'
-import { trpc } from '@/utils/trpc'
+import { createClientContext } from '@/pages/api/trpc/[trpc]'
+import { appRouter } from '@/server/route/app.router'
 
-type Props = {
-  contactInfo: {
-    openingHours: string
-    phoneNumber: string
-    email: string
-    whatsAppLink: string
-    location: string
-  }
-}
 const AddToCartButton = dynamic(
   () => import('@/features/cart/components/AddToCartButton'),
   {
@@ -32,13 +27,16 @@ const AddToCartButton = dynamic(
   }
 )
 
-const HomePage = ({ contactInfo }: Props) => {
+const HomePage = ({
+  contactInfo,
+  products,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   // @ts-ex
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = trpc.useQuery(['products.multiple-products', { limit: 7 }])
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   isError,
+  // } = trpc.useQuery(['products.multiple-products', { limit: 7 }])
   const featuredProduct = products?.at(0) ?? undefined
 
   return (
@@ -62,7 +60,7 @@ const HomePage = ({ contactInfo }: Props) => {
           </ButtonLink>
         </Container>
         <Container className='overflow-y-none relative grid h-full min-h-[300px] w-full content-end overflow-x-visible bg-gray-200 p-8 sm:p-10 md:min-h-[300px] md:rounded-l-3xl lg:col-span-3 lg:p-12 lg:pb-10'>
-          {(!isLoading || featuredProduct) && (
+          {featuredProduct && (
             <div className='align-self-end z-10 flex items-center justify-between gap-4 text-white '>
               <div>
                 <H1 weight='bold' className='drop-shadow-md'>
@@ -125,7 +123,7 @@ const HomePage = ({ contactInfo }: Props) => {
         level={1}
         className='grid gap-5 sm:grid-cols-2 lg:grid-cols-3'
       >
-        {products?.slice(1)?.map((product, i) => (
+        {products?.map((product, i) => (
           <ProductCard position={i} key={i} product={product} />
         ))}
         <ArrowLink
@@ -221,6 +219,16 @@ const HomePage = ({ contactInfo }: Props) => {
 export default HomePage
 
 export const getStaticProps = async () => {
+  const ssg = createSSGHelpers({
+    router: appRouter,
+    transformer: superjson,
+    ctx: await createClientContext(),
+  })
+
+  const products = await ssg.fetchQuery('products.multiple-products', {
+    limit: 7,
+  })
+
   return {
     props: {
       contactInfo: {
@@ -231,6 +239,8 @@ export const getStaticProps = async () => {
         whatsAppLink: 'https://wa.me/0000000000',
         location: '0000 Street Name, City, Province, Country',
       },
+      products,
     },
+    revalidate: 120,
   }
 }

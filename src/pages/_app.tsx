@@ -48,5 +48,5 @@ export default withTRPC<AppRouter>({
       transformer: superjson,
     }
   },
-  ssr: false, // means we make requests through the client (useful for dev mode)
+  ssr: true, // means we make requests through the client (false is useful for dev mode)
 })(MyApp)

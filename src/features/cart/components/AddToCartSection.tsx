@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 
 import ButtonLink from '@/components/links/ButtonLink'
 import { Caption, H3, P2 } from '@/components/typography/Typography'
+import {
+  ADD_TO_CART,
+  BUY_IMMEDIATELY,
+  OUT_OF_STOCK,
+  REMOVE_FROM_CART,
+  UPDATE_ITEMS_IN_CART,
+} from '@/constants/standardNames'
 import QuantitySelector from '@/features/cart/components/QuantitySelector'
 import { useCartStore } from '@/features/cart/state/CartContext'
 import clsxm from '@/lib/clsxm'
@@ -19,8 +26,8 @@ const AddToCartSection = ({ product }: Props) => {
   const { cart, addToCart, removeItemFromCart, howManyInCart } = useCartStore(
     (state) => state
   )
-  const [howMany, setHowMany] = React.useState<number>(1)
-  const [countInCart, setCountInCart] = React.useState(0)
+  const [howMany, setHowMany] = useState<number>(1)
+  const [countInCart, setCountInCart] = useState(0)
 
   const handleAddToCart = () => {
     howManyInCart(product) !== howMany
@@ -31,11 +38,11 @@ const AddToCartSection = ({ product }: Props) => {
   }
 
   // Check if product and  is in cart (every time cart changes)
-  React.useEffect(() => {
+  useEffect(() => {
     setCountInCart(howManyInCart(product))
   }, [cart, product, howManyInCart])
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHowMany(howManyInCart(product) || 1)
   }, [])
 
@@ -60,7 +67,7 @@ const AddToCartSection = ({ product }: Props) => {
           ({FormatCurrency(product.price)} each).
         </P2>
       </H3>
-      <div className='flex flex-wrap gap-6'>
+      <div className='flex flex-wrap gap-4'>
         <QuantitySelector
           quantity={howMany}
           onChange={setHowMany}
@@ -115,10 +122,12 @@ const AddToCartSection = ({ product }: Props) => {
           </figure>
           <P2 weight='bold'>
             {product.countInStock === 0
-              ? 'Out of stock'
+              ? OUT_OF_STOCK
               : countInCart > 0 && countInCart === howMany
-              ? 'Remove from Cart'
-              : 'Add to Cart'}
+              ? REMOVE_FROM_CART
+              : countInCart > 0 && countInCart !== howMany
+              ? UPDATE_ITEMS_IN_CART
+              : ADD_TO_CART}
           </P2>
         </button>
       </div>
@@ -128,16 +137,17 @@ const AddToCartSection = ({ product }: Props) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
+            className='xl:w-full'
           >
             <ButtonLink
               href='#'
               variant='outline'
-              className='flex w-full items-center justify-center gap-3 px-8 py-[0.85rem]'
+              className='flex w-full items-center justify-center gap-3  px-8 py-[0.85rem]'
               curve='top'
               icon='💳'
               alwaysActive
             >
-              Buy it now
+              {BUY_IMMEDIATELY}
             </ButtonLink>
           </motion.div>
         )}
