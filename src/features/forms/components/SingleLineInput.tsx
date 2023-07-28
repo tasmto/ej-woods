@@ -1,11 +1,12 @@
-import { motion } from 'framer-motion';
-import React from 'react';
+import { motion } from 'framer-motion'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
-import { P1 } from '@/components/typography/Typography';
+import { P1 } from '@/components/typography/Typography'
 
-import FormAlert from '@/features/forms/components/FormAlert';
+import FormAlert from '@/features/forms/components/FormAlert'
+import { FormikProps } from 'formik'
 
 enum InputTypes {
   'text',
@@ -13,12 +14,12 @@ enum InputTypes {
   'number',
 }
 type Props = {
-  type: keyof typeof InputTypes;
-  label: string;
-  placeholder?: string;
-  name: string;
-  formik: any;
-};
+  type: keyof typeof InputTypes
+  label: string
+  placeholder?: string
+  name: string
+  formik: FormikProps<any>
+}
 
 const SingleLineInput = ({ label, placeholder, name, formik, type }: Props) => {
   return (
@@ -41,7 +42,7 @@ const SingleLineInput = ({ label, placeholder, name, formik, type }: Props) => {
       />
       <FormAlert formik={formik} field={name} />
     </motion.fieldset>
-  );
-};
+  )
+}
 
-export default SingleLineInput;
+export default SingleLineInput

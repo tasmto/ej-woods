@@ -5,8 +5,8 @@ import Container from '@/components/layout/Container'
 import Seo from '@/components/Seo'
 import { D2, H1, P1 } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
-import CheckoutForm from '@/features/checkout/components/CheckoutForm'
 import CheckoutLayout from '@/features/checkout/components/Layout'
+import ShippingForm from '@/features/checkout/components/ShippingForm'
 import { FormatCurrency } from '@/lib/FormatNumber'
 
 const CartTable = dynamic(
@@ -31,10 +31,10 @@ const CheckoutPage = () => {
           <div className='grid gap-2'>
             <D2 className=''>Ready to checkout?</D2>
             <P1>
-              Step <strong>1 of 3</strong>
+              Step <strong>2 of 3</strong>
             </P1>
           </div>
-          <CheckoutForm />
+          <ShippingForm />
         </article>
         <aside className='grid gap-4'>
           <div>

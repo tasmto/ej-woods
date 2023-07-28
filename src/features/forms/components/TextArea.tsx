@@ -1,17 +1,16 @@
-import React from 'react';
+import React from 'react'
+import { FormikProps } from 'formik'
 
-import clsxm from '@/lib/clsxm';
-
-import { P1 } from '@/components/typography/Typography';
-
-import FormAlert from '@/features/forms/components/FormAlert';
+import { P1 } from '@/components/typography/Typography'
+import FormAlert from '@/features/forms/components/FormAlert'
+import clsxm from '@/lib/clsxm'
 
 type Props = {
-  label: string;
-  placeholder?: string;
-  name: string;
-  formik: any;
-};
+  label: string
+  placeholder?: string
+  name: string
+  formik: FormikProps<any>
+}
 
 const TextArea = ({ label, placeholder, name, formik }: Props) => {
   return (
@@ -35,7 +34,7 @@ const TextArea = ({ label, placeholder, name, formik }: Props) => {
 
       <FormAlert formik={formik} field={name} />
     </fieldset>
-  );
-};
+  )
+}
 
-export default TextArea;
+export default TextArea

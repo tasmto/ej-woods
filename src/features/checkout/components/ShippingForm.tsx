@@ -5,23 +5,28 @@ import { useRouter } from 'next/dist/client/router'
 import * as Yup from 'yup'
 
 import Button from '@/components/buttons/Button'
+import ShippingTimesInput from '@/features/checkout/components/ShippingTimesInput'
 import { useCheckoutStore } from '@/features/checkout/state/CheckoutContext'
 import SingleLineInput from '@/features/forms/components/SingleLineInput'
+import TextArea from '@/features/forms/components/TextArea'
 
 const CheckoutForm = () => {
   const router = useRouter()
-  const { updateCustomerDetails } = useCheckoutStore((state) => state)
+  const { updateOrderDetails } = useCheckoutStore((state) => state)
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      phone_number: '',
-      email_address: '',
+      delivery_address: '',
+      delivery_phone_number: '',
+      preferred_time_start: '',
+      preferred_time_end: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('We need your name'),
-      phone_number: Yup.number()
-        .required('We need your phone number')
+      delivery_address: Yup.string()
+        .required('Please enter your address')
+        .lowercase()
+        .trim(),
+      delivery_phone_number: Yup.number()
         .test(
           'tooLong',
           'A phone number can only have a maximum of 12 numbers',
@@ -32,16 +37,15 @@ const CheckoutForm = () => {
           'Your phone number needs to have at least 10 digits',
           (val) => (val ? val?.toString().length >= 10 : false)
         ),
-      email_address: Yup.string()
-        .email('Please enter a valid email')
-        .required('We need to know your email')
-        .lowercase()
-        .trim(),
+      preferred_time_start: Yup.number().required(
+        'Please select a starting range'
+      ),
+      preferred_time_end: Yup.number().required('Please select a end range'),
     }),
     onSubmit: async (values) => {
-      updateCustomerDetails(values)
+      updateOrderDetails(values)
 
-      router.push('/shipping')
+      router.push('/payment')
     },
   })
 
@@ -55,25 +59,24 @@ const CheckoutForm = () => {
         exit={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
       >
-        <SingleLineInput
+        <TextArea
           formik={formik}
-          label='What is your name?'
-          name='name'
-          type='text'
-          placeholder='i.e. Handsome'
+          label='Where do you want the items delivered?'
+          name='delivery_address'
+          placeholder='i.e 33 Granular Place, Milnerton, Cape Town.'
         />
         <SingleLineInput
           formik={formik}
-          label='What is your phone number?'
-          name='phone_number'
-          type='number'
+          label='What phone number can we call to confirm delivery?'
+          name='delivery_phone_number'
+          type='text'
           placeholder='i.e. E.g. 074 635 2662'
         />
-        <SingleLineInput
+        <ShippingTimesInput
           formik={formik}
           label='What is your email?'
           name='email_address'
-          type='email'
+          type='text'
           placeholder='i.e. handsome@example.co.za'
         />
 
@@ -81,12 +84,12 @@ const CheckoutForm = () => {
           type='submit'
           variant='outline'
           className='mt-3 w-full justify-center justify-self-stretch text-center'
-          icon='🛒'
+          icon={'🚀'}
           iconPosition='start'
           curve='top'
           disabled={formik.isSubmitting || formik.isValidating}
         >
-          Next 1/2
+          Proceed to payments
         </Button>
       </motion.form>
     </AnimatePresence>

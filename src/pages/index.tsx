@@ -13,6 +13,7 @@ import RegionMap from '@/components/maps/RegionMap'
 import NextImage from '@/components/NextImage'
 import Seo from '@/components/Seo'
 import { D1, D2, H1, H2, P1, P2 } from '@/components/typography/Typography'
+import ContactForm from '@/features/forms/ContactForm'
 import ProductCard from '@/features/products/components/Card'
 import ServiceCards from '@/features/services/components/Cards'
 import clsxm from '@/lib/clsxm'
@@ -208,7 +209,7 @@ const HomePage = ({
             Fill in the form below if you have any questions and we will get
             right back to you.
           </D2>
-          {/* <ContactForm /> */}
+          <ContactForm />
         </div>
         <RegionMap />
       </Container>
