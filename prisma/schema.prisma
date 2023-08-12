@@ -43,7 +43,6 @@ datasource db {
 // }
 
 // * Shop Schemas -------------------
-
 model Product {
   id Int @id @unique @default(autoincrement())
 
@@ -54,7 +53,10 @@ model Product {
 
   name        String
   description String
-  images      String[] @default(["/images/placeholder-product-imag.jpg"])
+  slug        String         @unique
+  mainImage   ProductImage?  @relation("main_image", fields: [mainImageId], references: [id])
+  mainImageId Int?
+  images      ProductImage[]
 
   countInStock     Int     @default(0)
   hasInfiniteStock Boolean @default(false)
@@ -70,4 +72,12 @@ model Product {
 enum ProductTypes {
   WOOD
   FURNITURE
+}
+
+model ProductImage {
+  id           Int       @id @unique @default(autoincrement())
+  url          String    @default("/images/placeholder-product-image.jpg")
+  mainProducts Product[] @relation("main_image")
+  productId    Int?
+  Product      Product[]
 }

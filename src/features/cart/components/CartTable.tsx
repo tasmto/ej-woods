@@ -1,6 +1,6 @@
 import React from 'react'
-import Image from 'next/image'
 
+import IMG from '@/components/CloudinaryImage'
 import { H3, P3 } from '@/components/typography/Typography'
 import QuantitySelector from '@/features/cart/components/QuantitySelector'
 import {
@@ -45,8 +45,9 @@ const CartTable = ({ className }: Props) => {
                   )}
                 >
                   <td className='w-[15%]'>
-                    <Image
-                      src={images[0] ?? ''}
+                    <IMG
+                      src={images[0]?.url}
+                      transformation='cartOverlayThumbnail'
                       layout='responsive'
                       className='skeleton w-full rounded-lg bg-gray-400 object-cover shadow-black transition-all duration-200'
                       height={70}

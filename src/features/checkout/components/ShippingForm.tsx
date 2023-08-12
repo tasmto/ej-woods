@@ -5,6 +5,7 @@ import { useRouter } from 'next/dist/client/router'
 import * as Yup from 'yup'
 
 import Button from '@/components/buttons/Button'
+import { deliveryTimes } from '@/constants/constants'
 import ShippingTimesInput from '@/features/checkout/components/ShippingTimesInput'
 import { useCheckoutStore } from '@/features/checkout/state/CheckoutContext'
 import SingleLineInput from '@/features/forms/components/SingleLineInput'
@@ -30,17 +31,23 @@ const CheckoutForm = () => {
         .test(
           'tooLong',
           'A phone number can only have a maximum of 12 numbers',
-          (val) => (val ? val?.toString().length <= 12 : false)
+          (val) => (val ? val?.toString().length <= 11 : false)
         )
         .test(
           'tooShort',
           'Your phone number needs to have at least 10 digits',
-          (val) => (val ? val?.toString().length >= 10 : false)
+          (val) => (val ? val?.toString().length >= 9 : false)
         ),
-      preferred_time_start: Yup.number().required(
-        'Please select a starting range'
-      ),
-      preferred_time_end: Yup.number().required('Please select a end range'),
+      preferred_time_start: Yup.string()
+        .required('Please select a starting range')
+        .test('notValid', 'Please select a starting range', (val) =>
+          Boolean(val !== undefined && deliveryTimes.indexOf(val) > -1)
+        ),
+      preferred_time_end: Yup.string()
+        .required('Please select a end range')
+        .test('notValid', 'Please select a starting range', (val) =>
+          Boolean(val !== undefined && deliveryTimes.indexOf(val) > -1)
+        ),
     }),
     onSubmit: async (values) => {
       updateOrderDetails(values)
@@ -74,9 +81,9 @@ const CheckoutForm = () => {
         />
         <ShippingTimesInput
           formik={formik}
-          label='What is your email?'
-          name='email_address'
-          type='text'
+          label='What time range would you prefer for a delivery (we’ll always call you to confirm).'
+          startName='preferred_time_start'
+          endName='preferred_time_end'
           placeholder='i.e. handsome@example.co.za'
         />
 

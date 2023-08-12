@@ -1,20 +1,18 @@
+import React, { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { atom, useAtom } from 'jotai'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-
-import clsxm from '@/lib/clsxm'
 
 import Container from '@/components/layout/Container'
 import Seo from '@/components/Seo'
 import { D1, D2 } from '@/components/typography/Typography'
-
 import { pageSize } from '@/constants/constants'
 import ProductCard, {
   ProductCardSkeleton,
 } from '@/features/products/components/Card'
 import ShopLayout from '@/features/shop/components/ShopLayout'
+import clsxm from '@/lib/clsxm'
 import { trpc } from '@/utils/trpc'
 
 export const productQuery = atom<'furniture' | undefined | 'wood'>(undefined)

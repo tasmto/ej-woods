@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 
-import NextImage from '@/components/NextImage'
+import IMG from '@/components/CloudinaryImage'
 import { H3, P1 } from '@/components/typography/Typography'
 import { FormatCurrency } from '@/features/products/lib/formatNumber'
 import clsxm from '@/lib/clsxm'
@@ -44,12 +44,14 @@ const ProductCard = ({ product, position }: Props) => {
             'content-stretch relative grid h-80 w-full content-end items-stretch justify-items-stretch overflow-hidden rounded-xl  bg-gray-400 text-slate-50 after:absolute after:bottom-0 after:block after:h-2/3 after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/60 after:to-black/0 md:h-[24rem]',
           ])}
         >
-          <NextImage
-            src={images.at(0) ?? ''}
+          <IMG
+            transformation='productImageThumbnail'
+            src={images?.at(0)?.url}
             alt={name}
             quality={50}
             useSkeleton
-            layout='fill'
+            width={400}
+            height={400}
             imgClassName='h-full w-full object-cover '
           />
           <div className='absolute bottom-0 z-10 flex w-full items-end justify-between gap-4 p-8 sm:p-6 md:py-8'>

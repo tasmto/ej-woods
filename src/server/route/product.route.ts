@@ -19,7 +19,12 @@ const productRouter = createRouter()
           id: input.productId,
         },
         include: {
-          crossSells: true,
+          crossSells: {
+            include: {
+              images: true,
+            },
+          },
+          images: true,
         },
       })
       if (!item)
@@ -55,6 +60,9 @@ const productRouter = createRouter()
             { name: { contains: name ?? undefined } },
             { published: true },
           ],
+        },
+        include: {
+          images: true,
         },
         skip: page && limit ? (page - 1) * limit : 0,
         take: limit ?? undefined,

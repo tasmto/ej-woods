@@ -9,7 +9,11 @@ const nextConfig = {
 
   // Uncoment to add domain whitelist
   images: {
-    domains: ['images.unsplash.com'],
+    domains: [
+      'images.unsplash.com',
+      // cloudinary
+      'res.cloudinary.com',
+    ],
   },
 
   compiler: {

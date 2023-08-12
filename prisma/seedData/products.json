@@ -1,0 +1,275 @@
+[
+    {
+        "name": "Oak Wood Plank",
+        "description": "A high-quality oak wood plank, perfect for woodworking and furniture making.",
+        "price": 50,
+        "weight": 5,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691586399/samples/ecommerce/oak-wood-planks-_hod7uu.jpg"
+            },
+            {
+                "url": "v1691586398/samples/ecommerce/red-oak-plank-flooring-vermont-plank_utf0xn.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Maple Wood Plank",
+        "description": "A smooth and durable maple wood plank, ideal for flooring and cabinetry.",
+        "price": 60,
+        "weight": 6,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691586480/samples/ecommerce/american-hard-maple-wood_eudxp2.jpg"
+            },
+            {
+                "url": "v1691586476/samples/ecommerce/38619-4_qgfvcv.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Cherry Wood Plank",
+        "description": "A rich and elegant cherry wood plank, great for decorative woodwork and furniture.",
+        "price": 70,
+        "weight": 7,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691586751/samples/ecommerce/s-l1600_gg4hx8.jpg"
+            },
+            {
+                "url": "v1691586753/samples/ecommerce/download_ul8myv.jpg"
+            },
+            {
+                "url": "v1691586757/samples/ecommerce/cherry-lumber-46122-3_g2c69g.jpg"
+            },
+            {
+                "url": "v1691586760/samples/ecommerce/img_3811_c9erjc.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Dining Table",
+        "description": "A large and sturdy wooden dining table, made from high-quality oak wood.",
+        "price": 500,
+        "weight": 50,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691586858/samples/ecommerce/152A5504s_t1eaqe.webp"
+            },
+            {
+                "url": "v1691586935/samples/ecommerce/e55dd1c267c304f91ea444a12f03c1b9_qo4emh.jpg"
+            },
+            {
+                "url": "v1691586957/samples/ecommerce/67b4367c8a1c417f766970301c61359e_eokpn3.jpg"
+            },
+            {
+                "url": "v1691586895/samples/ecommerce/emmerson-dining-table-remodelista_kmyax9.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Coffee Table",
+        "description": "A stylish and modern wooden coffee table, made from smooth maple wood.",
+        "price": 300,
+        "weight": 30,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691587665/samples/ecommerce/vancouver-acacia-wood-coffee-table_m6w5zh.webp"
+            },
+            {
+                "url": "v1691587662/samples/ecommerce/peyton-acacia-wood-coffee-table_ksaw5c.webp"
+            },
+            {
+                "url": "v1691587661/samples/ecommerce/LIN_6508-scaled_ifftbt.webp"
+            }
+        ]
+    },
+    {
+        "name": "Walnut Wood Plank",
+        "description": "A dark and rich walnut wood plank, perfect for furniture and cabinetry.",
+        "price": 80,
+        "weight": 8,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "/v1691587727/samples/ecommerce/1116_-900_5_npecnt.jpg"
+            },
+            {
+                "url": "v1691587733/samples/ecommerce/BULKWALC1001_1-scaled-1-1-1-1-1-1024x341_m6xwts.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Pine Wood Plank",
+        "description": "A light and versatile pine wood plank, great for construction and woodworking.",
+        "price": 40,
+        "weight": 4,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691587851/samples/ecommerce/1116_-900_5_bw98mp.jpg"
+            },
+            {
+                "url": "v1691587864/samples/ecommerce/360x360_t3bxib.webp"
+            },
+            {
+                "url": "v1691587869/samples/ecommerce/product-jpeg-500x500_hodqgb.jpg"
+            },
+            {
+                "url": "v1691587873/samples/ecommerce/silver-wood-plank-500x500_x7i1hu.webp"
+            },
+            {
+                "url": "v1691587855/samples/ecommerce/IMG_20200702_095800-1024x768-800x500_ejd7tz.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Bookshelf",
+        "description": "A tall and spacious wooden bookshelf, made from high-quality cherry wood.",
+        "price": 400,
+        "weight": 40,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691588190/samples/ecommerce/LIN_9954-scaled_un6i1k.jpg"
+            },
+            {
+                "url": "v1691588190/samples/ecommerce/73A4589_00fe4e77-0587-4f13-b161-f59d2cf8b1a8_nc2ixa.webp"
+            },
+            {
+                "url": "v1691588189/samples/ecommerce/Driftwood-Disp-DSC_5337-2_mwxnm3.jpg"
+            },
+            {
+                "url": "v1691588188/samples/ecommerce/81VxnFSeYES._AC_UF1000_1000_QL80__njvmht.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Desk",
+        "description": "A sturdy and functional wooden desk, made from durable oak wood.",
+        "price": 350,
+        "weight": 35,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691588356/samples/ecommerce/H275-14-H200-09_fiwz1v.webp"
+            },
+            {
+                "url": "v1691588350/samples/ecommerce/CWC06B-1-2-1500x1500_kjmqoh.jpg"
+            },
+            {
+                "url": "v1691588350/samples/ecommerce/Zenandi-4-drawer-desk1-12_ji7gv3.jpg"
+            },
+            {
+                "url": "v1691588350/samples/ecommerce/Waverly-Workstation-a64ea39a-d280-472c-83fd-e15f50830918_600_o8s2dd.webp"
+            },
+            {
+                "url": "v1691588350/samples/ecommerce/pending-modubox-office-desk-sonoma-home-office-desk-available-in-4-colours-28690748145726_690x690_hxuqui.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Bed Frame",
+        "description": "A sturdy and comfortable wooden bed frame, made from high-quality walnut wood.",
+        "price": 600,
+        "weight": 60,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691589360/samples/ecommerce/vancouver-acacia-wood-queen-size-bed_gwmao5.jpg"
+            },
+            {
+                "url": "v1691589359/samples/ecommerce/Spinebox-bed-frame_IG_flxebo.webp"
+            },
+            {
+                "url": "v1691589359/samples/ecommerce/Capture-7_sl683b.png"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Dresser",
+        "description": "A spacious and elegant wooden dresser, made from smooth cherry wood.",
+        "price": 450,
+        "weight": 45,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691589419/samples/ecommerce/haylend-chest-of-drawers_zo7soi.jpg"
+            },
+            {
+                "url": "v1691589421/samples/ecommerce/AVO_NATURAL_0002_i7yvpz.webp"
+            }
+        ]
+    },
+    {
+        "name": "Wooden Nightstand",
+        "description": "A functional and stylish wooden nightstand, made from durable oak wood.",
+        "price": 150,
+        "weight": 15,
+        "type": "FURNITURE",
+        "images": [
+            {
+                "url": "v1691589490/samples/ecommerce/Mid-Century-1-Drawer-Nightstand_b4ydi9.webp"
+            },
+            {
+                "url": "v1691589490/samples/ecommerce/asgard-bedside-table_hwypzo.webp"
+            }
+        ]
+    },
+    {
+        "name": "Birch Wood Plank",
+        "description": "A light and versatile birch wood plank, great for furniture and cabinetry.",
+        "price": 45,
+        "weight": 4,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691589576/samples/ecommerce/Baltic_Birch_Marine_Plywood__51612_xkgeh8.jpg"
+            },
+            {
+                "url": "v1691589575/samples/ecommerce/birchply3_jbvikz.jpg"
+            },
+            {
+                "url": "v1691589575/samples/ecommerce/1-2-Baltic-Birch-squares_yzqko4.webp"
+            }
+        ]
+    },
+    {
+        "name": "Ash Wood Plank",
+        "description": "A strong and durable ash wood plank, perfect for flooring and construction.",
+        "price": 55,
+        "weight": 5,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691589667/samples/ecommerce/Screenshot-2021-02-12-at-15.14.17_tn4ohd.webp"
+            },
+            {
+                "url": "v1691589666/samples/ecommerce/ash-wide-plank-flooring-vermont-plank_ohfkpk.jpg"
+            },
+            {
+                "url": "v1691589666/samples/ecommerce/sawn-english-ash-timber-base_qfax9e.jpg"
+            }
+        ]
+    },
+    {
+        "name": "Cedar Wood Plank",
+        "description": "A light and durable cedar wood plank, great for construction and woodworking.",
+        "price": 45,
+        "weight": 4,
+        "type": "WOOD",
+        "images": [
+            {
+                "url": "v1691589779/samples/ecommerce/istockphoto-171338059-612x612_r0xptw.jpg"
+            },
+            {
+                "url": "v1691589779/samples/ecommerce/cedar-boards-36422-64_600_u9pwwk.webp"
+            }
+        ]
+    }
+]

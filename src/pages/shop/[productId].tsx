@@ -2,9 +2,9 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 
+import IMG from '@/components/CloudinaryImage'
 import Container from '@/components/layout/Container'
 import ArrowLink from '@/components/links/ArrowLink'
-import NextImage from '@/components/NextImage'
 import Seo from '@/components/Seo'
 import { D1, D2, P2 } from '@/components/typography/Typography'
 import AddToCartSection from '@/features/cart/components/AddToCartSection'
@@ -20,6 +20,7 @@ const ProductPage = () => {
   const router = useRouter()
   const { productId } = router.query
 
+  // todo: move to get static props and have the data be a fallback/inital value for useQuery
   const {
     data: product,
     isLoading,
@@ -63,14 +64,14 @@ const ProductPage = () => {
       >
         <Container className='overflow-y-none  sticky top-0 order-last grid h-full max-h-[550px] min-h-[350px] w-full content-end overflow-x-visible p-8 sm:p-10 md:order-first md:min-h-[450px] lg:p-12'>
           <div className='img-full-w-curve--left children-h-full children-w-full h-full w-full'>
-            <NextImage
+            <IMG
               layout='intrinsic'
               width={1000}
               height={500}
-              src={product?.images?.at(0) as string}
+              src={product?.images?.at(0)?.url}
               alt=''
               quality={100}
-              className='skeleton relative h-full w-full  object-cover md:rounded-r-3xl'
+              className='skeleton relative h-full w-full  w-[100px] object-cover md:rounded-r-3xl'
               imgClassName='md:rounded-r-[2.5rem]  h-full w-full object-cover w-full '
               priority
             />
@@ -104,7 +105,7 @@ const ProductPage = () => {
           </div>
           <Container
             as='div'
-            className={clsxm('grid gap-5 sm:grid-cols-2', [
+            className={clsxm('grid gap-5 sm:grid-cols-2 md:grid-cols-3', [
               product.crossSells.length === 3 && 'lg:grid-cols-3',
             ])}
           >

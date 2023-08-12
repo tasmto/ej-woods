@@ -16,6 +16,7 @@ import { D1, D2, H1, H2, P1, P2 } from '@/components/typography/Typography'
 import ContactForm from '@/features/forms/ContactForm'
 import ProductCard from '@/features/products/components/Card'
 import ServiceCards from '@/features/services/components/Cards'
+import { returnCloudinaryImageUrl } from '@/lib/cloudinaryHelpers'
 import clsxm from '@/lib/clsxm'
 import { FormatCurrency } from '@/lib/FormatNumber'
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
@@ -83,7 +84,7 @@ const HomePage = ({
             <NextImage
               layout='fill'
               src={
-                featuredProduct?.images?.at(0) ??
+                returnCloudinaryImageUrl(featuredProduct?.images?.at(0)?.url) ??
                 '/images/homepage-hero-cover-image.jpg'
               }
               alt={featuredProduct ? `An image of ${featuredProduct.name}` : ''}

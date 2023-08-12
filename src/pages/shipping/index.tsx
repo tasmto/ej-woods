@@ -2,12 +2,12 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 
 import Container from '@/components/layout/Container'
+import RegionMap from '@/components/maps/RegionMap'
 import Seo from '@/components/Seo'
 import { D2, H1, P1 } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
 import CheckoutLayout from '@/features/checkout/components/Layout'
 import ShippingForm from '@/features/checkout/components/ShippingForm'
-import { FormatCurrency } from '@/lib/FormatNumber'
 
 const CartTable = dynamic(
   () => import('@/features/cart/components/CartTable'),
@@ -29,24 +29,17 @@ const CheckoutPage = () => {
       >
         <article className=' grid  justify-items-start gap-8'>
           <div className='grid gap-2'>
-            <D2 className=''>Ready to checkout?</D2>
+            <D2 className=''>Your shipping details:</D2>
             <P1>
               Step <strong>2 of 3</strong>
             </P1>
           </div>
           <ShippingForm />
         </article>
-        <aside className='grid gap-4'>
-          <div>
-            <H1 as='h2'>Here is what is in your cart</H1>
+        <aside className='flex flex-col gap-4 self-stretch'>
+          <H1 as='h2'>Here is the area we deliver in:</H1>
 
-            <P1 className='w-full flex-1 text-primary-300'>
-              Overview: {totalItemsInCart()} items · Total Price:{' '}
-              {FormatCurrency(cartValue())}
-            </P1>
-          </div>
-
-          <CartTable className='md:max-h-[600px] md:overflow-y-auto' />
+          <RegionMap />
         </aside>
       </Container>
     </CheckoutLayout>

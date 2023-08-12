@@ -1,11 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
-
-import Container from '@/components/layout/Container';
-import Typography from '@/components/typography/Typography';
-
-import FooterCTA from '@/features/navigation/components/FooterCTA';
+import Container from '@/components/layout/Container'
+import Typography from '@/components/typography/Typography'
+import FooterCTA from '@/features/navigation/components/FooterCTA'
+import clsxm from '@/lib/clsxm'
 
 const Footer = () => {
   const links = [
@@ -56,7 +54,7 @@ const Footer = () => {
         },
       ],
     },
-  ];
+  ]
 
   return (
     <div className='mt-20'>
@@ -103,7 +101,7 @@ const Footer = () => {
           size='body3'
           className='mt-[-35px] border-t border-primary-100/40 py-4 text-center  text-primary-100'
         >
-          © 2022 ej-woods | Designed and developed by{' '}
+          © {new Date().getFullYear()} ej-woods | Designed and developed by{' '}
           <a
             rel='noreferrer'
             href='https://tasmto.com?utm_source=ej-woods'
@@ -114,7 +112,7 @@ const Footer = () => {
         </Typography>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

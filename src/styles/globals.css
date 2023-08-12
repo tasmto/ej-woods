@@ -61,7 +61,7 @@
     @apply img-full-w-curve md:rounded-l-3xl;
   }
   .img-full-w-curve--left {
-    @apply img-full-w-curve md:rounded-r-3xl;
+    @apply img-full-w-curve md:right-[0] md:ml-auto md:rounded-r-3xl 2xl:right-0;
   }
 
   .ej-form-input {

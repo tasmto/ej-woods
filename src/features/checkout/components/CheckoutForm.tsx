@@ -25,12 +25,12 @@ const CheckoutForm = () => {
         .test(
           'tooLong',
           'A phone number can only have a maximum of 12 numbers',
-          (val) => (val ? val?.toString().length <= 12 : false)
+          (val) => (val ? val?.toString().length <= 11 : false)
         )
         .test(
           'tooShort',
           'Your phone number needs to have at least 10 digits',
-          (val) => (val ? val?.toString().length >= 10 : false)
+          (val) => (val ? val?.toString().length >= 9 : false)
         ),
       email_address: Yup.string()
         .email('Please enter a valid email')
