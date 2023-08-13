@@ -1,26 +1,26 @@
-import { useFormik } from 'formik';
-import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
-import * as Yup from 'yup';
+import { useFormik } from 'formik'
+import { AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
+import * as Yup from 'yup'
 
-import Button from '@/components/buttons/Button';
-import ArrowLink from '@/components/links/ArrowLink';
-import { H2, P2 } from '@/components/typography/Typography';
+import Button from '@/components/buttons/Button'
+import ArrowLink from '@/components/links/ArrowLink'
+import { H2, P2 } from '@/components/typography/Typography'
 
-import SingleLineInput from '@/features/forms/components/SingleLineInput';
-import TextArea from '@/features/forms/components/TextArea';
+import SingleLineInput from '@/features/forms/components/SingleLineInput'
+import TextArea from '@/features/forms/components/TextArea'
 
 const ContactForm = () => {
   const [formData, setFormData] = React.useState({
     name: '',
     email: '',
     message: '',
-  });
-  const [submitted, setSubmitted] = React.useState(false);
+  })
+  const [submitted, setSubmitted] = React.useState(false)
 
   const handleFormMutate = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  ) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const formik = useFormik({
     initialValues: {
@@ -36,14 +36,14 @@ const ContactForm = () => {
       message: Yup.string().required('Please enter a message'),
     }),
     onSubmit: async (values) => {
-      await console.log(JSON.stringify(values, null, 2));
+      await console.log(JSON.stringify(values, null, 2))
       // Todo return an error if the form is invalid
-      setSubmitted(true);
+      setSubmitted(true)
     },
-  });
+  })
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       {!submitted ? (
         <motion.form
           onSubmit={formik.handleSubmit}
@@ -111,7 +111,7 @@ const ContactForm = () => {
         </motion.div>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default ContactForm

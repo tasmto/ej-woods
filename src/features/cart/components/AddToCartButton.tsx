@@ -56,7 +56,7 @@ const AddToCartButton = ({ product }: Props) => {
         [product.countInStock === 0 && 'cursor-not-allowed !bg-gray-500']
       )}
     >
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode='wait'>
         {hover && (
           <motion.span
             initial={{

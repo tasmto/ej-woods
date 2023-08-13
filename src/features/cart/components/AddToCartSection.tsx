@@ -131,7 +131,7 @@ const AddToCartSection = ({ product }: Props) => {
           </P2>
         </button>
       </div>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode='wait'>
         {countInCart && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}

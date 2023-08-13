@@ -13,14 +13,14 @@ import TextArea from '@/features/forms/components/TextArea'
 
 const CheckoutForm = () => {
   const router = useRouter()
-  const { updateOrderDetails } = useCheckoutStore((state) => state)
+  const { updateOrderDetails, order } = useCheckoutStore((state) => state)
 
   const formik = useFormik({
     initialValues: {
-      delivery_address: '',
-      delivery_phone_number: '',
-      preferred_time_start: '',
-      preferred_time_end: '',
+      delivery_address: order.delivery_address,
+      delivery_phone_number: order.delivery_phone_number,
+      preferred_time_start: order.preferred_time_start,
+      preferred_time_end: order.preferred_time_end,
     },
     validationSchema: Yup.object({
       delivery_address: Yup.string()
@@ -57,7 +57,7 @@ const CheckoutForm = () => {
   })
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       <motion.form
         onSubmit={formik.handleSubmit}
         className='grid w-full gap-5'

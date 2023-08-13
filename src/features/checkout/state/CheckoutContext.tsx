@@ -9,7 +9,8 @@ export interface CustomerDetails {
 export interface OrderDetails {
   delivery_address: string
   delivery_phone_number?: string
-  preferred_times?: string[]
+  preferred_time_end?: string
+  preferred_time_start?: string
   payment_method?: string
 }
 
@@ -23,36 +24,42 @@ interface CheckoutState {
 
 const useCheckoutStore = create<CheckoutState>()(
   devtools(
-    persist((set, get) => ({
-      customer_details: {
-        name: '',
-        phone_number: '',
-        email_address: '',
-      },
-      order: {
-        delivery_address: '',
-        delivery_phone_number: '',
-        preferred_times: ['', ''],
-        payment_method: '',
-      },
+    persist(
+      (set, get) => ({
+        customer_details: {
+          name: '',
+          phone_number: '',
+          email_address: '',
+        },
+        order: {
+          delivery_address: '',
+          delivery_phone_number: '',
+          preferred_time_end: '',
+          preferred_time_start: '',
+          payment_method: '',
+        },
 
-      updateCustomerDetails: (details) => {
-        set(({ customer_details }) => {
-          return { customer_details: { ...customer_details, details } }
-        })
-      },
-      updateOrderDetails: (details) => {
-        set(({ order }) => {
-          return { order: { ...order, details } }
-        })
-      },
-      getOrderDetails: () => get().order,
-      getCustomerDetails: () => get().customer_details,
-      getCheckoutDetails: () => ({
-        order: get().order,
-        customer_details: get().customer_details,
+        updateCustomerDetails: (details) => {
+          set(({ customer_details }) => {
+            return { customer_details: { ...customer_details, details } }
+          })
+        },
+        updateOrderDetails: (details) => {
+          set(({ order }) => {
+            return { order: { ...order, details } }
+          })
+        },
+        getOrderDetails: () => get().order,
+        getCustomerDetails: () => get().customer_details,
+        getCheckoutDetails: () => ({
+          order: get().order,
+          customer_details: get().customer_details,
+        }),
       }),
-    }))
+      {
+        name: 'checkout-storage',
+      }
+    )
   )
 )
 

@@ -10,13 +10,15 @@ import SingleLineInput from '@/features/forms/components/SingleLineInput'
 
 const CheckoutForm = () => {
   const router = useRouter()
-  const { updateCustomerDetails } = useCheckoutStore((state) => state)
+  const { updateCustomerDetails, customer_details } = useCheckoutStore(
+    (state) => state
+  )
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      phone_number: '',
-      email_address: '',
+      name: customer_details.name,
+      phone_number: customer_details.phone_number,
+      email_address: customer_details.email_address,
     },
     validationSchema: Yup.object({
       name: Yup.string().required('We need your name'),
@@ -46,7 +48,7 @@ const CheckoutForm = () => {
   })
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode='wait'>
       <motion.form
         onSubmit={formik.handleSubmit}
         className='grid w-full gap-5'
