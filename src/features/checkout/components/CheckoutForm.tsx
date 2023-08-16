@@ -48,7 +48,7 @@ const CheckoutForm = () => {
   })
 
   return (
-    <AnimatePresence mode='wait'>
+    <AnimatePresence exitBeforeEnter>
       <motion.form
         onSubmit={formik.handleSubmit}
         className='grid w-full gap-5'

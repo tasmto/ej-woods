@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { atom, useAtom } from 'jotai'
 import Image from 'next/image'
@@ -45,6 +45,11 @@ const CartOverlay = () => {
     exit: { opacity: 0 },
     present: { opacity: 1, y: 0, transition: { duration: 1 } },
   }
+  useEffect(() => {
+    return () => {
+      setCartOpen(false)
+    }
+  }, [])
 
   return (
     <AnimatePresence>

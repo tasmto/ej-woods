@@ -28,6 +28,33 @@ const deliveryTimes = [
   '10:00 PM',
 ]
 
+const paymentMethods: {
+  id: PaymentMethodsIds
+  name: string
+  description: string
+  logo: string
+  supportedMethodsLogos: string
+}[] = [
+  {
+    id: 'pod' as const,
+    name: 'Pay on Delivery',
+    description: 'Pay when you receive your order',
+    logo: '/images/cash-on-delivery.png',
+    supportedMethodsLogos: '/images/cash-on-delivery-methods.png',
+  },
+  {
+    id: 'peach' as const,
+    name: 'Peach Payments',
+    description: 'Pay with your credit card',
+    logo: '/images/peach-payments-logo.png',
+    supportedMethodsLogos: '/images/peach-payments-methods.png',
+  },
+]
+
+export type PaymentMethodsIds = 'pod' | 'peach'
+export const paymentMethodsIds = paymentMethods.map(
+  (method) => method.id as PaymentMethodsIds
+)
 export {
   apiUrl,
   baseUrl,
@@ -36,4 +63,5 @@ export {
   deliveryTimes,
   maxItemsFetchLimit,
   pageSize,
+  paymentMethods,
 }

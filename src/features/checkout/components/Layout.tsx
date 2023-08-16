@@ -9,16 +9,20 @@ import EjWoodsLogo from '~/svg/ej-woods-logo.svg'
 
 const CheckoutLayout = ({
   children,
+  backLink,
+  backLinkText,
 }: {
   children: React.ReactNode | React.ReactNode[]
+  backLink: string
+  backLinkText: string
 }) => (
   <div className='min-h-screen bg-gray-50  bg-[url("/images/glow.png")] bg-auto bg-top  bg-no-repeat pt-4 pb-2 selection:bg-primary-500 selection:text-primary-50 '>
     <Container level={1} className='relative grid  gap-4'>
       <header className=' flex items-center justify-between gap-4 '>
-        <ArrowLink href='/shop' direction='left' className=' text-start'>
-          Back to Shop
+        <ArrowLink href={backLink} direction='left' className=' text-start'>
+          {backLinkText}
         </ArrowLink>
-        <UnstyledLink href='/' className=' text-start  hover:text-gray-600'>
+        <UnstyledLink href='#' className=' text-start  hover:text-gray-600'>
           <EjWoodsLogo className='h-auto w-24' />
         </UnstyledLink>
       </header>

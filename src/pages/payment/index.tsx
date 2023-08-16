@@ -5,8 +5,8 @@ import Container from '@/components/layout/Container'
 import Seo from '@/components/Seo'
 import { D2, H1, P1 } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
-import CheckoutForm from '@/features/checkout/components/CheckoutForm'
 import CheckoutLayout from '@/features/checkout/components/Layout'
+import PaymentMethodSelector from '@/features/checkout/components/PaymentMethodSelector'
 import { FormatCurrency } from '@/lib/FormatNumber'
 
 const CartTable = dynamic(
@@ -16,12 +16,12 @@ const CartTable = dynamic(
   }
 )
 
-const CheckoutPage = () => {
+const PaymentsPage = () => {
   const { totalItemsInCart, cartValue } = useCartStore((state) => state)
 
   // todo: create empty cart layout
   return (
-    <CheckoutLayout backLink='/shop' backLinkText='Go back to shop'>
+    <CheckoutLayout backLink='/shipping' backLinkText='Go back to shipping'>
       <Seo templateTitle='Checkout' />
       <Container
         as='section'
@@ -29,12 +29,12 @@ const CheckoutPage = () => {
       >
         <article className=' grid  justify-items-start gap-8'>
           <div className='grid gap-2'>
-            <D2 className=''>Ready to checkout?</D2>
+            <D2 className=''>Payment method.</D2>
             <P1>
-              Step <strong>1 of 3</strong>
+              Step <strong>3 of 3</strong>
             </P1>
           </div>
-          <CheckoutForm />
+          <PaymentMethodSelector />
         </article>
         <aside className='grid gap-4'>
           <div>
@@ -46,11 +46,14 @@ const CheckoutPage = () => {
             </P1>
           </div>
 
-          <CartTable className='md:max-h-[600px] md:overflow-y-auto' />
+          <CartTable
+            className='md:max-h-[600px] md:overflow-y-auto'
+            allowEditing={false}
+          />
         </aside>
       </Container>
     </CheckoutLayout>
   )
 }
 
-export default CheckoutPage
+export default PaymentsPage

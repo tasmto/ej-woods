@@ -1,4 +1,5 @@
 import React from 'react'
+import clsx from 'clsx'
 
 import IMG from '@/components/CloudinaryImage'
 import { H3, P3 } from '@/components/typography/Typography'
@@ -13,9 +14,10 @@ import { trimString } from '@/lib/FormatString'
 
 type Props = {
   className?: string
+  allowEditing?: boolean
 }
 
-const CartTable = ({ className }: Props) => {
+const CartTable = ({ className, allowEditing = true }: Props) => {
   const { cart, removeItemFromCart, addToCart } = useCartStore((state) => state)
   return (
     <>
@@ -56,7 +58,12 @@ const CartTable = ({ className }: Props) => {
                       alt=''
                     />
                   </td>
-                  <td className='grid gap-[2px] sm:w-[50%]'>
+                  <td
+                    className={clsx([
+                      'grid gap-[2px]',
+                      allowEditing ? 'sm:w-[50%]' : 'sm:w-[85%]',
+                    ])}
+                  >
                     <H3 className='break-all !leading-tight sm:break-normal lg:!text-[1.3rem]'>
                       {trimString(name, 40)}
                     </H3>
@@ -67,23 +74,25 @@ const CartTable = ({ className }: Props) => {
                         : ` — for ${product.weight * quantity ?? 1} ${"kg's"}`}
                     </P3>
                   </td>
-                  <td className='flex  justify-end gap-1 sm:w-[35%]'>
-                    <QuantitySelector
-                      quantity={quantity}
-                      onChange={(q) => addToCart(product, q)}
-                      product={product}
-                      size='small'
-                    />
-                    <button
-                      className='rounded-lg p-1 px-2 text-xl hover:bg-slate-300'
-                      onClick={() => removeItemFromCart(product)}
-                    >
-                      &times;
-                      <span className='sr-only'>
-                        remove item from your cart
-                      </span>
-                    </button>
-                  </td>
+                  {allowEditing && (
+                    <td className='flex  justify-end gap-1 sm:w-[35%]'>
+                      <QuantitySelector
+                        quantity={quantity}
+                        onChange={(q) => addToCart(product, q)}
+                        product={product}
+                        size='small'
+                      />
+                      <button
+                        className='rounded-lg p-1 px-2 text-xl hover:bg-slate-300'
+                        onClick={() => removeItemFromCart(product)}
+                      >
+                        &times;
+                        <span className='sr-only'>
+                          remove item from your cart
+                        </span>
+                      </button>
+                    </td>
+                  )}
                 </tr>
               )
             })}

@@ -1,5 +1,4 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
 
 import Container from '@/components/layout/Container'
 import RegionMap from '@/components/maps/RegionMap'
@@ -9,19 +8,12 @@ import { useCartStore } from '@/features/cart/state/CartContext'
 import CheckoutLayout from '@/features/checkout/components/Layout'
 import ShippingForm from '@/features/checkout/components/ShippingForm'
 
-const CartTable = dynamic(
-  () => import('@/features/cart/components/CartTable'),
-  {
-    ssr: false,
-  }
-)
-
 const CheckoutPage = () => {
   const { totalItemsInCart, cartValue } = useCartStore((state) => state)
 
   // todo: create empty cart layout
   return (
-    <CheckoutLayout>
+    <CheckoutLayout backLink='/checkout' backLinkText='Go back to checkout'>
       <Seo templateTitle='Checkout' />
       <Container
         as='section'
