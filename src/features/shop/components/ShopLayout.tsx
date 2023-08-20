@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import Wrapper from '@/components/layout/Wrapper'
-
 import CartOverlay from '@/features/cart/components/CartOverlay'
 import Footer from '@/features/navigation/components/Footer'
 import Header from '@/features/navigation/components/Header'

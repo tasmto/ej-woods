@@ -1,31 +1,32 @@
 import React, { useState } from 'react'
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+import { useRouter } from 'next/router'
 
 import { D1 } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
-import StripePaymentsForm from '@/features/checkout/components/StripePaymentsForm'
 import { useCheckoutStore } from '@/features/checkout/state/CheckoutContext'
 import { useEffectOnce } from '@/lib/hooks/useEffectOnce'
 import { trpc } from '@/utils/trpc'
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
-)
-
 type Props = {}
 
-const ProcessPage = (props: Props) => {
-  const mutation = trpc.useMutation(['sales.create-sale'])
-  const { customer_details, order, payment_details } = useCheckoutStore(
+const Process = (props: Props) => {
+  const mutation = trpc.useMutation(['orders.create-order'], {
+    retry: 0,
+  })
+  const {
+    customer_details,
+    order: orderState,
+    payment_details,
+  } = useCheckoutStore((state) => state)
+  const { cart, cartValue, totalItemsInCart, clearCart } = useCartStore(
     (state) => state
   )
-  const { cart, cartValue, totalItemsInCart } = useCartStore((state) => state)
-  const [clientSecret, setClientSecret] = useState<string>()
+  const [checkoutData, setCheckoutData] = useState<any>()
+  const router = useRouter()
 
-  const handleCreateSale = async () => {
+  const handleCreateOrder = async () => {
     try {
-      const sale = await mutation.mutateAsync({
+      const order = await mutation.mutateAsync({
         totalPrice: cartValue(),
         totalQuantity: totalItemsInCart(),
         products: cart.map((item) => ({
@@ -36,42 +37,37 @@ const ProcessPage = (props: Props) => {
         customerName: customer_details.name,
         customerEmail: customer_details.email_address,
         customerPhoneNumber: customer_details.phone_number.toString(),
-        deliveryTimeSlotStart: order.preferred_time_start,
-        deliveryTimeSlotEnd: order.preferred_time_end,
-        deliveryPhoneNumber: order.delivery_phone_number,
-        deliveryAddress: order.delivery_address,
+        deliveryTimeSlotStart: orderState.preferred_time_start,
+        deliveryTimeSlotEnd: orderState.preferred_time_end,
+        deliveryPhoneNumber: orderState.delivery_phone_number,
+        deliveryAddress: orderState.delivery_address,
         paymentMethod: payment_details.payment_method,
       })
-      // sale returns html, so we need to parse it and display it
-      setClientSecret(sale?.clientSecret)
+      // order returns html, so we need to parse it and display it
+      setCheckoutData(order)
+      clearCart()
+      router.push(`/orders/${order}`)
     } catch (error) {
-      console.log('Failed to create sale', error)
+      console.log('Failed to create order', error)
     }
   }
 
   useEffectOnce(() => {
-    handleCreateSale()
+    handleCreateOrder()
   })
 
-  return clientSecret ? (
-    <div className='App'>
-      {clientSecret && (
-        <Elements
-          options={{
-            clientSecret,
-            appearance: {
-              theme: 'stripe',
-            },
-          }}
-          stripe={stripePromise}
-        >
-          <StripePaymentsForm />
-        </Elements>
-      )}
+  return checkoutData ? (
+    <div className='m-0 flex h-screen w-screen overflow-clip'>
+      {/* <style>
+        {`body {
+          overflow-y: hidden !important;
+        }`}
+      </style> */}
+      <div>{JSON.stringify(checkoutData, null, 2)}</div>
     </div>
   ) : (
     <D1>Loading...</D1>
   )
 }
 
-export default ProcessPage
+export default Process

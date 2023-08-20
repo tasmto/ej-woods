@@ -5,6 +5,9 @@ import productsData from './seedData/products.json'
 const prisma = new PrismaClient()
 async function main() {
   // delete all products
+  await prisma.orderProduct.deleteMany({})
+  await prisma.order.deleteMany({})
+  await prisma.productImage.deleteMany({})
   await prisma.product.deleteMany({})
   // Seed products
   const allProducts: Product[] = []

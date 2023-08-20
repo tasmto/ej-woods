@@ -10,6 +10,7 @@ interface CartState {
   howManyInCart: (product?: SingleProductType) => number
   totalItemsInCart: () => number
   cartValue: () => number
+  clearCart: () => void
 }
 
 export interface CartProductType extends SingleProductType {
@@ -70,6 +71,7 @@ const useCartStore = create<CartState>()(
             (acc, item) => acc + item.price * item.quantity,
             0
           ) ?? 0,
+        clearCart: () => set({ cart: [] }),
       }),
       {
         name: 'cart-storage',

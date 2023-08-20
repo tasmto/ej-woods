@@ -7,7 +7,7 @@ import {
 } from '@/constants/constants'
 import { InferQueryOutput } from '@/utils/trpc'
 
-const createSaleSchema = z.object({
+const createOrderSchema = z.object({
   totalPrice: z.number(),
   totalQuantity: z.number(),
   products: z
@@ -36,7 +36,13 @@ const createSaleSchema = z.object({
     ...paymentMethodsIds,
   ]),
 })
-export type CreateSaleInput = z.TypeOf<typeof createSaleSchema>
+export type CreateOrderInput = z.TypeOf<typeof createOrderSchema>
+
+const getOrderSchema = z.object({
+  orderId: z.number(),
+})
+
+export type GetSaleInput = z.TypeOf<typeof getOrderSchema>
 
 // ------------ Request Response Types --------------------
 
@@ -48,4 +54,4 @@ export type SingleProductType = Omit<
   'crossSells'
 >
 
-export { createSaleSchema }
+export { createOrderSchema, getOrderSchema }

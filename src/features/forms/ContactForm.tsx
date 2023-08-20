@@ -1,12 +1,11 @@
+import React from 'react'
 import { useFormik } from 'formik'
 import { AnimatePresence, motion } from 'framer-motion'
-import React from 'react'
 import * as Yup from 'yup'
 
 import Button from '@/components/buttons/Button'
 import ArrowLink from '@/components/links/ArrowLink'
 import { H2, P2 } from '@/components/typography/Typography'
-
 import SingleLineInput from '@/features/forms/components/SingleLineInput'
 import TextArea from '@/features/forms/components/TextArea'
 

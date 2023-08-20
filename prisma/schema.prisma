@@ -65,9 +65,9 @@ model Product {
   crossSells Product[] @relation("cross_sells")
   relatedTo  Product[] @relation("cross_sells")
 
-  updatedAt   DateTime      @default(now()) @updatedAt()
-  createdAt   DateTime      @default(now())
-  SaleProduct SaleProduct[]
+  updatedAt    DateTime       @default(now()) @updatedAt()
+  createdAt    DateTime       @default(now())
+  orderProduct orderProduct[]
 }
 
 enum ProductTypes {
@@ -83,7 +83,7 @@ model ProductImage {
   Product      Product[]
 }
 
-model Sale {
+model Order {
   id        Int     @id @unique @default(autoincrement())
   paymentId String? @unique @default(uuid())
 
@@ -91,22 +91,23 @@ model Sale {
   customerEmail       String
   customerPhoneNumber String
 
-  products              SaleProduct[]
+  products              orderProduct[]
   deliveryTimeSlotStart String
   deliveryTimeSlotEnd   String
   deliveryPhoneNumber   String
   deliveryAddress       String
 
-  totalPrice    Int
-  totalQuantity Int
-  status        SaleStatus @default(PENDING)
-  paymentMethod String
+  totalPrice     Int
+  totalQuantity  Int
+  status         PaymentStatus  @default(PENDING)
+  deliveryStatus DeliveryStatus @default(PENDING)
+  paymentMethod  String
 
   updatedAt DateTime @default(now()) @updatedAt()
   createdAt DateTime @default(now())
 }
 
-enum SaleStatus {
+enum PaymentStatus {
   PENDING
   PAID
   DELIVERED
@@ -115,11 +116,18 @@ enum SaleStatus {
   ARCHIVED
 }
 
-model SaleProduct {
+enum DeliveryStatus {
+  PENDING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model orderProduct {
   id Int @id @unique @default(autoincrement())
 
-  saleId Int
-  sale   Sale @relation(fields: [saleId], references: [id])
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
 
   productId Int
   product   Product @relation(fields: [productId], references: [id])
