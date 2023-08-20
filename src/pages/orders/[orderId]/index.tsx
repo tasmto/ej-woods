@@ -7,7 +7,6 @@ import Container from '@/components/layout/Container'
 import ArrowLink from '@/components/links/ArrowLink'
 import Seo from '@/components/Seo'
 import { H1, P1, P2 } from '@/components/typography/Typography'
-import { Progress } from '@/components/ui/progress'
 import { paymentMethods } from '@/constants/constants'
 import ProductsTable from '@/features/products/components/ProductsTable'
 import ShopLayout from '@/features/shop/components/ShopLayout'
@@ -74,6 +73,20 @@ const SingleOrderPage = (props: Props) => {
                   value: order?.deliveryAddress,
                 },
                 {
+                  name:
+                    order.deliveryStatus === 'DELIVERED'
+                      ? 'Delivered at'
+                      : 'Delivery status',
+                  value:
+                    order.deliveryStatus === 'DELIVERED'
+                      ? FormatDate(order?.deliveredAt || '', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })
+                      : order.deliveryStatus,
+                },
+                {
                   name: 'Phone number',
                   value:
                     order?.deliveryPhoneNumber || order.customerPhoneNumber,
@@ -94,7 +107,6 @@ const SingleOrderPage = (props: Props) => {
                   <span>{field.value}</span>
                 </P2>
               ))}
-              <Progress value={22} />
             </div>
 
             <motion.div
@@ -117,7 +129,7 @@ const SingleOrderPage = (props: Props) => {
             </motion.div>
           </article>
         </AnimatePresence>
-        <aside className='grid w-full gap-4'>
+        <aside className='flex w-full flex-col gap-4'>
           <H1>What you ordered:</H1>
           <ProductsTable
             products={order.products.map((product) => ({
