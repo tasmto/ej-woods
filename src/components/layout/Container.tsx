@@ -1,13 +1,14 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 type Props = {
-  children: React.ReactNode;
-  level?: 0 | 1 | 2 | 3 | 4;
-  as?: React.ElementType;
-  className?: string;
-} & React.HTMLAttributes<Element>;
+  children: React.ReactNode
+  level?: 0 | 1 | 2 | 3 | 4
+  as?: React.ElementType
+  className?: string
+} & React.HTMLAttributes<Element>
 
 /**
  * @description: A container component that wraps its children in a div (as a defined tag) with a specific level of nesting.
@@ -15,7 +16,7 @@ type Props = {
  * @param as: React Element you want rendered
  */
 const Container = ({ children, level = 0, as, className, ...rest }: Props) => {
-  const Tag = as || 'div';
+  const Tag = as || 'div'
 
   return (
     <Tag
@@ -37,7 +38,7 @@ const Container = ({ children, level = 0, as, className, ...rest }: Props) => {
     >
       {children}
     </Tag>
-  );
-};
+  )
+}
 
-export default Container;
+export default Container

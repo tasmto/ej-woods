@@ -1,24 +1,25 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import ArrowLink from '@/components/links/ArrowLink';
-import NextImage from '@/components/NextImage';
-import Typography from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import ArrowLink from '@/components/links/ArrowLink'
+import NextImage from '@/components/NextImage'
+import Typography from '@/components/typography/Typography'
 
 type Props = {
   contactInfo?: {
-    openingHours: string;
-    phoneNumber: string;
-    email: string;
-    whatsAppLink: string;
-    location: string;
-  };
-};
+    openingHours: string
+    phoneNumber: string
+    email: string
+    whatsAppLink: string
+    location: string
+  }
+}
 
 const ContactDetailsCards = ({ contactInfo }: Props) => {
-  if (!contactInfo) return null;
+  if (!contactInfo) return null
   const { openingHours, phoneNumber, email, whatsAppLink, location } =
-    contactInfo;
+    contactInfo
   return (
     <Container className='grid gap-3'>
       {openingHours && (
@@ -109,7 +110,7 @@ const ContactDetailsCards = ({ contactInfo }: Props) => {
         </article>
       )}
     </Container>
-  );
-};
+  )
+}
 
-export default ContactDetailsCards;
+export default ContactDetailsCards

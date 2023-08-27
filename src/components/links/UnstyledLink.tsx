@@ -1,31 +1,31 @@
-import Link, { LinkProps } from 'next/link';
-import * as React from 'react';
+import * as React from 'react'
+import Link, { LinkProps } from 'next/link'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 export type UnstyledLinkProps = {
-  href: string;
-  children: React.ReactNode;
-  openNewTab?: boolean;
-  className?: string;
-  nextLinkProps?: Omit<LinkProps, 'href'>;
-} & React.ComponentPropsWithRef<'a'>;
+  href: string
+  children: React.ReactNode
+  openNewTab?: boolean
+  className?: string
+  nextLinkProps?: Omit<LinkProps, 'href'>
+} & React.ComponentPropsWithRef<'a'>
 
 const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
   ({ children, href, openNewTab, className, nextLinkProps, ...rest }, ref) => {
     const isNewTab =
       openNewTab !== undefined
         ? openNewTab
-        : href && !href.startsWith('/') && !href.startsWith('#');
+        : href && !href.startsWith('/') && !href.startsWith('#')
 
     if (!isNewTab) {
       return (
-        <Link href={href} {...nextLinkProps}>
+        <Link href={href} {...nextLinkProps} legacyBehavior>
           <a ref={ref} {...rest} className={className}>
             {children}
           </a>
         </Link>
-      );
+      )
     }
 
     return (
@@ -39,8 +39,8 @@ const UnstyledLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(
       >
         {children}
       </a>
-    );
+    )
   }
-);
+)
 
-export default UnstyledLink;
+export default UnstyledLink

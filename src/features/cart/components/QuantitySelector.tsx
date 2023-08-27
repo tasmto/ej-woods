@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 
 import { CartProductType } from '@/features/cart/state/CartContext'

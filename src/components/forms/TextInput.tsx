@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { ChangeHandler, UseFormRegister } from 'react-hook-form'
 
@@ -25,7 +26,7 @@ const TextInput = ({
   return (
     <fieldset className='grid gap-2'>
       <label htmlFor={name} className='text-base md:text-lg'>
-        {children} {required && <span className='text-rose-600 ml-2'>*</span>}
+        {children} {required && <span className='ml-2 text-rose-600'>*</span>}
       </label>
       <input
         type={type}
@@ -33,7 +34,7 @@ const TextInput = ({
         name={name}
         placeholder={placeholder ?? ''}
         {...rest}
-        className='py-2 px-3 bg-slate-100 dark:bg-slate-600 dark:text-slate-300 rounded-md border-slate-500 border focus:border-slate-500'
+        className='rounded-md border border-slate-500 bg-slate-100 py-2 px-3 focus:border-slate-500 dark:bg-slate-600 dark:text-slate-300'
       />
     </fieldset>
   )

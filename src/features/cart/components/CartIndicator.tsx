@@ -31,7 +31,7 @@ const CartIndicatorButton = () => {
             ] || ''
           }
           layout='intrinsic'
-          className='shadow-xl shadow-black transition-all duration-200'
+          className='transition-all duration-200'
           height={30}
           width={30}
           alt=''

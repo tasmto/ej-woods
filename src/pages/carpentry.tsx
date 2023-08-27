@@ -1,11 +1,11 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import RegionMap from '@/components/maps/RegionMap';
-import { D2 } from '@/components/typography/Typography';
-
-import ContactForm from '@/features/forms/ContactForm';
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import RegionMap from '@/components/maps/RegionMap'
+import { D2 } from '@/components/typography/Typography'
+import ContactForm from '@/features/forms/ContactForm'
 
 const CarpentryPage = () => {
   return (
@@ -25,7 +25,7 @@ const CarpentryPage = () => {
         <RegionMap />
       </Container>
     </Layout>
-  );
-};
+  )
+}
 
-export default CarpentryPage;
+export default CarpentryPage

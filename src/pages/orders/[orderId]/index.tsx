@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { ProductImage } from '@prisma/client'
 import { AnimatePresence, motion } from 'framer-motion'

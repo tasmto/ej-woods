@@ -1,15 +1,14 @@
+import * as React from 'react'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import * as React from 'react'
-
-import clsxm from '@/lib/clsxm'
-import resolveIcon from '@/lib/iconResolver'
 
 import Container from '@/components/layout/Container'
 import UnstyledLink from '@/components/links/UnstyledLink'
 import { P2 } from '@/components/typography/Typography'
+import clsxm from '@/lib/clsxm'
+import resolveIcon from '@/lib/iconResolver'
 
 import EjWoodsLogo from '~/svg/ej-woods-logo.svg'
 
@@ -87,7 +86,7 @@ export default function Header() {
                     <Image
                       src={resolveIcon('🔍', true)?.['active'] || ''}
                       layout='intrinsic'
-                      className='shadow-xl shadow-black transition-all duration-200'
+                      className='transition-all duration-200'
                       height={35}
                       width={35}
                       alt=''
@@ -106,7 +105,7 @@ export default function Header() {
                     <Image
                       src={resolveIcon('💬', true)?.['active'] || ''}
                       layout='intrinsic'
-                      className='shadow-xl shadow-black transition-all duration-200'
+                      className=' transition-all duration-200'
                       height={30}
                       width={30}
                       alt=''

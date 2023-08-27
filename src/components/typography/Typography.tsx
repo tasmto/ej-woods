@@ -1,13 +1,14 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import clsxm from '@/lib/clsxm';
+import clsxm from '@/lib/clsxm'
 
 type TypographyType = {
-  children: React.ReactNode | React.ReactNode[];
-  as?: React.ElementType;
-  className?: string;
-  size?: keyof typeof Size;
-  weight?: 'normal' | 'bold' | 'semiBold' | 'light';
+  children: React.ReactNode | React.ReactNode[]
+  as?: React.ElementType
+  className?: string
+  size?: keyof typeof Size
+  weight?: 'normal' | 'bold' | 'semiBold' | 'light'
 } & React.ComponentPropsWithRef<
   | 'div'
   | 'p'
@@ -23,7 +24,7 @@ type TypographyType = {
   | 'b'
   | 'figcaption'
   | 'a'
->;
+>
 
 enum Size {
   'display1',
@@ -47,7 +48,7 @@ const Typography = ({
   size = 'body2',
   ...rest
 }: TypographyType) => {
-  const Tag = as || 'div';
+  const Tag = as || 'div'
 
   return (
     <Tag
@@ -90,39 +91,39 @@ const Typography = ({
     >
       {children}
     </Tag>
-  );
-};
+  )
+}
 
 const D1 = ({ ...props }: TypographyType) => (
   <Typography as='h1' size='display1' {...props} />
-);
+)
 const D2 = ({ ...props }: TypographyType) => (
   <Typography as='h1' size='display2' {...props} />
-);
+)
 const D3 = ({ ...props }: TypographyType) => (
   <Typography as='h1' size='display3' {...props} />
-);
+)
 const H1 = ({ ...props }: TypographyType) => (
   <Typography as='h1' size='heading1' {...props} />
-);
+)
 const H2 = ({ ...props }: TypographyType) => (
   <Typography as='h2' size='heading2' {...props} />
-);
+)
 const H3 = ({ ...props }: TypographyType) => (
   <Typography as='h3' size='heading3' {...props} />
-);
+)
 const P1 = ({ ...props }: TypographyType) => (
   <Typography as='p' size='body1' {...props} />
-);
+)
 const P2 = ({ ...props }: TypographyType) => (
   <Typography as='p' size='body2' {...props} />
-);
+)
 const P3 = ({ ...props }: TypographyType) => (
   <Typography as='p' size='body3' {...props} />
-);
+)
 const Caption = ({ ...props }: TypographyType) => (
   <Typography as='span' size='caption' {...props} />
-);
+)
 
-export default Typography;
-export { Caption, D1, D2, D3, H1, H2, H3, P1, P2, P3 };
+export default Typography
+export { Caption, D1, D2, D3, H1, H2, H3, P1, P2, P3 }

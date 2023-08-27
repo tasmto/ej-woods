@@ -1,16 +1,17 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
+'use client'
+import React from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
-import Typography from '@/components/typography/Typography';
+import Typography from '@/components/typography/Typography'
 
 type Props = {
-  formik: any;
-  field: string;
-};
+  formik: any
+  field: string
+}
 
 const FormAlert = ({ formik, field }: Props) => {
-  const touched = formik.touched[field];
-  const error = formik.errors[field];
+  const touched = formik.touched[field]
+  const error = formik.errors[field]
 
   return (
     <AnimatePresence>
@@ -28,7 +29,7 @@ const FormAlert = ({ formik, field }: Props) => {
         </motion.div>
       ) : null}
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default FormAlert;
+export default FormAlert

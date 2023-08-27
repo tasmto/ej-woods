@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
@@ -12,9 +13,11 @@ import '../styles/globals.css'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <Provider>
-      <Component {...pageProps} />
-    </Provider>
+    <ClerkProvider {...pageProps}>
+      <Provider>
+        <Component {...pageProps} />
+      </Provider>
+    </ClerkProvider>
   )
 }
 const defaultLinkOptions = httpBatchLink({

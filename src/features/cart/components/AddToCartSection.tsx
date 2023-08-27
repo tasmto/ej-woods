@@ -51,6 +51,7 @@ const AddToCartSection = ({ product }: Props) => {
       <H3
         as='p'
         className='mt-[-17px] mb-6 flex w-full items-end tracking-tight text-primary-600'
+        suppressHydrationWarning
       >
         {howManyInCart(product) ? (
           <>

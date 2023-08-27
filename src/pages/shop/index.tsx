@@ -101,6 +101,7 @@ const ShopPage = () => {
       >
         {paths.map(({ path, label }, i) => (
           <Link
+            legacyBehavior
             key={path ?? i}
             href={`/shop${path ? `?category=${path}` : ''}`}
           >

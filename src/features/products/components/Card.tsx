@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
@@ -27,7 +28,7 @@ const ProductCard = ({ product, position }: Props) => {
   const { name, price, type, images, id } = product
 
   return (
-    <Link href={`/shop/${id}`}>
+    <Link href={`/shop/${id}`} legacyBehavior>
       <motion.a
         initial={{ opacity: 0, x: '-5%' }}
         animate={{ opacity: 1, x: '0' }}

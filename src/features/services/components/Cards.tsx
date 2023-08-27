@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import React from 'react';
+'use client'
+import React from 'react'
+import Link from 'next/link'
 
-import clsxm from '@/lib/clsxm';
-
-import { D2, P2 } from '@/components/typography/Typography';
+import { D2, P2 } from '@/components/typography/Typography'
+import clsxm from '@/lib/clsxm'
 
 type Props = {
-  include: 'all' | 'wood' | 'carpentry' | 'furniture';
-};
+  include: 'all' | 'wood' | 'carpentry' | 'furniture'
+}
 
 const ServiceCards = ({ include }: Props) => {
   const categories = [
@@ -32,14 +32,14 @@ const ServiceCards = ({ include }: Props) => {
       description: '(We also create custom furniture items.)',
       image: '/images/carpentry-cat--banner.jpg',
     },
-  ];
+  ]
   return (
     <>
       {(include !== 'all'
         ? categories.filter((cat) => cat.id === include)
         : categories
       ).map(({ name, id, description, image, href }) => (
-        <Link href={href} key={id}>
+        <Link href={href} key={id} legacyBehavior>
           <a
             className={clsxm(
               ' relative grid h-80 w-full content-end overflow-hidden rounded-xl  p-8 sm:p-6',
@@ -62,7 +62,7 @@ const ServiceCards = ({ include }: Props) => {
         </Link>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default ServiceCards;
+export default ServiceCards

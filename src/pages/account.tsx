@@ -1,11 +1,11 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import Layout from '@/components/layout/Layout';
-import NextImage from '@/components/NextImage';
-import { D2, P2 } from '@/components/typography/Typography';
-
-import ServiceCards from '@/features/services/components/Cards';
+import Container from '@/components/layout/Container'
+import Layout from '@/components/layout/Layout'
+import NextImage from '@/components/NextImage'
+import { D2, P2 } from '@/components/typography/Typography'
+import ServiceCards from '@/features/services/components/Cards'
 
 const AcountPage = () => {
   return (
@@ -82,7 +82,7 @@ const AcountPage = () => {
         </div>
       </Container>
     </Layout>
-  );
-};
+  )
+}
 
-export default AcountPage;
+export default AcountPage

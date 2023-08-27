@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
 
@@ -19,7 +20,7 @@ const SingleProductDisplay = ({ product }: Props) => {
       className='relative grid grid-cols-1 items-center justify-center gap-14 md:grid-cols-2 md:gap-8 lg:gap-10 '
     >
       <Container className='overflow-y-none  sticky top-0 order-last grid h-full max-h-[550px] min-h-[350px] w-full content-end overflow-x-visible p-8 sm:p-10 md:order-first md:min-h-[450px] lg:p-12'>
-        <div className='img-full-w-curve--left children-h-full children-w-full h-full w-full'>
+        <div className='img-full-w-curve--left children-h-full children-w-full h-full w-full '>
           <NextImage
             layout='intrinsic'
             width={1000}
@@ -27,7 +28,7 @@ const SingleProductDisplay = ({ product }: Props) => {
             src={product.images[0] ?? ''}
             alt=''
             quality={100}
-            className='skeleton relative h-full w-full  object-cover md:rounded-r-3xl'
+            className=' relative h-full w-full  object-cover md:rounded-r-3xl'
             imgClassName='md:rounded-r-[2.5rem]  h-full w-full object-cover w-full '
             priority
           />

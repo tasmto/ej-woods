@@ -1,14 +1,14 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React from 'react';
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import resolveIcon, { Icons } from '@/lib/iconResolver';
-
-import { P3 } from '@/components/typography/Typography';
+import { P3 } from '@/components/typography/Typography'
+import resolveIcon, { Icons } from '@/lib/iconResolver'
 
 const MobileNav = () => {
-  const router = useRouter();
+  const router = useRouter()
   const routes: { name: string; href: string; icon: keyof typeof Icons }[] = [
     {
       name: 'Shop',
@@ -25,7 +25,7 @@ const MobileNav = () => {
       href: '/contact',
       icon: '💬',
     },
-  ];
+  ]
 
   return (
     <nav
@@ -35,7 +35,7 @@ const MobileNav = () => {
       <ul className='flex items-center justify-center divide-x divide-primary-300'>
         {routes.map(({ name, href, icon }) => (
           <li key={href}>
-            <Link href={href}>
+            <Link href={href} legacyBehavior>
               <a className='grid items-center gap-1 px-6 py-3 hover:bg-primary-800/20'>
                 <Image
                   src={
@@ -56,7 +56,7 @@ const MobileNav = () => {
         ))}
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default MobileNav;
+export default MobileNav

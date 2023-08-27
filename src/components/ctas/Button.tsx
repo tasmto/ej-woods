@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import clsxm from '../../utils/clsxm'
 
@@ -22,7 +23,7 @@ const Button = ({ variant, size, onClick, href, className }: Props) => {
   return (
     <button
       className={clsxm(
-        'py-3 rounded-2xl px-2 w-fulltext-lg mt-2',
+        'w-fulltext-lg mt-2 rounded-2xl py-3 px-2',
         // * startRegion variants
         [
           variant === 'primary' &&

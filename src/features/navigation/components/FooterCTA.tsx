@@ -1,7 +1,8 @@
-import React from 'react';
+'use client'
+import React from 'react'
 
-import Container from '@/components/layout/Container';
-import Typography from '@/components/typography/Typography';
+import Container from '@/components/layout/Container'
+import Typography from '@/components/typography/Typography'
 
 const FooterCTA = () => {
   return (
@@ -15,7 +16,7 @@ const FooterCTA = () => {
         </Typography>
       </div>
     </Container>
-  );
-};
+  )
+}
 
-export default FooterCTA;
+export default FooterCTA

@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Product, ProductImage } from '@prisma/client'
 import clsx from 'clsx'
@@ -53,7 +54,7 @@ const ProductsTable = ({ className, products }: Props) => {
                       src={image?.url}
                       transformation='cartOverlayThumbnail'
                       layout='responsive'
-                      className='skeleton w-full rounded-lg bg-gray-400 object-cover shadow-black transition-all duration-200'
+                      className='skeleton w-full rounded-lg bg-gray-400 object-cover shadow-black/10 transition-all duration-200'
                       height={70}
                       quality={20}
                       width={70}
@@ -64,7 +65,7 @@ const ProductsTable = ({ className, products }: Props) => {
                     <H3 className='break-all !leading-tight sm:break-normal lg:!text-[1.3rem]'>
                       {trimString(name, 40)}
                     </H3>
-                    <P3 className='text-primary-200'>
+                    <P3 className='text-primary-200' suppressHydrationWarning>
                       <b>{FormatCurrency(quantity * price) ?? 0}</b>
                       {type === 'FURNITURE'
                         ? ` — for ${quantity}.`
