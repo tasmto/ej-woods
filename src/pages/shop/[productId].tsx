@@ -27,14 +27,11 @@ const ProductPage = () => {
     isLoading,
     isError,
     error,
-  } = trpc.useQuery(
-    [
-      'products.single-product',
-      {
-        productId: Number(productId),
-      },
-    ],
-    { staleTime: Infinity }
+  } = trpc.products.singleProduct.useQuery(
+    {
+                  productId: Number(productId),
+                },
+      { staleTime: Infinity }
   )
 
   if (isLoading)

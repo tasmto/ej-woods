@@ -26,18 +26,15 @@ const ShopPage = () => {
     isLoading,
     isError,
     error,
-  } = trpc.useQuery(
-    [
-      'products.multiple-products',
-      {
-        limit: pageSize,
-        page: 1,
-        type: selected
-          ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
-          : undefined,
-      },
-    ],
-    { staleTime: Infinity }
+  } = trpc.products.multipleProducts.useQuery(
+    {
+                  limit: pageSize,
+                  page: 1,
+                  type: selected
+                    ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
+                    : undefined,
+                },
+      { staleTime: Infinity }
   )
 
   useEffect(() => {

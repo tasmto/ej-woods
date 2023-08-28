@@ -10,7 +10,7 @@ import { trpc } from '@/utils/trpc'
 type Props = {}
 
 const Process = (props: Props) => {
-  const mutation = trpc.useMutation(['orders.create-order'], {
+  const mutation = trpc.orders.createOrder.useMutation({
     retry: 0,
   })
   const {

@@ -14,6 +14,8 @@ const productRouter = createRouter()
   .query('single-product', {
     input: getSingleProductSchema,
     async resolve({ input, ctx }) {
+      const auth = await ctx.user
+      console.log(auth)
       const item = await ctx.prisma.product.findUnique({
         where: {
           id: input.productId,

@@ -1,38 +1,22 @@
+import { getAuth } from '@clerk/nextjs/server'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { verifyJWT } from '../utils/jwt'
 import { prisma } from '../utils/prisma'
 
-interface ctxUser {
-  id: string
-  email: string
-  name: string
-  iat: string
-  exp: number
+const userContext = (req: NextApiRequest) => {
+  const user = getAuth(req)
+  return user
 }
 
-// Gets the user from the request cookie
-const getUserFromRequest = (req: NextApiRequest) => {
-  const token = req.cookies.token
-  if (!token) return null
-
-  try {
-    const verified = verifyJWT<ctxUser>(token)
-    return verified
-  } catch (error) {
-    return null
-  }
-}
-
-const createContext = ({
+const createContext = async ({
   req,
   res,
 }: {
   req: NextApiRequest
   res: NextApiResponse
 }) => {
-  const user = getUserFromRequest(req)
-  return { req, res, prisma, user }
+  const user = getAuth(req)
+  return { req, res, prisma, user: userContext(req) }
 }
 
 export { createContext }
