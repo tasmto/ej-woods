@@ -6,17 +6,19 @@ import {
   getSingleProductSchema,
 } from '@/schema/product.schema'
 
-import { createRouter } from '../createRouter'
+import { protectedProcedure, publicProcedure, router } from '../createRouter'
 
 // todo: Add middleware to make sure only auth'ed users see unpublished products
 
-const productRouter = createRouter()
-  .query('single-product', {
-    input: getSingleProductSchema,
-    async resolve({ input, ctx }) {
-      const auth = await ctx.user
+const productRouter = router({
+  singleProduct: publicProcedure
+    .input(getSingleProductSchema)
+    .query(async ({ ctx, input }) => {
+      const auth = await (await ctx).user
       console.log(auth)
-      const item = await ctx.prisma.product.findUnique({
+      const item = await (
+        await ctx
+      ).prisma.product.findUnique({
         where: {
           id: input.productId,
         },
@@ -35,27 +37,16 @@ const productRouter = createRouter()
           message: 'Product not found',
         })
 
-      // if (!ctx.user)
-      //   throw new trpc.TRPCError({
-      //     code: 'UNAUTHORIZED',
-      //     message: 'This item is currently unavailable...',
-      //   })
-
-      // const crossSells = await  ctx.prisma.product.findMany({
-      //   where: {
-      //     id: {in: item.crossSells}
-      //   }
-      // })
-
       return item
-    },
-  })
-  .query('multiple-products', {
-    input: getMultipleProductsSchema,
-    async resolve({ input, ctx }) {
+    }),
+  multipleProducts: publicProcedure
+    .input(getMultipleProductsSchema)
+    .query(async ({ ctx, input }) => {
       const { type, limit, name, page } = input
 
-      const products = await ctx.prisma.product.findMany({
+      const products = await (
+        await ctx
+      ).prisma.product.findMany({
         where: {
           AND: [
             { type: type ?? undefined },
@@ -74,17 +65,18 @@ const productRouter = createRouter()
       })
 
       return products
-    },
-  })
-  .mutation('create-product', {
-    input: createProductSchema,
-    async resolve({ input, ctx }) {
-      const product = await ctx.prisma.product.create({
-        data: input,
+    }),
+  createProduct: protectedProcedure
+    .input(createProductSchema)
+    .mutation(async ({ ctx, input }) => {
+      const product = await (
+        await ctx
+      ).prisma.product.create({
+        data: { ...input },
       })
 
       return product
-    },
-  })
+    }),
+})
 
 export { productRouter }

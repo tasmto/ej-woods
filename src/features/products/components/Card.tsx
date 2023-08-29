@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { Product, ProductImage } from '@prisma/client'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -19,7 +20,11 @@ const AddToCartButton = dynamic(
 )
 
 type Props = {
-  product: SingleProductType
+  product:
+    | SingleProductType
+    | (Product & {
+        images: ProductImage[]
+      })
   position: number
 }
 const ProductCard = ({ product, position }: Props) => {

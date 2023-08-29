@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { ClerkProvider } from '@clerk/nextjs'
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
@@ -8,6 +9,9 @@ import superjson from 'superjson' // allows us to use native dates, maps and set
 
 import { apiUrl } from '../constants/constants'
 import { AppRouter } from '../server/route/app.router'
+// prettier-ignore
+// eslint-disable-next-line no-unused-vars, unused-imports/no-unused-imports
+import * as i from "@tanstack/react-query"
 
 import '../styles/globals.css'
 

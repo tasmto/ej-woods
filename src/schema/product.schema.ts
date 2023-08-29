@@ -1,3 +1,4 @@
+import { ProductImage } from '@prisma/client'
 import z from 'zod'
 
 import { maxItemsFetchLimit } from '@/constants/constants'
@@ -47,7 +48,9 @@ export type SingleProductTypeWithCrossSells =
 export type SingleProductType = Omit<
   SingleProductTypeWithCrossSells,
   'crossSells'
->
+> & {
+  images: ProductImage[]
+}
 
 export {
   createProductSchema,

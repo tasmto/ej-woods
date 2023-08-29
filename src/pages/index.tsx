@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { createSSGHelpers } from '@trpc/react/ssg'
+import { createServerSideHelpers } from '@trpc/react-query/server'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import superjson from 'superjson'
@@ -221,13 +221,13 @@ const HomePage = ({
 export default HomePage
 
 export const getStaticProps = async () => {
-  const ssg = createSSGHelpers({
+  const ssg = createServerSideHelpers({
     router: appRouter,
     transformer: superjson,
     ctx: await createClientContext(),
   })
 
-  const products = await ssg.fetchQuery('products.multiple-products', {
+  const products = await ssg.products.multipleProducts.fetch({
     limit: 7,
   })
 

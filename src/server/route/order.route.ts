@@ -9,15 +9,16 @@ import {
   getOrderSchema,
 } from '@/schema/order.schema'
 
-import { createRouter } from '../createRouter'
-// todo: Add middleware to make sure only auth'ed users see unpublished products
+import { protectedProcedure, publicProcedure, router } from '../createRouter'
 
-const orderRouter = createRouter()
-  .mutation('create-order', {
-    input: createOrderSchema,
-    async resolve({ input, ctx }) {
+const orderRouter = router({
+  createOrder: publicProcedure
+    .input(createOrderSchema)
+    .mutation(async ({ ctx, input }) => {
       // check that all products exist and have enough stock
-      const products = await ctx.prisma.product.findMany({
+      const products = await (
+        await ctx
+      ).prisma.product.findMany({
         where: {
           id: { in: input.products.map(({ productId }) => productId) },
         },
@@ -89,7 +90,9 @@ const orderRouter = createRouter()
         })
       }
 
-      const order = await ctx.prisma.order.create({
+      const order = await (
+        await ctx
+      ).prisma.order.create({
         data: {
           ...input,
           products: {
@@ -200,12 +203,13 @@ const orderRouter = createRouter()
           cause: error,
         })
       }
-    },
-  })
-  .query('get-order', {
-    input: getOrderSchema,
-    async resolve({ input, ctx }) {
-      const order = await ctx.prisma.order.findUnique({
+    }),
+  getOrder: protectedProcedure
+    .input(getOrderSchema)
+    .query(async ({ ctx, input }) => {
+      const order = await (
+        await ctx
+      ).prisma.order.findUnique({
         where: { id: input.orderId },
         include: {
           products: {
@@ -234,7 +238,6 @@ const orderRouter = createRouter()
         })
       }
       return order
-    },
-  })
-
+    }),
+})
 export { orderRouter }
