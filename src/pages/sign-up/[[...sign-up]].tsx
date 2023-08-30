@@ -1,7 +1,13 @@
-import { SignIn } from '@clerk/nextjs'
+import { SignUp } from '@clerk/nextjs'
+
+import SignUpLayout from '@/features/accounts/components/SignUpLayout'
 
 const Page = () => {
-  return <SignIn />
+  return (
+    <SignUpLayout>
+      <SignUp />
+    </SignUpLayout>
+  )
 }
 
 export default Page

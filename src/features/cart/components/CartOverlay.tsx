@@ -11,6 +11,7 @@ import {
   HERE_IS_WHAT_IS_IN_YOUR_CART,
 } from '@/constants/standardNames'
 import CartTable from '@/features/cart/components/CartTable'
+import EmptyCartGif from '@/features/cart/components/EmptyCartGif'
 import { useCartStore } from '@/features/cart/state/CartContext'
 import { FormatCurrency } from '@/lib/FormatNumber'
 import resolveIcon from '@/lib/iconResolver'
@@ -67,7 +68,7 @@ const CartOverlay = () => {
               initial='enter'
               animate='present'
               exit='exit'
-              className='grid w-full min-w-[80vw] max-w-[400px] cursor-default gap-6 rounded-2xl bg-slate-100 py-6 px-6   shadow-xl md:rounded-3xl lg:min-w-[500px] lg:max-w-[600px]'
+              className='grid w-full min-w-[80vw] max-w-[400px] cursor-default gap-6 rounded-2xl bg-slate-100 py-6 px-6   shadow-xl md:rounded-3xl lg:min-w-[400px] lg:max-w-[500px]'
             >
               <div className='grid gap-1'>
                 <div className='flex items-center justify-between gap-3'>
@@ -79,31 +80,39 @@ const CartOverlay = () => {
                     <Image
                       src={resolveIcon('➖', false)?.['active'] || ''}
                       layout='intrinsic'
-                      className='shadow-xl transition-all duration-200'
+                      className='transition-all duration-200'
                       height={50}
                       width={50}
                       alt=''
                     />
                   </button>
                 </div>
-                <P1 className='w-full flex-1 text-primary-300'>
-                  Overview: {totalItemsInCart()} items · Total Price:{' '}
-                  {FormatCurrency(cartValue())}
-                </P1>
+                {
+                  <P1 className='w-full flex-1 text-primary-300'>
+                    Overview: {totalItemsInCart()} items · Total Price:{' '}
+                    {FormatCurrency(cartValue())}
+                  </P1>
+                }
               </div>
 
-              <CartTable className='max-h-[300px] overflow-y-scroll md:max-h-[400px]  lg:max-h-[450px]' />
-              <ButtonLink
-                href='/checkout'
-                variant='outline'
-                className='mt-3 w-full justify-center justify-self-stretch text-center'
-                icon='💳'
-                alwaysActive
-                iconPosition='start'
-                curve='top'
-              >
-                {GO_TO_CHECKOUT}
-              </ButtonLink>
+              {cart.length === 0 ? (
+                <EmptyCartGif />
+              ) : (
+                <>
+                  <CartTable className='max-h-[300px] overflow-y-scroll md:max-h-[400px]  lg:max-h-[450px]' />
+                  <ButtonLink
+                    href='/checkout'
+                    variant='outline'
+                    className='mt-3 w-full justify-center justify-self-stretch text-center'
+                    icon='💳'
+                    alwaysActive
+                    iconPosition='start'
+                    curve='top'
+                  >
+                    {GO_TO_CHECKOUT}
+                  </ButtonLink>
+                </>
+              )}
             </motion.div>
           </Container>
           {/* Overlay on background */}

@@ -6,7 +6,7 @@ import Typography from '@/components/typography/Typography'
 import FooterCTA from '@/features/navigation/components/FooterCTA'
 import clsxm from '@/lib/clsxm'
 
-const Footer = () => {
+const Footer = ({ showCta = true }: { showCta?: boolean }) => {
   const links = [
     {
       title: 'Who we are',
@@ -60,7 +60,7 @@ const Footer = () => {
   return (
     <div className='mt-20'>
       <Container level={1} as='footer' className='grid  gap-10'>
-        <FooterCTA />
+        {showCta && <FooterCTA />}
         <div className='grid gap-5 border-t border-primary-100/40 py-8 text-primary-300 sm:grid-cols-3 md:gap-6'>
           <article className='col-span-full grid items-start gap-8 sm:grid-cols-3  md:gap-6'>
             {links.map((link, index) => (

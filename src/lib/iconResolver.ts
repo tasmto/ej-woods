@@ -11,16 +11,17 @@ export enum Icons {
   '📅',
   '➕',
   '➖',
+  '👤',
 }
 
 const resolveIcon = (
   icon: keyof typeof Icons,
   iso: boolean
 ): {
-  icon: string;
-  active: string;
+  icon: string
+  active: string
 } | null => {
-  if (!icon) return null;
+  if (!icon) return null
 
   const iconName =
     icon === '💬'
@@ -47,9 +48,11 @@ const resolveIcon = (
       ? 'plus'
       : icon === '➖'
       ? 'close'
-      : undefined;
+      : icon === '👤'
+      ? 'person'
+      : undefined
 
-  if (!iconName) return null;
+  if (!iconName) return null
 
   return {
     icon: iso
@@ -58,7 +61,7 @@ const resolveIcon = (
     active: iso
       ? `/icons/${iconName}-icon--active-iso.png`
       : `/icons/${iconName}-icon--active.png`,
-  };
-};
+  }
+}
 
-export default resolveIcon;
+export default resolveIcon

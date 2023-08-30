@@ -28,11 +28,6 @@ export const createContextInner = async ({
   }
 }
 
-const userContext = (req: NextApiRequest) => {
-  const user = getAuth(req)
-  return user
-}
-
 const createContext = async ({
   req,
   res,
@@ -40,7 +35,6 @@ const createContext = async ({
   req: NextApiRequest
   res: NextApiResponse
 }) => {
-  const user = getAuth(req)
   // return { req, res, prisma, user: userContext(req) }
   return await createContextInner({ auth: getAuth(req), req, res, prisma })
 }

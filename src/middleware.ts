@@ -7,17 +7,21 @@ export default authMiddleware({
   publicRoutes: [
     '/',
     '/shop',
-    '/shop/[category]',
-    '/shipping',
+    '/shop/:bar',
+    '/shop/:foo:bar',
+
     '/checkout',
     'cart',
-    'payment',
+
     'carpentry',
     'about',
     'contact',
     'privacy',
     'orders-and-returns',
     'frequency-asked-questions',
+    // API routes are always public
+    '/api/trpc/products.multipleProducts',
+    '/api/trpc/products.singleProduct',
   ],
 })
 

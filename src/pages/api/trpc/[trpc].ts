@@ -25,6 +25,6 @@ export const createClientContext = async (
     req: opts?.req,
     res: opts?.res,
     prisma,
-    user: null,
+    auth: null,
   }
 }

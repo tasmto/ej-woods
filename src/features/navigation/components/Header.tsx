@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useAuth, UserButton } from '@clerk/nextjs'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -26,7 +27,7 @@ const CartIndicatorButton = dynamic(
   }
 )
 
-export default function Header() {
+const Header = () => {
   const router = useRouter()
 
   const { scrollYProgress } = useScroll()
@@ -35,6 +36,7 @@ export default function Header() {
     [0, 0.03],
     ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.9)']
   )
+  const { isLoaded, isSignedIn, sessionId, getToken } = useAuth()
 
   // todo: sticky mobile nav: https://blog.logrocket.com/react-scroll-animations-framer-motion/
 
@@ -115,6 +117,25 @@ export default function Header() {
                     </P2>
                   </UnstyledLink>
                 </li>
+                <li
+                  className='flex items-center gap-1 rounded-2xl  px-2 py-1  hover:bg-primary-50/50 '
+                  title='Account'
+                >
+                  {isSignedIn ? (
+                    <UserButton afterSignOutUrl='/' />
+                  ) : (
+                    <UnstyledLink href='/sign-in' title='Sign-in'>
+                      <Image
+                        src={resolveIcon('👤', true)?.['active'] || ''}
+                        layout='intrinsic'
+                        className=' transition-all duration-200'
+                        height={30}
+                        width={30}
+                        alt=''
+                      />
+                    </UnstyledLink>
+                  )}
+                </li>
               </ul>
             </nav>
           </motion.div>
@@ -123,3 +144,4 @@ export default function Header() {
     </div>
   )
 }
+export default Header

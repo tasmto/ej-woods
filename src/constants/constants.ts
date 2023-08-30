@@ -65,3 +65,11 @@ export {
   pageSize,
   paymentMethods,
 }
+
+export const contactInfo = {
+  openingHours: 'Open 6am/10pm Monday - Friday & 8am - 6pm Saturday- Sunday',
+  phoneNumber: '+27 65 000 0000',
+  email: 'info@ej-wood.co.za',
+  whatsAppLink: 'https://wa.me/0000000000',
+  location: '0000 Street Name, City, Province, Country',
+}

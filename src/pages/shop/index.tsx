@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { atom, useAtom } from 'jotai'
@@ -28,13 +29,13 @@ const ShopPage = () => {
     error,
   } = trpc.products.multipleProducts.useQuery(
     {
-                  limit: pageSize,
-                  page: 1,
-                  type: selected
-                    ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
-                    : undefined,
-                },
-      { staleTime: Infinity }
+      limit: pageSize,
+      page: 1,
+      type: selected
+        ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
+        : undefined,
+    },
+    { staleTime: Infinity }
   )
 
   useEffect(() => {
