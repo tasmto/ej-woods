@@ -14,12 +14,7 @@ interface AuthContext {
   prisma: typeof prisma
 }
 
-export const createContextInner = async ({
-  auth,
-  req,
-  res,
-  prisma,
-}: AuthContext) => {
+export const createContextInner = ({ auth, req, res, prisma }: AuthContext) => {
   return {
     auth,
     prisma,
@@ -28,7 +23,7 @@ export const createContextInner = async ({
   }
 }
 
-const createContext = async ({
+const createContext = ({
   req,
   res,
 }: {
@@ -36,7 +31,7 @@ const createContext = async ({
   res: NextApiResponse
 }) => {
   // return { req, res, prisma, user: userContext(req) }
-  return await createContextInner({ auth: getAuth(req), req, res, prisma })
+  return createContextInner({ auth: getAuth(req), req, res, prisma })
 }
 
 export { createContext }

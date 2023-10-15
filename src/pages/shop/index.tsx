@@ -22,21 +22,18 @@ const ShopPage = () => {
   const router = useRouter()
   const [selected, setSelected] = useAtom(productQuery)
 
-  const {
-    data: products,
-    isLoading,
-    isError,
-    error,
-  } = trpc.products.multipleProducts.useQuery(
-    {
-      limit: pageSize,
-      page: 1,
-      type: selected
-        ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
-        : undefined,
-    },
-    { staleTime: Infinity }
-  )
+  const { data, isLoading, isError, error } =
+    trpc.products.multipleProducts.useQuery(
+      {
+        limit: pageSize,
+        page: 1,
+        type: selected
+          ? (selected.toString().toUpperCase() as 'FURNITURE' | 'WOOD')
+          : undefined,
+        sortBy: 'random',
+      },
+      { staleTime: Infinity }
+    )
 
   useEffect(() => {
     if (router.query.category !== selected)
@@ -145,7 +142,7 @@ const ShopPage = () => {
           level={1}
           role='tabpanel'
           className={clsxm('grid gap-5 sm:grid-cols-2 lg:grid-cols-3', [
-            products && 'min-h-[300px] lg:min-h-[400px]',
+            data?.products && 'min-h-[300px] lg:min-h-[400px]',
           ])}
         >
           <h1 className='sr-only'>
@@ -155,7 +152,7 @@ const ShopPage = () => {
             ? new Array(3)
                 .fill(undefined)
                 .map((_, i) => <ProductCardSkeleton key={i} />)
-            : products?.map((product, i) => (
+            : data?.products?.map((product, i) => (
                 <ProductCard key={i} position={i} product={product} />
               ))}
         </Container>

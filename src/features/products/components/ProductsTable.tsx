@@ -66,7 +66,9 @@ const ProductsTable = ({ className, products }: Props) => {
                       {trimString(name, 40)}
                     </H3>
                     <P3 className='text-primary-200' suppressHydrationWarning>
-                      <b>{FormatCurrency(quantity * price) ?? 0}</b>
+                      <b suppressHydrationWarning>
+                        {FormatCurrency(quantity * price) ?? 0}
+                      </b>
                       {type === 'FURNITURE'
                         ? ` — for ${quantity}.`
                         : ` — for ${product.weight * quantity ?? 1} ${"kg's"}`}

@@ -48,12 +48,15 @@ const IMG = ({
   return (
     <figure
       style={!widthIsSet ? { width: `${width}px` } : undefined}
-      className={clsxm(className, 'absolute top-0 left-0 h-full w-full')}
+      className={clsxm(
+        className,
+        'relative top-0 left-0 h-full w-full overflow-hidden'
+      )}
     >
       <Image
         className={clsxm(
           imgClassName,
-          status === 'loading' && clsxm('animate-pulse', blurClassName)
+          status === 'loading' && clsxm('skeleton animate-pulse', blurClassName)
         )}
         src={
           transformation

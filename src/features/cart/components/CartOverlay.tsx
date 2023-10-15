@@ -9,6 +9,7 @@ import { H1, P1 } from '@/components/typography/Typography'
 import {
   GO_TO_CHECKOUT,
   HERE_IS_WHAT_IS_IN_YOUR_CART,
+  YOUR_CART_IS_EMPTY,
 } from '@/constants/standardNames'
 import CartTable from '@/features/cart/components/CartTable'
 import EmptyCartGif from '@/features/cart/components/EmptyCartGif'
@@ -72,7 +73,11 @@ const CartOverlay = () => {
             >
               <div className='grid gap-1'>
                 <div className='flex items-center justify-between gap-3'>
-                  <H1>{HERE_IS_WHAT_IS_IN_YOUR_CART}</H1>
+                  <H1>
+                    {totalItemsInCart()
+                      ? HERE_IS_WHAT_IS_IN_YOUR_CART
+                      : YOUR_CART_IS_EMPTY}
+                  </H1>
                   <button
                     onClick={() => setCartOpen(false)}
                     className='rounded-xl bg-slate-200 px-1 py-[1px] hover:bg-slate-300'

@@ -66,7 +66,7 @@ const ProductCard = ({ product, position }: Props) => {
                 {trimString(name, 65)}
               </H3>
 
-              <P1 className='mt-2 drop-shadow-md'>
+              <P1 className='mt-2 drop-shadow-md' suppressHydrationWarning>
                 {FormatCurrency(price)} {type === 'WOOD' ? ' per kg' : 'each'}
               </P1>
             </div>

@@ -1,9 +1,8 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-import { openGraph } from '@/lib/helper';
+import { openGraph } from '@/lib/helper'
 
-// !STARTERCONF Change these default meta
 const defaultMeta = {
   title: 'Ej-Woods',
   siteName: 'Ej-Woods',
@@ -19,22 +18,22 @@ const defaultMeta = {
    */
   image:
     'https://images.unsplash.com/photo-1569695145335-ed8e60d92945?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-};
+}
 
 type SeoProps = {
-  date?: string;
-  templateTitle?: string;
-} & Partial<typeof defaultMeta>;
+  date?: string
+  templateTitle?: string
+} & Partial<typeof defaultMeta>
 
-export default function Seo(props: SeoProps) {
-  const router = useRouter();
+const Seo = (props: SeoProps) => {
+  const router = useRouter()
   const meta = {
     ...defaultMeta,
     ...props,
-  };
+  }
   meta['title'] = props.templateTitle
     ? `${props.templateTitle} | ${meta.siteName}`
-    : meta.title;
+    : meta.title
 
   // Use siteName if there is templateTitle
   // but show full title if there is none
@@ -44,7 +43,7 @@ export default function Seo(props: SeoProps) {
     description: meta.description,
     siteName: props.templateTitle ? meta.siteName : meta.title,
     templateTitle: props.templateTitle,
-  });
+  })
 
   return (
     <Head>
@@ -92,15 +91,15 @@ export default function Seo(props: SeoProps) {
       />
       <meta name='theme-color' content='#ffffff' />
     </Head>
-  );
+  )
 }
 
 type Favicons = {
-  rel: string;
-  href: string;
-  sizes?: string;
-  type?: string;
-};
+  rel: string
+  href: string
+  sizes?: string
+  type?: string
+}
 
 const favicons: Array<Favicons> = [
   {
@@ -176,4 +175,6 @@ const favicons: Array<Favicons> = [
     rel: 'manifest',
     href: '/favicon/manifest.json',
   },
-];
+]
+
+export default Seo

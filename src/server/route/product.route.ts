@@ -4,6 +4,8 @@ import {
   createProductSchema,
   getMultipleProductsSchema,
   getSingleProductSchema,
+  updateProductStockSchema,
+  updateProductVisibilitySchema,
 } from '@/schema/product.schema'
 
 import { protectedProcedure, publicProcedure, router } from '../createRouter'
@@ -42,7 +44,7 @@ const productRouter = router({
   multipleProducts: publicProcedure
     .input(getMultipleProductsSchema)
     .query(async ({ ctx, input }) => {
-      const { type, limit, name, page } = input
+      const { type, limit, name, page, sortBy, showArchived, sortOrder } = input
 
       const products = await (
         await ctx
@@ -51,7 +53,7 @@ const productRouter = router({
           AND: [
             { type: type ?? undefined },
             { name: { contains: name ?? undefined } },
-            { published: true },
+            { published: showArchived === true ? undefined : true },
           ],
         },
         include: {
@@ -59,12 +61,28 @@ const productRouter = router({
         },
         skip: page && limit ? (page - 1) * limit : 0,
         take: limit ?? undefined,
-        orderBy: {
-          name: 'desc',
+        orderBy:
+          sortBy === 'random' || !sortBy
+            ? { id: sortOrder || 'asc' }
+            : { [sortBy]: sortOrder || 'asc' },
+      })
+      const count = await ctx.prisma.product.count({
+        where: {
+          AND: [
+            { type: type ?? undefined },
+            { name: { contains: name ?? undefined } },
+            { published: showArchived === true ? undefined : true },
+          ],
         },
       })
 
-      return products
+      return {
+        products,
+        count,
+        page: page ?? 1,
+        limit,
+        totalPages: limit ? Math.ceil(count / limit) : 1,
+      }
     }),
   createProduct: protectedProcedure
     .input(createProductSchema)
@@ -76,6 +94,41 @@ const productRouter = router({
       })
 
       return product
+    }),
+  setProductStock: protectedProcedure
+    .input(updateProductStockSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.prisma.product.update({
+          where: {
+            id: input.productId,
+          },
+          data: {
+            countInStock: input.countInStock,
+            hasInfiniteStock: input.hasInfiniteStock,
+          },
+        })
+        return true
+      } catch (error) {
+        return false
+      }
+    }),
+  setProductVisibility: protectedProcedure
+    .input(updateProductVisibilitySchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.prisma.product.update({
+          where: {
+            id: input.productId,
+          },
+          data: {
+            published: input.published,
+          },
+        })
+        return true
+      } catch (error) {
+        return false
+      }
     }),
 })
 

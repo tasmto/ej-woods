@@ -31,7 +31,7 @@ const AddToCartButton = dynamic(
 
 const HomePage = ({
   contactInfo,
-  products,
+  products: { products } = { products: [] },
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   // @ts-ex
   // const {
@@ -68,7 +68,7 @@ const HomePage = ({
                 <H1 weight='bold' className='drop-shadow-md'>
                   {featuredProduct?.name}
                 </H1>
-                <P1 className='drop-shadow-md'>
+                <P1 className='drop-shadow-md' suppressHydrationWarning>
                   {FormatCurrency(featuredProduct?.price)} per kg
                 </P1>
               </div>
@@ -88,8 +88,9 @@ const HomePage = ({
                 '/images/homepage-hero-cover-image.jpg'
               }
               alt={featuredProduct ? `An image of ${featuredProduct.name}` : ''}
-              className='skeleton h-full w-full bg-slate-500'
+              className='h-full w-full bg-slate-500'
               imgClassName='object-cover'
+              useSkeleton
             />
           </div>
         </Container>

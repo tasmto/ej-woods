@@ -207,6 +207,10 @@ const orderRouter = router({
   getOrder: protectedProcedure
     .input(getOrderSchema)
     .query(async ({ ctx, input }) => {
+      console.log(
+        '🚀 ~ file: order.route.ts ~ line 210 ~ ',
+        (await ctx).auth?.userId
+      )
       const order = await (
         await ctx
       ).prisma.order.findUnique({

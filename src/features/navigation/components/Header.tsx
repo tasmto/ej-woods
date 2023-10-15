@@ -1,5 +1,7 @@
 import * as React from 'react'
+import { IoArrowBackOutline } from 'react-icons/io5'
 import { useAuth, UserButton } from '@clerk/nextjs'
+import clsx from 'clsx'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -20,6 +22,13 @@ const links = [
   { href: '/gallery', label: 'Our Work' },
 ]
 
+const adminLinks = [
+  { href: '/admin', label: 'Dashboard' },
+  { href: '/admin/products', label: 'Products' },
+  { href: '/admin/orders', label: 'Orders' },
+  { href: '/admin/customers', label: 'Customers' },
+]
+
 const CartIndicatorButton = dynamic(
   () => import('../../cart/components/CartIndicator'),
   {
@@ -27,7 +36,7 @@ const CartIndicatorButton = dynamic(
   }
 )
 
-const Header = () => {
+const Header = ({ hideOnMobile = true, isAdmin = false }) => {
   const router = useRouter()
 
   const { scrollYProgress } = useScroll()
@@ -41,7 +50,14 @@ const Header = () => {
   // todo: sticky mobile nav: https://blog.logrocket.com/react-scroll-animations-framer-motion/
 
   return (
-    <div className='sr-only bg-transparent sm:not-sr-only sm:fixed sm:top-1 sm:z-30 sm:!w-full'>
+    <div
+      className={clsx([
+        'bg-transparent  sm:z-30 sm:!w-full',
+        hideOnMobile
+          ? 'sr-only sm:not-sr-only sm:fixed sm:top-1 '
+          : 'fixed top-1 ',
+      ])}
+    >
       <Container level={1}>
         <AnimatePresence>
           <motion.div
@@ -58,7 +74,21 @@ const Header = () => {
             </UnstyledLink>
             <nav className='flex items-center justify-end  divide-x divide-slate-300'>
               <ul className='flex items-center justify-between'>
-                {links.map(({ href, label }, i) => (
+                {isAdmin && (
+                  <li>
+                    <UnstyledLink
+                      href={'/'}
+                      className={clsxm(
+                        'max-[1px] flex items-center gap-2 rounded-xl px-2 py-2 text-primary-600 hover:bg-primary-50/50 hover:text-primary-300 md:mx-[2px] md:px-3',
+                        []
+                      )}
+                    >
+                      <IoArrowBackOutline className='h-5 w-5' />
+                      <P2 as='span'>Back to shop</P2>
+                    </UnstyledLink>
+                  </li>
+                )}
+                {(isAdmin ? adminLinks : links).map(({ href, label }, i) => (
                   <li key={i}>
                     <UnstyledLink
                       href={href}
@@ -76,9 +106,11 @@ const Header = () => {
                 ))}
               </ul>
               <ul className='ml-2 flex items-center justify-between gap-1 pl-1'>
-                <li>
-                  <CartIndicatorButton />
-                </li>
+                {!isAdmin && (
+                  <li>
+                    <CartIndicatorButton />
+                  </li>
+                )}
                 <li>
                   <UnstyledLink
                     href='/shop/cart'

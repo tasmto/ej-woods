@@ -1,3 +1,5 @@
+import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClientOptions } from '@prisma/client/runtime'
 import * as trpcNext from '@trpc/server/adapters/next'
 
 import { createContext } from '../../../server/createContext'
@@ -26,5 +28,14 @@ export const createClientContext = async (
     res: opts?.res,
     prisma,
     auth: null,
+  } as unknown as {
+    req: trpcNext.CreateNextContextOptions['req']
+    res: trpcNext.CreateNextContextOptions['res']
+    prisma: PrismaClient<
+      PrismaClientOptions,
+      never,
+      Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+    >
+    auth: null
   }
 }

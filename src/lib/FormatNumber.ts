@@ -1,5 +1,5 @@
 export function FormatCurrency(number = 0, currency = 'ZAR') {
-  return Number(number).toLocaleString('en-ZA', {
+  return Number(number).toLocaleString('en-za', {
     style: 'currency',
     currency: currency,
   })
@@ -23,8 +23,5 @@ export const FormatDate = (
     hour: options?.hour,
     minute: options?.minute,
   }
-  return new Date(date).toLocaleDateString(
-     'en-za',
-    format
-  )
+  return new Date(date).toLocaleDateString('en-za', format)
 }

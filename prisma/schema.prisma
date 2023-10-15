@@ -106,6 +106,8 @@ model Order {
   updatedAt   DateTime  @default(now()) @updatedAt()
   createdAt   DateTime  @default(now())
   deliveredAt DateTime?
+  User        User      @relation(fields: [userId], references: [id])
+  userId      Int
 }
 
 enum PaymentStatus {
@@ -135,6 +137,37 @@ model orderProduct {
 
   quantity Int
   price    Int
+
+  updatedAt DateTime @default(now()) @updatedAt()
+  createdAt DateTime @default(now())
+}
+
+// * Users Schemas -------------------
+model User {
+  id    Int      @id @unique @default(autoincrement())
+  email String   @unique
+  name  String?
+  role  UserRole @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt()
+
+  // * Relations
+  orders Order[]
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+// * Settings Schemas -------------------
+model Settings {
+  id Int @id @unique @default(autoincrement())
+
+  key   String
+  value String
 
   updatedAt DateTime @default(now()) @updatedAt()
   createdAt DateTime @default(now())

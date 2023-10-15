@@ -27,9 +27,9 @@ const SingleOrderPage = (props: Props) => {
     error,
   } = trpc.orders.getOrder.useQuery(
     {
-                  orderId: Number(orderId),
-                },
-      { staleTime: Infinity }
+      orderId: Number(orderId),
+    },
+    { staleTime: Infinity }
   )
 
   return isLoading ? (

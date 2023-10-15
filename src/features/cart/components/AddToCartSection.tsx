@@ -64,7 +64,11 @@ const AddToCartSection = ({ product }: Props) => {
             {product.weight * howMany ?? 1} {"kg's"}
           </>
         )}
-        <P2 as='span' className='ml-4 text-primary-200'>
+        <P2
+          as='span'
+          className='ml-4 text-primary-200'
+          suppressHydrationWarning
+        >
           ({FormatCurrency(product.price)} each).
         </P2>
       </H3>

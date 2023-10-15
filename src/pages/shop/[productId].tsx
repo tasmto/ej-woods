@@ -29,9 +29,9 @@ const ProductPage = () => {
     error,
   } = trpc.products.singleProduct.useQuery(
     {
-                  productId: Number(productId),
-                },
-      { staleTime: Infinity }
+      productId: Number(productId),
+    },
+    { staleTime: Infinity }
   )
 
   if (isLoading)
@@ -69,9 +69,10 @@ const ProductPage = () => {
               src={product?.images?.at(0)?.url}
               alt=''
               quality={100}
-              className='skeleton relative h-full w-full  w-[100px] object-cover md:rounded-r-3xl'
+              className=' relative h-full w-full  w-[100px] object-cover md:rounded-r-3xl'
               imgClassName='md:rounded-r-[2.5rem]  h-full w-full object-cover w-full '
               priority
+              useSkeleton
             />
           </div>
         </Container>

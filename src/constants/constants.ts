@@ -73,3 +73,6 @@ export const contactInfo = {
   whatsAppLink: 'https://wa.me/0000000000',
   location: '0000 Street Name, City, Province, Country',
 }
+
+export const errorPageGif =
+  'https://media2.giphy.com/media/3ktLJJs5fYT6NP005b/giphy.gif?cid=ecf05e47dy411abkf25ynnzzpb5hz4245m8dnxojwyfbu6ih&ep=v1_gifs_search&rid=giphy.gif&ct=g'

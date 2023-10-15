@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import Container from '@/components/layout/Container'
 import Seo from '@/components/Seo'
 import { D2, H1, P1 } from '@/components/typography/Typography'
+import { HERE_IS_WHAT_IS_IN_YOUR_CART } from '@/constants/standardNames'
 import { useCartStore } from '@/features/cart/state/CartContext'
 import CheckoutForm from '@/features/checkout/components/CheckoutForm'
 import CheckoutLayout from '@/features/checkout/components/Layout'
@@ -39,7 +40,7 @@ const CheckoutPage = () => {
         </article>
         <aside className='grid gap-4'>
           <div>
-            <H1 as='h2'>Here is what is in your cart</H1>
+            <H1 as='h2'>{HERE_IS_WHAT_IS_IN_YOUR_CART}</H1>
 
             <P1 className='w-full flex-1 text-primary-300'>
               Overview: {totalItemsInCart()} items · Total Price:{' '}

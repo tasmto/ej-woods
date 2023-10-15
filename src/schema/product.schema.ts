@@ -17,6 +17,21 @@ const createProductSchema = z.object({
 })
 export type CreateProductInput = z.TypeOf<typeof createProductSchema>
 
+const updateProductStockSchema = z.object({
+  productId: z.number(),
+  countInStock: z.number(),
+  hasInfiniteStock: z.boolean(),
+})
+export type UpdateProductStockInput = z.TypeOf<typeof updateProductStockSchema>
+
+const updateProductVisibilitySchema = z.object({
+  productId: z.number(),
+  published: z.boolean(),
+})
+export type UpdateProductVisibilityInput = z.TypeOf<
+  typeof updateProductVisibilitySchema
+>
+
 const getSingleProductSchema = z.object({
   productId: z.number(),
 })
@@ -35,6 +50,12 @@ const getMultipleProductsSchema = z.object({
     .nullable()
     .default(null),
   page: z.number().nullable().default(null),
+  sortBy: z
+    .enum(['name', 'price', 'random', 'type', 'createdAt', 'updatedAt'])
+    .nullable()
+    .default('random'),
+  showArchived: z.boolean().default(false),
+  sortOrder: z.enum(['asc', 'desc']).nullable().default('asc'),
 })
 export type GetMultipleProductsInput = z.TypeOf<
   typeof getMultipleProductsSchema
@@ -56,4 +77,6 @@ export {
   createProductSchema,
   getMultipleProductsSchema,
   getSingleProductSchema,
+  updateProductStockSchema,
+  updateProductVisibilitySchema,
 }
