@@ -33,7 +33,8 @@ export type UpdateProductVisibilityInput = z.TypeOf<
 >
 
 const getSingleProductSchema = z.object({
-  productId: z.number(),
+  productId: z.number().optional(),
+  slug: z.string().optional(),
 })
 
 const getMultipleProductsSchema = z.object({

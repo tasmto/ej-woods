@@ -20,12 +20,30 @@ type Props = {
   placeholder?: string
   name: string
   formik: FormikProps<any>
+  className?: string
+  disabled?: boolean
 }
 
-const SingleLineInput = ({ label, placeholder, name, formik, type }: Props) => {
+const SingleLineInput = ({
+  label,
+  placeholder,
+  name,
+  formik,
+  type,
+  className,
+  disabled,
+}: Props) => {
   return (
-    <motion.fieldset className='grid gap-2' layout>
-      <P1 weight='bold' htmlFor='name' as='label'>
+    <motion.fieldset
+      className={`flex w-full flex-col gap-2 ${className}`}
+      layout
+    >
+      <P1
+        weight='bold'
+        htmlFor='name'
+        as='label'
+        className={clsxm([disabled && 'cursor-not-allowed text-gray-500'])}
+      >
         {label}
       </P1>
       <input
@@ -36,12 +54,17 @@ const SingleLineInput = ({ label, placeholder, name, formik, type }: Props) => {
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         value={formik.values[name]}
+        disabled={disabled}
         className={clsxm([
           'ej-form-input',
-          formik.touched[name] && formik.errors[name] && 'ej-form-input-error',
+          formik.touched[name] &&
+            formik.errors[name] &&
+            !disabled &&
+            'ej-form-input-error',
+          disabled && 'ej-form-input-disabled',
         ])}
       />
-      <FormAlert formik={formik} field={name} />
+      {!disabled && <FormAlert formik={formik} field={name} />}
     </motion.fieldset>
   )
 }

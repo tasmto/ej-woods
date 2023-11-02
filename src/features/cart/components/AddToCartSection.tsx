@@ -55,13 +55,13 @@ const AddToCartSection = ({ product }: Props) => {
       >
         {howManyInCart(product) ? (
           <>
-            <b>{FormatCurrency(product.price * howMany ?? 1)}</b> — for{' '}
+            <b>{FormatCurrency((product.price || 1) * howMany ?? 1)}</b> — for{' '}
             {howMany}.
           </>
         ) : (
           <>
-            <b>{FormatCurrency(product.price * howMany ?? 1)}</b> — for{' '}
-            {product.weight * howMany ?? 1} {"kg's"}
+            <b>{FormatCurrency((product.price || 1) * howMany ?? 1)}</b> — for{' '}
+            {(product.weight || 1) * howMany ?? 1} {"kg's"}
           </>
         )}
         <P2

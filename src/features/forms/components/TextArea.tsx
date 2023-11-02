@@ -11,12 +11,18 @@ type Props = {
   placeholder?: string
   name: string
   formik: FormikProps<any>
+  disabled?: boolean
 }
 
-const TextArea = ({ label, placeholder, name, formik }: Props) => {
+const TextArea = ({ label, placeholder, name, formik, disabled }: Props) => {
   return (
     <fieldset className='grid gap-2'>
-      <P1 weight='bold' htmlFor='name' as='label'>
+      <P1
+        weight='bold'
+        htmlFor='name'
+        as='label'
+        className={clsxm([disabled && 'cursor-not-allowed text-gray-500'])}
+      >
         {label}
       </P1>
       <textarea
@@ -27,13 +33,18 @@ const TextArea = ({ label, placeholder, name, formik }: Props) => {
         onBlur={formik.handleBlur}
         value={formik.values[name]}
         rows={3}
+        disabled={disabled}
         className={clsxm([
           'ej-form-input',
-          formik.touched[name] && formik.errors[name] && 'ej-form-input-error',
+          formik.touched[name] &&
+            formik.errors[name] &&
+            !disabled &&
+            'ej-form-input-error',
+          disabled && 'ej-form-input-disabled',
         ])}
       ></textarea>
 
-      <FormAlert formik={formik} field={name} />
+      {!disabled && <FormAlert formik={formik} field={name} />}
     </fieldset>
   )
 }

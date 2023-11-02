@@ -17,12 +17,18 @@ const productRouter = router({
     .input(getSingleProductSchema)
     .query(async ({ ctx, input }) => {
       const auth = await (await ctx).user
-      console.log(auth)
+      if (!input.productId && !input.slug) {
+        throw new trpc.TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Please provide a productId or slug',
+        })
+      }
       const item = await (
         await ctx
       ).prisma.product.findUnique({
         where: {
-          id: input.productId,
+          ...(input.productId ? { id: input.productId } : {}),
+          ...(input.slug ? { slug: input.slug } : {}),
         },
         include: {
           crossSells: {

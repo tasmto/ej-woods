@@ -65,10 +65,13 @@
   }
 
   .ej-form-input {
-    @apply rounded-sm rounded-t-lg border-0 border-b-2 border-gray-400  bg-slate-100 text-primary-800 outline-0 transition-colors duration-300 placeholder:text-slate-400 focus:border-primary-400 focus:shadow-sm  focus:shadow-slate-200  focus:outline-offset-2 focus:ring-0;
+    @apply rounded-sm rounded-t-lg border-0 border-b border-gray-400  bg-gray-100/80 py-2 px-3 text-primary-800 outline-0 transition-colors duration-300 placeholder:text-slate-400 focus:border-primary-400 focus:shadow-sm  focus:shadow-slate-200  focus:outline-offset-2 focus:ring-0;
   }
   .ej-form-input-error {
     @apply border-red-600 duration-500 focus:border-red-700;
+  }
+  .ej-form-input-disabled {
+    @apply cursor-not-allowed border-gray-400 bg-gray-200/60 text-gray-400;
   }
 
   .children-h-full * {

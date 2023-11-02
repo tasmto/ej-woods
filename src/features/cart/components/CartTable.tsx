@@ -38,7 +38,14 @@ const CartTable = ({ className, allowEditing = true }: Props) => {
             )}
           >
             {cart.map((product: CartProductType, i) => {
-              const { id, name, quantity, images, price, type } = product
+              const {
+                id,
+                name = '',
+                quantity = 1,
+                images,
+                price = 1,
+                type,
+              } = product
               return (
                 <tr
                   key={id}
@@ -69,10 +76,12 @@ const CartTable = ({ className, allowEditing = true }: Props) => {
                       {trimString(name, 40)}
                     </H3>
                     <P3 className='text-primary-200' suppressHydrationWarning>
-                      <b>{FormatCurrency(quantity * price) ?? 0}</b>
+                      <b>{FormatCurrency(quantity * (price || 1)) ?? 0}</b>
                       {type === 'FURNITURE'
                         ? ` — for ${quantity}.`
-                        : ` — for ${product.weight * quantity ?? 1} ${"kg's"}`}
+                        : ` — for ${
+                            (product.weight || 1) * quantity ?? 1
+                          } ${"kg's"}`}
                     </P3>
                   </td>
                   {allowEditing && (
