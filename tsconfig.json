@@ -1,33 +1,44 @@
 {
   "compilerOptions": {
-    "target": "ES2021",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    /* Base Options: */
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
     "resolveJsonModule": true,
+    "moduleDetection": "force",
     "isolatedModules": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "checkJs": true,
+
+    /* Bundled projects */
+    "lib": ["dom", "dom.iterable", "ES2022"],
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "jsx": "preserve",
-    "baseUrl": ".",
+    "plugins": [{ "name": "next" }],
+    "incremental": true,
+
+    /* Path Aliases */
+     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./public/*"]
     },
-    "incremental": true
   },
   "include": [
+    ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.cjs",
+    "**/*.js",
+    ".next/types/**/*.ts",
     "src/data/product.seed.ts"
   ],
-  "exclude": ["node_modules"],
-  "moduleResolution": ["node_modules", ".next", "node"]
+  "exclude": ["node_modules"]
 }

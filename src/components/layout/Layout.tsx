@@ -2,10 +2,11 @@ import * as React from 'react'
 import clsx from 'clsx'
 
 import Wrapper from '@/components/layout/Wrapper'
-import CartOverlay from '@/features/cart/components/CartOverlay'
-import Footer from '@/features/navigation/components/Footer'
 import Header from '@/features/navigation/components/Header'
+import CartOverlay from '@/features/cart/components/CartOverlay'
 import MobileNav from '@/features/navigation/components/MobileNav'
+import Footer from '@/features/navigation/components/Footer'
+ 
 
 const Layout = ({
   children,

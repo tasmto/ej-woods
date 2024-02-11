@@ -1,25 +1,25 @@
-import { Prisma, PrismaClient } from '@prisma/client'
-import { PrismaClientOptions } from '@prisma/client/runtime'
+import { createNextApiHandler } from "@trpc/server/adapters/next";
 import * as trpcNext from '@trpc/server/adapters/next'
+import { env } from "@/env";
+import { appRouter } from "@/server/api/root";
+import { createTRPCContext } from "@/server/api/trpc";
+import { PrismaClient, Prisma } from "@prisma/client";
+import { PrismaClientOptions } from "@prisma/client/runtime/library";
 
-import { createContext } from '../../../server/createContext'
-import { appRouter } from '../../../server/route/app.router'
-// This allows trpc to intercept the nextjs request
-export default trpcNext.createNextApiHandler({
+// export API handler
+export default createNextApiHandler({
   router: appRouter,
-  createContext,
+  createContext: createTRPCContext,
+  onError:
+    env.NODE_ENV === "development"
+      ? ({ path, error }) => {
+          console.error(
+            `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
+          );
+        }
+      : undefined,
+});
 
-  onError({ error }) {
-    if (error.code === 'INTERNAL_SERVER_ERROR') {
-      console.error('Something went wrong...', error)
-    } else {
-      console.error(error)
-    }
-  },
-})
-
-// create context based of incoming request
-// set as optional here so it can also be re-used for `getStaticProps()`
 export const createClientContext = async (
   opts?: trpcNext.CreateNextContextOptions
 ) => {
@@ -34,7 +34,8 @@ export const createClientContext = async (
     prisma: PrismaClient<
       PrismaClientOptions,
       never,
-      Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+      // Prisma.RejectOnNotFound | Prisma.RejectPerOperation
+      any 
     >
     auth: null
   }

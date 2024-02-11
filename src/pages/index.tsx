@@ -1,3 +1,4 @@
+
 import * as React from 'react'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import { InferGetStaticPropsType } from 'next'
@@ -20,7 +21,8 @@ import { returnCloudinaryImageUrl } from '@/lib/cloudinaryHelpers'
 import clsxm from '@/lib/clsxm'
 import { FormatCurrency } from '@/lib/FormatNumber'
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
-import { appRouter } from '@/server/route/app.router'
+import { appRouter } from '@/server/api/root'
+import { api } from "@/utils/api";
 
 const AddToCartButton = dynamic(
   () => import('@/features/cart/components/AddToCartButton'),
@@ -31,7 +33,7 @@ const AddToCartButton = dynamic(
 
 const HomePage = ({
   contactInfo,
-  products: { products } = { products: [] },
+  // products: { products } = { products: [] },
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   // @ts-ex
   // const {
@@ -39,6 +41,10 @@ const HomePage = ({
   //   isLoading,
   //   isError,
   // } = trpc.useQuery(['products.multiple-products', { limit: 7 }])
+    const {data} = api.products.multipleProducts.useQuery({
+    limit: 7,
+  })
+  const products = data?.products ?? []
   const featuredProduct = products?.at(0) ?? undefined
 
   return (
@@ -98,7 +104,7 @@ const HomePage = ({
       <Container as='section' level={1} aria-hidden='true'>
         <Container
           as='div'
-          className='flex rounded-b-3xl bg-primary-900 p-8 text-slate-200 lg:p-12'
+          className='bg-primary-900 flex rounded-b-3xl p-8 text-slate-200 lg:p-12'
         >
           <div className='grid gap-2 sm:grid-cols-3 sm:gap-8'>
             <H2 as='p' className='sm:col-span-1'>
@@ -222,15 +228,16 @@ const HomePage = ({
 export default HomePage
 
 export const getStaticProps = async () => {
-  const ssg = createServerSideHelpers({
-    router: appRouter,
-    transformer: superjson,
-    ctx: await createClientContext(),
-  })
-
-  const products = await ssg.products.multipleProducts.fetch({
-    limit: 7,
-  })
+  // const ssg = createServerSideHelpers({
+  //   router: appRouter,
+  //   transformer: superjson,
+  //   ctx: await createClientContext(),
+  // })
+ 
+  
+  // const products = await api.products.multipleProducts({
+  //   limit: 7,
+  // })
 
   return {
     props: {
@@ -242,7 +249,7 @@ export const getStaticProps = async () => {
         whatsAppLink: 'https://wa.me/0000000000',
         location: '0000 Street Name, City, Province, Country',
       },
-      products,
+      // products,
     },
     revalidate: 120,
   }

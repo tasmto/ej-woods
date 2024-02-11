@@ -13,8 +13,6 @@ import { P2 } from '@/components/typography/Typography'
 import clsxm from '@/lib/clsxm'
 import resolveIcon from '@/lib/iconResolver'
 
-import EjWoodsLogo from '~/svg/ej-woods-logo.svg'
-
 const links = [
   { href: '/shop', label: 'Shop' },
   { href: '/shop?category=furniture', label: 'Furniture' },
@@ -67,10 +65,10 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
             className='flex h-14 items-center justify-between rounded-3xl px-4 backdrop-blur-sm sm:py-2 '
-            style={{ backgroundColor: navBG }}
+            // style={{ backgroundColor: navBG }}
           >
             <UnstyledLink href='/' className='font-bold hover:text-gray-600'>
-              <EjWoodsLogo className='h-20 w-full md:h-24' />
+              <img src="/svg/ej-woods-logo.svg" className='h-10 w-full md:h-12' />
             </UnstyledLink>
             <nav className='flex items-center justify-end  divide-x divide-slate-300'>
               <ul className='flex items-center justify-between'>

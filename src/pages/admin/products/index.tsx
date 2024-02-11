@@ -11,7 +11,7 @@ import AdminLayout from '@/features/accounts/components/AdminLayout'
 import HorizontalProductCard from '@/features/products/components/HorizontalProductCard'
 import clsxm from '@/lib/clsxm'
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
-import { appRouter } from '@/server/route/app.router'
+import { appRouter } from '@/server/api/routers/app.router'
 import { trpc } from '@/utils/trpc'
 
 const Page = ({
@@ -63,7 +63,7 @@ const Page = ({
                   handlePageChange((data?.page || 1) - 1)
                 }}
                 className={clsxm([
-                  'rounded-l-lg border border-r-0 border-primary-100 py-2 px-3 hover:bg-primary-100 hover:text-primary-10',
+                  'border-primary-100 hover:bg-primary-100 hover:text-primary-10 rounded-l-lg border border-r-0 py-2 px-3',
                   'disabled:bg-primary-20 disabled:text-primary-100',
                 ])}
               >
@@ -77,7 +77,7 @@ const Page = ({
                   handlePageChange((data?.page || 0) + 1)
                 }}
                 className={clsxm([
-                  'rounded-r-lg border   border-primary-100 py-2 px-3 hover:bg-primary-100 hover:text-primary-10',
+                  'border-primary-100 hover:bg-primary-100   hover:text-primary-10 rounded-r-lg border py-2 px-3',
                   'disabled:bg-primary-20 disabled:text-primary-100',
                 ])}
               >

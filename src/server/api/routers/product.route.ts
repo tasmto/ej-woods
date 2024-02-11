@@ -8,15 +8,19 @@ import {
   updateProductVisibilitySchema,
 } from '@/schema/product.schema'
 
-import { protectedProcedure, publicProcedure, router } from '../createRouter'
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
 // todo: Add middleware to make sure only auth'ed users see unpublished products
 
-const productRouter = router({
+const productRouter = createTRPCRouter({
   singleProduct: publicProcedure
     .input(getSingleProductSchema)
     .query(async ({ ctx, input }) => {
-      const auth = await (await ctx).user
+      const auth = await ctx?.auth?.user
       if (!input.productId && !input.slug) {
         throw new trpc.TRPCError({
           code: 'BAD_REQUEST',

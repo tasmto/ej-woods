@@ -1,7 +1,7 @@
 import { createTRPCReact } from '@trpc/react-query'
 import { inferProcedureOutput } from '@trpc/server'
 
-import { AppRouter } from '../server/route/app.router'
+import { AppRouter } from '../server/api/routers/app.router'
 
 // This is the trpc instance we can use on the frontend
 // We add the _app router as generic

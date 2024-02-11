@@ -10,7 +10,7 @@ import { H1 } from '@/components/typography/Typography'
 import AdminLayout from '@/features/accounts/components/AdminLayout'
 import HorizontalProductCard from '@/features/products/components/HorizontalProductCard'
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
-import { appRouter } from '@/server/route/app.router'
+import { appRouter } from '@/server/api/routers/app.router'
 import { trpc } from '@/utils/trpc'
 
 const Page = ({

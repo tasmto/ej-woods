@@ -13,7 +13,7 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 
-import { Context } from './createContext'
+import { Context } from '../../../src/server/createContext'
 
 const t = initTRPC.context<Context>().create({
   // Optional:

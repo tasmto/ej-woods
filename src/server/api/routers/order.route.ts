@@ -9,9 +9,13 @@ import {
   getOrderSchema,
 } from '@/schema/order.schema'
 
-import { protectedProcedure, publicProcedure, router } from '../createRouter'
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 
-const orderRouter = router({
+const orderRouter = createTRPCRouter({
   createOrder: publicProcedure
     .input(createOrderSchema)
     .mutation(async ({ ctx, input }) => {
@@ -20,12 +24,12 @@ const orderRouter = router({
         await ctx
       ).prisma.product.findMany({
         where: {
-          id: { in: input.products.map(({ productId }) => productId) },
+          id: { in: input.products?.map(({ productId }) => productId) },
         },
       })
 
       // if any products are not found, throw an error
-      if (products.length !== input.products.length) {
+      if (products.length !== input.products?.length) {
         throw new trpc.TRPCError({
           code: 'NOT_FOUND',
           message: 'One or more products not found',
@@ -35,7 +39,7 @@ const orderRouter = router({
       // create a map of products to make it easier to check stock
       const productMap = products.reduce(
         (acc, product) => {
-          const productInCart = input.products.find(
+          const productInCart = input.products?.find(
             (prod) => prod.productId === product.id
           )
           if (!productInCart) return acc

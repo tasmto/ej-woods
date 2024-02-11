@@ -1,8 +1,8 @@
-import { adminRouter } from '@/server/route/account.router'
-import { orderRouter } from '@/server/route/order.route'
-import { productRouter } from '@/server/route/product.route'
+import { adminRouter } from '@/server/api/routers/account.router'
+import { orderRouter } from '@/server/api/routers/order.route'
+import { productRouter } from '@/server/api/routers/product.route'
 
-import { router } from '../createRouter'
+import { router } from '../../../../archive/src/server/createRouter'
 
 // import { postRouter } from './post.router'
 // import { userRouter } from './user.router'

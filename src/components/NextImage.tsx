@@ -54,10 +54,7 @@ const NextImage = ({
         onLoadingComplete={() => setStatus('complete')}
         {...rest}
         sizes="100vw"
-        style={{
-          width: "100%",
-          height: "auto"
-        }} />
+        />
     </figure>
   );
 }

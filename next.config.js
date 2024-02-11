@@ -1,18 +1,28 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    dirs: ['src'],
-  },
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
+ * for Docker builds.
+ */
+await import("./src/env.js");
 
-  swcMinify: true,
+/** @type {import("next").NextConfig} */
+const config = {
   reactStrictMode: true,
 
-  // Uncoment to add domain whitelist
-  images: {
+  /**
+   * If you are using `appDir` then you must comment the below `i18n` config out.
+   *
+   * @see https://github.com/vercel/next.js/issues/41980
+   */
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
+    images: {
     domains: [
       'images.unsplash.com',
       // cloudinary
       'res.cloudinary.com',
+       'res.cloudinary.com',
       'media0.giphy.com',
       'media1.giphy.com',
       'media2.giphy.com',
@@ -21,38 +31,6 @@ const nextConfig = {
       'media5.giphy.com',
     ],
   },
+};
 
-  compiler: {
-    // Enables the styled-components SWC transform
-    styledComponents: true,
-  },
-
-  // SVGR
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            typescript: true,
-            icon: true,
-          },
-        },
-      ],
-    })
-
-    return config
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
-}
-
-const { withSuperjson } = require('next-superjson')
-module.exports = withSuperjson()(nextConfig)
+export default config;
