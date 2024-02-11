@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import Image from 'next/image'
+import Image from "next/image"
 
 import { Caption } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
@@ -107,12 +107,14 @@ const AddToCartButton = ({ product }: Props) => {
               countInCart > 0
             )?.[countInCart ? 'active' : 'icon'] || ''
           }
-          layout='intrinsic'
           className='shadow-2xl shadow-red-500 transition-all duration-200'
           height={30}
           width={30}
           alt=''
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         {countInCart > 0 && (
           <Caption
             as='figcaption'
@@ -128,7 +130,7 @@ const AddToCartButton = ({ product }: Props) => {
         )}
       </figure>
     </button>
-  )
+  );
 }
 
 export default AddToCartButton

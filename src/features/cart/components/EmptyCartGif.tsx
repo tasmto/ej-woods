@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import Image from 'next/image'
+import Image from "next/image"
 
 import cartGifs from '../data/cartgifs.json'
 
@@ -18,11 +18,11 @@ const EmptyCartGif = (props: Props) => {
         src={randomGif}
         alt='empty cart'
         quality={100}
-        layout='fill'
         className='object-contain'
-      />
+        fill
+        sizes="100vw" />
     </div>
-  )
+  );
 }
 
 export default EmptyCartGif

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Image, { ImageProps } from 'next/image'
+import Image, { ImageProps } from "next/image"
 
 import clsxm from '@/lib/clsxm'
 
@@ -52,10 +52,13 @@ const NextImage = ({
         height={height}
         alt={alt}
         onLoadingComplete={() => setStatus('complete')}
-        layout='responsive'
         {...rest}
-      />
+        sizes="100vw"
+        style={{
+          width: "100%",
+          height: "auto"
+        }} />
     </figure>
-  )
+  );
 }
 export default NextImage

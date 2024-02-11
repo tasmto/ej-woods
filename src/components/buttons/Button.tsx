@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/image"
 import * as React from 'react'
 import { ImSpinner2 } from 'react-icons/im'
 
@@ -129,15 +129,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   (iconActive ? 'active' : 'icon')
               ] || ''
             }
-            layout='intrinsic'
             height={30}
             width={30}
             alt=''
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         )}
         <span>{children}</span>
       </button>
-    )
+    );
   }
 )
 

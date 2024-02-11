@@ -4,7 +4,7 @@ import { useAuth, UserButton } from '@clerk/nextjs'
 import clsx from 'clsx'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
+import Image from "next/image"
 import { useRouter } from 'next/router'
 
 import Container from '@/components/layout/Container'
@@ -119,12 +119,14 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                   >
                     <Image
                       src={resolveIcon('🔍', true)?.['active'] || ''}
-                      layout='intrinsic'
                       className='transition-all duration-200'
                       height={35}
                       width={35}
                       alt=''
-                    />
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                     <P2 as='span' className='sr-only '>
                       Search
                     </P2>
@@ -138,12 +140,14 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                   >
                     <Image
                       src={resolveIcon('💬', true)?.['active'] || ''}
-                      layout='intrinsic'
                       className=' transition-all duration-200'
                       height={30}
                       width={30}
                       alt=''
-                    />
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                     <P2 as='span' className='sr-only'>
                       Contact
                     </P2>
@@ -159,12 +163,14 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                     <UnstyledLink href='/sign-in' title='Sign-in'>
                       <Image
                         src={resolveIcon('👤', true)?.['active'] || ''}
-                        layout='intrinsic'
                         className=' transition-all duration-200'
                         height={30}
                         width={30}
                         alt=''
-                      />
+                        style={{
+                          maxWidth: "100%",
+                          height: "auto"
+                        }} />
                     </UnstyledLink>
                   )}
                 </li>
@@ -174,6 +180,6 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
         </AnimatePresence>
       </Container>
     </div>
-  )
+  );
 }
 export default Header

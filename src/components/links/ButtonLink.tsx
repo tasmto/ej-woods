@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 import * as React from 'react';
 
 import clsxm from '@/lib/clsxm';
@@ -112,11 +112,13 @@ const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
                 (!alwaysActive && 'icon') || (iconActive ? 'active' : 'icon')
               ] || ''
             }
-            layout='intrinsic'
             height={30}
             width={30}
             alt=''
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         )}
         <P2 as='span' weight='bold'>
           {children}

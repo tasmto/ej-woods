@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NextApiResponse } from 'next'
-import Image from 'next/image'
+import Image from "next/image"
 
 import Container from '@/components/layout/Container'
 import Layout from '@/components/layout/Layout'
@@ -35,11 +35,14 @@ const Error = ({ statusCode }: { statusCode: number }) => {
             height={200}
             className='h-full w-full object-contain'
             src={errorPageGif}
-          />
+            style={{
+              maxWidth: "100%",
+              height: "auto"
+            }} />
         </Container>
       </Container>
     </Layout>
-  )
+  );
 }
 Error.getInitialProps = ({
   res,

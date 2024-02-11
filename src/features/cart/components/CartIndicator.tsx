@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useAtom } from 'jotai'
-import Image from 'next/image'
+import Image from "next/image"
 import { useRouter } from 'next/router'
 
 import { Caption, P2 } from '@/components/typography/Typography'
@@ -30,12 +30,14 @@ const CartIndicatorButton = () => {
               'active'
             ] || ''
           }
-          layout='intrinsic'
           className='transition-all duration-200'
           height={30}
           width={30}
           alt=''
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         {totalItemsInCart() > 0 && (
           <Caption
             as='figcaption'
@@ -52,7 +54,7 @@ const CartIndicatorButton = () => {
       </div>
       <P2 as='span'>Cart</P2>
     </button>
-  )
+  );
 }
 
 export default CartIndicatorButton

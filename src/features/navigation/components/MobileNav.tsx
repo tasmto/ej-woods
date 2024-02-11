@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import Image from 'next/image'
+import Image from "next/image"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -43,12 +43,14 @@ const MobileNav = () => {
                       router.pathname === href ? 'active' : 'icon'
                     ] || ''
                   }
-                  layout='intrinsic'
                   className='shadow-2xl transition-all duration-200'
                   height={40}
                   width={40}
                   alt=''
-                />
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} />
                 <P3>{name}</P3>
               </a>
             </Link>
@@ -56,7 +58,7 @@ const MobileNav = () => {
         ))}
       </ul>
     </nav>
-  )
+  );
 }
 
 export default MobileNav

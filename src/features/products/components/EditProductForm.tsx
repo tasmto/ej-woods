@@ -176,7 +176,7 @@ const EditProductForm = ({ product }: Props) => {
         </Button>
       </motion.form>
     </AnimatePresence>
-  )
+  );
 }
 
 export default EditProductForm

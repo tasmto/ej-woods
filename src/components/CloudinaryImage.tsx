@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Image, { ImageProps } from 'next/image'
+import Image, { ImageProps } from "next/image"
 
 import { CloudinaryTransformationType } from '@/constants/cloudinaryConstants'
 import {
@@ -67,10 +67,13 @@ const IMG = ({
         height={height}
         alt={alt}
         onLoadingComplete={() => setStatus('complete')}
-        layout='responsive'
         {...rest}
-      />
+        sizes="100vw"
+        style={{
+          width: "100%",
+          height: "auto"
+        }} />
     </figure>
-  )
+  );
 }
 export default IMG

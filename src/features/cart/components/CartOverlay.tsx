@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { atom, useAtom } from 'jotai'
-import Image from 'next/image'
+import Image from "next/image"
 
 import Container from '@/components/layout/Container'
 import ButtonLink from '@/components/links/ButtonLink'
@@ -84,12 +84,14 @@ const CartOverlay = () => {
                   >
                     <Image
                       src={resolveIcon('➖', false)?.['active'] || ''}
-                      layout='intrinsic'
                       className='transition-all duration-200'
                       height={50}
                       width={50}
                       alt=''
-                    />
+                      style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                      }} />
                   </button>
                 </div>
                 {
@@ -136,7 +138,7 @@ const CartOverlay = () => {
         </div>
       )}
     </AnimatePresence>
-  )
+  );
 }
 
 export default CartOverlay
