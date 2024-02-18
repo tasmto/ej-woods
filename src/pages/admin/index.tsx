@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { createServerSideHelpers } from '@trpc/react-query/server'
-import { InferGetStaticPropsType } from 'next'
+import { type InferGetStaticPropsType } from 'next'
 import superjson from 'superjson'
 
 import Container from '@/components/layout/Container'
@@ -12,10 +12,29 @@ import HorizontalProductCard from '@/features/products/components/HorizontalProd
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
 import { appRouter } from '@/server/api/routers/app.router'
 import { trpc } from '@/utils/trpc'
+import ssg from '@/server/createSSGHelpers'
 
-const Page = ({
-  products: productsFromGSP,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+export const getStaticProps = async () => {
+  await ssg.products.multipleProducts.prefetch({
+    limit: 8,
+    page: 1,
+    type: null,
+    sortBy: 'random',
+    sortOrder: 'desc',
+    showArchived: true,
+  })
+
+  return {
+    props: {},
+    // revalidate: 120,
+  }
+}
+
+const Page = (
+  {
+    // products: productsFromGSP,
+  }: InferGetStaticPropsType<typeof getStaticProps>,
+) => {
   const { data, isLoading, isError, error, refetch } =
     trpc.products.multipleProducts.useQuery(
       {
@@ -28,8 +47,8 @@ const Page = ({
       },
       {
         staleTime: 1300,
-        initialData: productsFromGSP,
-      }
+        // initialData: productsFromGSP,
+      },
     )
 
   return (
@@ -63,30 +82,6 @@ const Page = ({
       </Container>
     </AdminLayout>
   )
-}
-
-export const getStaticProps = async () => {
-  const ssg = createServerSideHelpers({
-    router: appRouter,
-    transformer: superjson,
-    ctx: await createClientContext(),
-  })
-
-  const products = await ssg.products.multipleProducts.fetch({
-    limit: 8,
-    page: 1,
-    type: null,
-    sortBy: 'random',
-    sortOrder: 'desc',
-    showArchived: true,
-  })
-
-  return {
-    props: {
-      products,
-    },
-    revalidate: 120,
-  }
 }
 
 export default Page

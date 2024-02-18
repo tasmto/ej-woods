@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Product, ProductImage } from '@prisma/client'
+import { type Product, type ProductImage } from '@prisma/client'
 import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -10,13 +10,13 @@ import { H3, P1 } from '@/components/typography/Typography'
 import { FormatCurrency } from '@/features/products/lib/formatNumber'
 import clsxm from '@/lib/clsxm'
 import { trimString } from '@/lib/FormatString'
-import { SingleProductType } from '@/schema/product.schema'
+import { type SingleProductType } from '@/schema/product.schema'
 
 const AddToCartButton = dynamic(
   () => import('@/features/cart/components/AddToCartButton'),
   {
     ssr: false,
-  }
+  },
 )
 
 type Props = {
@@ -47,7 +47,7 @@ const ProductCard = ({ product, position }: Props) => {
       >
         <article
           className={clsxm([
-            'content-stretch relative grid h-80 w-full content-end items-stretch justify-items-stretch overflow-hidden rounded-xl  bg-gray-400 text-slate-50 after:absolute after:bottom-0 after:block after:h-2/3 after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/60 after:to-black/0 md:h-[24rem]',
+            'relative grid h-80 w-full content-stretch items-stretch justify-items-stretch overflow-hidden rounded-xl  bg-gray-400 text-slate-50 after:absolute after:bottom-0 after:block after:h-2/3 after:w-full after:bg-gradient-to-t after:from-black/90 after:via-black/60 after:to-black/0 md:h-[24rem]',
           ])}
         >
           <IMG
@@ -83,7 +83,7 @@ const ProductCardSkeleton = () => {
     <div
       role='presentation'
       className={clsxm([
-        'content-stretch skeleton relative grid h-80 w-full content-end items-stretch justify-items-stretch overflow-hidden rounded-xl bg-cover text-slate-50  md:h-[24rem]',
+        'skeleton relative grid h-80 w-full content-end content-stretch items-stretch justify-items-stretch overflow-hidden rounded-xl bg-cover text-slate-50  md:h-[24rem]',
       ])}
     ></div>
   )

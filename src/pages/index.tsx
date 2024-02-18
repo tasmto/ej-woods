@@ -1,7 +1,6 @@
-
 import * as React from 'react'
 import { createServerSideHelpers } from '@trpc/react-query/server'
-import { InferGetStaticPropsType } from 'next'
+import { type InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import superjson from 'superjson'
 
@@ -22,13 +21,14 @@ import clsxm from '@/lib/clsxm'
 import { FormatCurrency } from '@/lib/FormatNumber'
 import { createClientContext } from '@/pages/api/trpc/[trpc]'
 import { appRouter } from '@/server/api/root'
-import { api } from "@/utils/api";
+import { api } from '@/utils/api'
+import ssg from '@/server/createSSGHelpers'
 
 const AddToCartButton = dynamic(
   () => import('@/features/cart/components/AddToCartButton'),
   {
     ssr: false,
-  }
+  },
 )
 
 const HomePage = ({
@@ -41,9 +41,12 @@ const HomePage = ({
   //   isLoading,
   //   isError,
   // } = trpc.useQuery(['products.multiple-products', { limit: 7 }])
-    const {data} = api.products.multipleProducts.useQuery({
-    limit: 7,
-  })
+  const { data } = api.products.multipleProducts.useQuery(
+    {
+      limit: 7,
+    },
+    { staleTime: 1300 },
+  )
   const products = data?.products ?? []
   const featuredProduct = products?.at(0) ?? undefined
 
@@ -57,7 +60,7 @@ const HomePage = ({
       >
         <Container
           as='article'
-          className='grid justify-items-start gap-6 pt-10 pb-0 md:gap-8 md:pt-20 md:pb-16 lg:col-span-2'
+          className='grid justify-items-start gap-6 pb-0 pt-10 md:gap-8 md:pb-16 md:pt-20 lg:col-span-2'
         >
           <D1 className=''>
             Lorem ipsum dolor sit amet consec tetur adipisicing elit. Animi quod
@@ -104,7 +107,7 @@ const HomePage = ({
       <Container as='section' level={1} aria-hidden='true'>
         <Container
           as='div'
-          className='bg-primary-900 flex rounded-b-3xl p-8 text-slate-200 lg:p-12'
+          className='flex rounded-b-3xl bg-primary-900 p-8 text-slate-200 lg:p-12'
         >
           <div className='grid gap-2 sm:grid-cols-3 sm:gap-8'>
             <H2 as='p' className='sm:col-span-1'>
@@ -233,11 +236,14 @@ export const getStaticProps = async () => {
   //   transformer: superjson,
   //   ctx: await createClientContext(),
   // })
- 
-  
+
   // const products = await api.products.multipleProducts({
   //   limit: 7,
   // })
+
+  await ssg.products.multipleProducts.prefetch({
+    limit: 7,
+  })
 
   return {
     props: {

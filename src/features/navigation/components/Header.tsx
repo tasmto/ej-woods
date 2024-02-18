@@ -4,7 +4,7 @@ import { useAuth, UserButton } from '@clerk/nextjs'
 import clsx from 'clsx'
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import Image from "next/image"
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Container from '@/components/layout/Container'
@@ -31,7 +31,7 @@ const CartIndicatorButton = dynamic(
   () => import('../../cart/components/CartIndicator'),
   {
     ssr: false,
-  }
+  },
 )
 
 const Header = ({ hideOnMobile = true, isAdmin = false }) => {
@@ -41,7 +41,7 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
   const navBG = useTransform(
     scrollYProgress,
     [0, 0.03],
-    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.9)']
+    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.9)'],
   )
   const { isLoaded, isSignedIn, sessionId, getToken } = useAuth()
 
@@ -68,7 +68,11 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
             // style={{ backgroundColor: navBG }}
           >
             <UnstyledLink href='/' className='font-bold hover:text-gray-600'>
-              <img src="/svg/ej-woods-logo.svg" className='h-10 w-full md:h-12' />
+              <img
+                src='/svg/ej-woods-logo.svg'
+                alt=""
+                className='h-10 w-full md:h-12'
+              />
             </UnstyledLink>
             <nav className='flex items-center justify-end  divide-x divide-slate-300'>
               <ul className='flex items-center justify-between'>
@@ -78,11 +82,24 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                       href={'/'}
                       className={clsxm(
                         'max-[1px] flex items-center gap-2 rounded-xl px-2 py-2 text-primary-600 hover:bg-primary-50/50 hover:text-primary-300 md:mx-[2px] md:px-3',
-                        []
+                        [],
                       )}
                     >
                       <IoArrowBackOutline className='h-5 w-5' />
                       <P2 as='span'>Back to shop</P2>
+                    </UnstyledLink>
+                  </li>
+                )}
+                {!isAdmin && isSignedIn && (
+                  <li>
+                    <UnstyledLink
+                      href={'/admin'}
+                      className={clsxm(
+                        'max-[1px] flex items-center gap-2 rounded-xl px-2 py-2 text-primary-600 hover:bg-primary-50/50 hover:text-primary-300 md:mx-[2px] md:px-3',
+                        [],
+                      )}
+                    >
+                      <P2 as='span'>Admin</P2>
                     </UnstyledLink>
                   </li>
                 )}
@@ -95,7 +112,7 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                         [
                           router.asPath === href &&
                             'bg-primary-100 text-slate-200 hover:bg-primary-100/90 hover:text-slate-200',
-                        ]
+                        ],
                       )}
                     >
                       <P2 as='span'>{label}</P2>
@@ -116,15 +133,16 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                     title='Search'
                   >
                     <Image
-                      src={resolveIcon('🔍', true)?.['active'] || ''}
+                      src={resolveIcon('🔍', true)?.active ?? ''}
                       className='transition-all duration-200'
                       height={35}
                       width={35}
                       alt=''
                       style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                      }} />
+                        maxWidth: '100%',
+                        height: 'auto',
+                      }}
+                    />
                     <P2 as='span' className='sr-only '>
                       Search
                     </P2>
@@ -137,15 +155,16 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                     title='Contact'
                   >
                     <Image
-                      src={resolveIcon('💬', true)?.['active'] || ''}
+                      src={resolveIcon('💬', true)?.active ?? ''}
                       className=' transition-all duration-200'
                       height={30}
                       width={30}
                       alt=''
                       style={{
-                        maxWidth: "100%",
-                        height: "auto"
-                      }} />
+                        maxWidth: '100%',
+                        height: 'auto',
+                      }}
+                    />
                     <P2 as='span' className='sr-only'>
                       Contact
                     </P2>
@@ -160,15 +179,16 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
                   ) : (
                     <UnstyledLink href='/sign-in' title='Sign-in'>
                       <Image
-                        src={resolveIcon('👤', true)?.['active'] || ''}
+                        src={resolveIcon('👤', true)?.active ?? ''}
                         className=' transition-all duration-200'
                         height={30}
                         width={30}
                         alt=''
                         style={{
-                          maxWidth: "100%",
-                          height: "auto"
-                        }} />
+                          maxWidth: '100%',
+                          height: 'auto',
+                        }}
+                      />
                     </UnstyledLink>
                   )}
                 </li>
@@ -178,6 +198,6 @@ const Header = ({ hideOnMobile = true, isAdmin = false }) => {
         </AnimatePresence>
       </Container>
     </div>
-  );
+  )
 }
 export default Header

@@ -1,13 +1,13 @@
 'use client'
 import React from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import Image from "next/image"
+import Image from 'next/image'
 
 import { Caption } from '@/components/typography/Typography'
 import { useCartStore } from '@/features/cart/state/CartContext'
 import clsxm from '@/lib/clsxm'
 import resolveIcon from '@/lib/iconResolver'
-import { SingleProductType } from '@/schema/product.schema'
+import { type SingleProductType } from '@/schema/product.schema'
 
 type Props = {
   product?: SingleProductType
@@ -16,13 +16,13 @@ type Props = {
 
 const AddToCartButton = ({ product }: Props) => {
   const { cart, addToCart, removeItemFromCart, howManyInCart } = useCartStore(
-    (state) => state
+    (state) => state,
   )
   const [countInCart, setCountInCart] = React.useState(0)
   const [hover, setHover] = React.useState(false)
 
   const handleAddToCart = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     if (!product) return
 
@@ -46,7 +46,7 @@ const AddToCartButton = ({ product }: Props) => {
       type='button'
       className={clsxm(
         'inline-flex items-center justify-center gap-3  font-semibold',
-        'rounded-full rounded-tl-none  py-4 px-4 ',
+        'rounded-full rounded-tl-none  px-4 py-4 ',
         ' delay-200',
         'bg-primary-100 text-white ',
         ' group transition-all duration-300',
@@ -54,7 +54,7 @@ const AddToCartButton = ({ product }: Props) => {
         'relative',
         [hover && 'rounded-l-none bg-primary-300'],
         [countInCart && 'bg-primary-300 hover:bg-primary-600'],
-        [product.countInStock === 0 && 'cursor-not-allowed !bg-gray-500']
+        [product.countInStock === 0 && 'cursor-not-allowed !bg-gray-500'],
       )}
     >
       <AnimatePresence mode='wait'>
@@ -80,7 +80,7 @@ const AddToCartButton = ({ product }: Props) => {
                 ? 'rgb(65 65 66)'
                 : 'rgb(141 127 127)',
             }}
-            transition={{ type: 'linear', duration: 0.3 }}
+            transition={{ duration: 0.3 }}
             className={clsxm(
               'absolute left-[10px] z-10 flex translate-x-[-100%] items-center justify-center',
               'bg-primary-300 text-base',
@@ -88,14 +88,14 @@ const AddToCartButton = ({ product }: Props) => {
               ' block h-[100%] w-full min-w-[120px] py-5 pl-4',
               [countInCart && ' min-w-[160px] '],
               [countInCart && 'bg-primary-300 hover:bg-primary-600'],
-              [product.countInStock === 0 && 'cursor-not-allowed !bg-gray-500']
+              [product.countInStock === 0 && 'cursor-not-allowed !bg-gray-500'],
             )}
           >
             {product.countInStock === 0
               ? 'Out of stock'
               : countInCart
-              ? 'Remove from Cart'
-              : 'Add to Cart'}
+                ? 'Remove from Cart'
+                : 'Add to Cart'}
           </motion.span>
         )}
       </AnimatePresence>
@@ -104,23 +104,24 @@ const AddToCartButton = ({ product }: Props) => {
           src={
             resolveIcon(
               product.countInStock === 0 ? '➖' : '🛒',
-              countInCart > 0
-            )?.[countInCart ? 'active' : 'icon'] || ''
+              countInCart > 0,
+            )?.[countInCart ? 'active' : 'icon'] ?? ''
           }
           className='shadow-2xl shadow-red-500 transition-all duration-200'
           height={30}
           width={30}
           alt=''
           style={{
-            maxWidth: "100%",
-            height: "auto"
-          }} />
+            maxWidth: '100%',
+            height: 'auto',
+          }}
+        />
         {countInCart > 0 && (
           <Caption
             as='figcaption'
             className={clsxm([
               'absolute right-[-10px] top-[-10px] h-5 w-5 rounded-full p-1 ',
-              'text-xs text-[10px] font-bold leading-tight text-white',
+              'text-[10px] text-xs font-bold leading-tight text-white',
               'bg-primary-200 ',
             ])}
           >
@@ -130,7 +131,7 @@ const AddToCartButton = ({ product }: Props) => {
         )}
       </figure>
     </button>
-  );
+  )
 }
 
 export default AddToCartButton

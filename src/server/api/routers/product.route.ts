@@ -12,7 +12,8 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "@/server/api/trpc";
+} from '@/server/api/trpc'
+import { ProductImage } from '@prisma/client'
 
 // todo: Add middleware to make sure only auth'ed users see unpublished products
 
@@ -49,7 +50,7 @@ const productRouter = createTRPCRouter({
           message: 'Product not found',
         })
 
-      return item
+      return item as typeof item & { images: ProductImage[] }
     }),
   multipleProducts: publicProcedure
     .input(getMultipleProductsSchema)

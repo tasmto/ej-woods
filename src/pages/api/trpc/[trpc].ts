@@ -1,27 +1,27 @@
-import { createNextApiHandler } from "@trpc/server/adapters/next";
-import * as trpcNext from '@trpc/server/adapters/next'
-import { env } from "@/env";
-import { appRouter } from "@/server/api/root";
-import { createTRPCContext } from "@/server/api/trpc";
-import { PrismaClient, Prisma } from "@prisma/client";
-import { PrismaClientOptions } from "@prisma/client/runtime/library";
+import { createNextApiHandler } from '@trpc/server/adapters/next'
+import type * as trpcNext from '@trpc/server/adapters/next'
+import { env } from '@/env'
+import { appRouter } from '@/server/api/root'
+import { createTRPCContext } from '@/server/api/trpc'
+import { type PrismaClient, Prisma } from '@prisma/client'
+import { type PrismaClientOptions } from '@prisma/client/runtime/library'
 
 // export API handler
 export default createNextApiHandler({
   router: appRouter,
   createContext: createTRPCContext,
   onError:
-    env.NODE_ENV === "development"
+    env.NODE_ENV === 'development'
       ? ({ path, error }) => {
           console.error(
-            `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
-          );
+            `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`,
+          )
         }
       : undefined,
-});
+})
 
 export const createClientContext = async (
-  opts?: trpcNext.CreateNextContextOptions
+  opts?: trpcNext.CreateNextContextOptions,
 ) => {
   return {
     req: opts?.req,
@@ -35,7 +35,7 @@ export const createClientContext = async (
       PrismaClientOptions,
       never,
       // Prisma.RejectOnNotFound | Prisma.RejectPerOperation
-      any 
+      any
     >
     auth: null
   }

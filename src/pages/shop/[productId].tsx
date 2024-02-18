@@ -14,8 +14,10 @@ import ShopLayout from '@/features/shop/components/ShopLayout'
 import clsxm from '@/lib/clsxm'
 import { omitKeyFromObject } from '@/lib/ObjectHelpers'
 import { trpc } from '@/utils/trpc'
+import ssg from '@/server/createSSGHelpers'
+import { type GetServerSidePropsContext } from 'next'
 
-type Props = {}
+//
 
 const ProductPage = () => {
   const router = useRouter()
@@ -31,7 +33,7 @@ const ProductPage = () => {
     {
       productId: Number(productId),
     },
-    { staleTime: Infinity }
+    { staleTime: 1300 },
   )
 
   if (isLoading)
@@ -40,7 +42,7 @@ const ProductPage = () => {
         <D1>Loading...</D1>
       </ShopLayout>
     )
-  if (error || !product) {
+  if (error ?? !product) {
     console.log(error)
     return (
       <ShopLayout>
@@ -66,10 +68,10 @@ const ProductPage = () => {
               layout='intrinsic'
               width={1000}
               height={500}
-              src={product?.images?.at(0)?.url}
+              src={product.images?.at(0)?.url}
               alt=''
               quality={100}
-              className=' relative h-full w-full  w-[100px] object-cover md:rounded-r-3xl'
+              className=' relative h-full w-[100px]  w-full object-cover md:rounded-r-3xl'
               imgClassName='md:rounded-r-[2.5rem]  h-full w-full object-cover w-full '
               priority
               useSkeleton

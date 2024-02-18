@@ -7,16 +7,20 @@
  * need to use are documented accordingly near the end.
  */
 
-import { initTRPC, TRPCError } from "@trpc/server";
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
-import { type Session } from "next-auth";
-import superjson from "superjson";
-import { ZodError } from "zod";
+import { initTRPC, TRPCError } from '@trpc/server'
+import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
+import { type Session } from 'next-auth'
+import superjson from 'superjson'
+import { ZodError } from 'zod'
 
-import { getServerAuthSession } from "@/server/auth";
-import { db } from "@/server/db";
+import { getServerAuthSession } from '@/server/auth'
+import { db } from '@/server/db'
 import { type Context } from '../createContext'
-import { getAuth, SignedInAuthObject, SignedOutAuthObject } from "@clerk/nextjs/server";
+import {
+  getAuth,
+  type SignedInAuthObject,
+  type SignedOutAuthObject,
+} from '@clerk/nextjs/server'
 /**
  * 1. CONTEXT
  *
@@ -26,8 +30,8 @@ import { getAuth, SignedInAuthObject, SignedOutAuthObject } from "@clerk/nextjs/
  */
 
 interface CreateContextOptions {
-  session: Session | null;
-  auth:  SignedInAuthObject | SignedOutAuthObject
+  // session: Session | null;
+  auth: SignedInAuthObject | SignedOutAuthObject
 }
 
 /**
@@ -42,11 +46,11 @@ interface CreateContextOptions {
  */
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
-    session: opts.session,
+    // session: opts.session,
     prisma: db,
-    auth: opts.auth
-  };
-};
+    auth: opts.auth,
+  }
+}
 
 /**
  * This is the actual context you will use in your router. It will be used to process every request
@@ -55,17 +59,17 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
+  const { req, res } = opts
 
   // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+  // const session = await getServerAuthSession({ req, res });
   const auth = getAuth(req)
 
   return createInnerTRPCContext({
-    session,
-    auth
-  });
-};
+    // session,
+    auth,
+  })
+}
 
 /**
  * 2. INITIALIZATION
@@ -85,9 +89,9 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         zodError:
           error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
-    };
+    }
   },
-});
+})
 
 /**
  * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
@@ -101,7 +105,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  *
  * @see https://trpc.io/docs/router
  */
-export const createTRPCRouter = t.router;
+export const createTRPCRouter = t.router
 
 /**
  * Public (unauthenticated) procedure
@@ -110,7 +114,7 @@ export const createTRPCRouter = t.router;
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure;
+export const publicProcedure = t.procedure
 
 /**
  * Protected (authenticated) procedure
@@ -123,11 +127,11 @@ export const publicProcedure = t.procedure;
 
 // check if the user is signed in, otherwise throw a UNAUTHORIZED CODE
 const isAuthed = t.middleware(async ({ next, ctx }) => {
-  const isAuthed =  ctx.auth
+  const isAuthed = ctx.auth
   console.log(
     new Date().toLocaleTimeString(),
     '🚀 ~ file createRouter.ts  ~ line 35 ~ auth object: ',
-    isAuthed
+    isAuthed,
   )
   if (!isAuthed?.userId) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
@@ -135,11 +139,11 @@ const isAuthed = t.middleware(async ({ next, ctx }) => {
   }
   return next({
     ctx: {
-      auth:  ctx.auth,
+      auth: ctx.auth,
     },
   })
 })
 
-export const protectedProcedure = t.procedure.use(isAuthed);
+export const protectedProcedure = t.procedure.use(isAuthed)
 export const router = t.router
 export const mergeRouters = t.mergeRouters

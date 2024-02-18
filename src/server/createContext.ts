@@ -1,9 +1,9 @@
 import {
   getAuth,
-  SignedInAuthObject,
-  SignedOutAuthObject,
+  type SignedInAuthObject,
+  type SignedOutAuthObject,
 } from '@clerk/nextjs/server'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { type NextApiRequest, type NextApiResponse } from 'next'
 
 import { prisma } from '../utils/prisma'
 
@@ -34,5 +34,5 @@ const createContext = ({
   return createContextInner({ auth: getAuth(req), req, res, prisma })
 }
 
-export { createContext }
+export { createContext, prisma }
 export type Context = ReturnType<typeof createContext>

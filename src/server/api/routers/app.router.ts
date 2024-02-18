@@ -2,7 +2,7 @@ import { adminRouter } from '@/server/api/routers/account.router'
 import { orderRouter } from '@/server/api/routers/order.route'
 import { productRouter } from '@/server/api/routers/product.route'
 
-import { router } from '../../../../archive/src/server/createRouter'
+import { router } from '@/server/api/trpc'
 
 // import { postRouter } from './post.router'
 // import { userRouter } from './user.router'
