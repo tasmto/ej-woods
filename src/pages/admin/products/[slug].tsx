@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import Container from '@/components/layout/Container'
@@ -20,12 +20,40 @@ const Page = ({}: Props) => {
     isLoading,
     isError,
     error,
+    refetch,
   } = trpc.products.singleProduct.useQuery(
     {
       slug: slug as string,
     },
     { staleTime: Infinity },
   )
+
+  const [productImages, setProductMainImage] = useState(
+    product?.images.map((image) => ({
+      ...image,
+      isMainImage: image.id === product.mainImageId,
+    })) || [],
+  )
+
+  useEffect(() => {
+    if (product) {
+      setProductMainImage(
+        product.images.map((image) => ({
+          ...image,
+          isMainImage: image.id === product.mainImageId,
+        })),
+      )
+    }
+  }, [product])
+
+  const onDeleteImageSuccess = (imageId: number) => {
+    setProductMainImage((prev) => prev.filter((image) => image.id !== imageId))
+  }
+
+  const onUpdateProductSuccess = async () => {
+    refetch()
+  }
+
   if (isError || !product) {
     return <div>Still loading</div>
   }
@@ -36,7 +64,10 @@ const Page = ({}: Props) => {
         className='grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-5'
       >
         <div className='lg:col-span-3'>
-          <EditProductForm product={product} />
+          <EditProductForm
+            product={product}
+            onUpdateProductSuccess={onUpdateProductSuccess}
+          />
         </div>
         <div className='grid gap-6 self-start lg:col-span-2'>
           <div className='flex justify-between'>
@@ -46,8 +77,13 @@ const Page = ({}: Props) => {
           </div>
 
           <ul className='grid gap-2 md:grid-cols-2'>
-            {product.images.map((image) => (
-              <AdminProductImage key={image.id} image={image} />
+            {productImages.map((image) => (
+              <AdminProductImage
+                key={image.id}
+                image={image}
+                productId={product.id}
+                onDeleteImageSuccess={onDeleteImageSuccess}
+              />
             ))}
           </ul>
         </div>

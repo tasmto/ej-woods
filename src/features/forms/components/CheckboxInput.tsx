@@ -19,6 +19,8 @@ const CheckboxInput = ({ label, name, formik }: Props) => {
         id={name}
         onChange={formik.handleChange}
         value={formik.values[name]}
+        checked={formik.values[name]}
+        onCheckedChange={(checked) => formik.setFieldValue(name, checked)}
       />
       <P1 weight='bold' htmlFor={name} as='label' className='cursor-pointer'>
         {label}

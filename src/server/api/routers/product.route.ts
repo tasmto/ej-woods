@@ -2,8 +2,11 @@ import * as trpc from '@trpc/server'
 
 import {
   createProductSchema,
+  deleteProductImageSchema,
   getMultipleProductsSchema,
   getSingleProductSchema,
+  updateProductMainImageSchema,
+  updateProductSchema,
   updateProductStockSchema,
   updateProductVisibilitySchema,
 } from '@/schema/product.schema'
@@ -42,6 +45,7 @@ const productRouter = createTRPCRouter({
             },
           },
           images: true,
+          mainImage: true,
         },
       })
       if (!item)
@@ -106,6 +110,33 @@ const productRouter = createTRPCRouter({
 
       return product
     }),
+  updateProduct: protectedProcedure
+    .input(updateProductSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const product = await ctx.prisma.product.update({
+          where: {
+            id: input.productId,
+          },
+          data: {
+            price: input.price,
+            name: input.name,
+            description: input.description,
+            weight: input.weight,
+            type: input.type,
+            countInStock: input.countInStock,
+            hasInfiniteStock: input.hasInfiniteStock,
+            published: input.published,
+          },
+        })
+        return product
+      } catch (error) {
+        throw new trpc.TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Failed to update product',
+        })
+      }
+    }),
   setProductStock: protectedProcedure
     .input(updateProductStockSchema)
     .mutation(async ({ ctx, input }) => {
@@ -139,6 +170,58 @@ const productRouter = createTRPCRouter({
         return true
       } catch (error) {
         return false
+      }
+    }),
+  setProductMainImage: protectedProcedure
+    .input(updateProductMainImageSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const image = await ctx.prisma.productImage.findUnique({
+          where: {
+            id: input.mainImageId,
+          },
+        })
+        if (!image) {
+          throw new trpc.TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Image not found',
+          })
+        }
+        await ctx.prisma.product.update({
+          where: {
+            id: input.productId,
+          },
+          data: {
+            mainImageId: input.mainImageId,
+          },
+        })
+        return true
+      } catch (error) {
+        return false
+      }
+    }),
+  deleteProductImage: protectedProcedure
+    .input(deleteProductImageSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await ctx.prisma.product.update({
+          where: {
+            id: input.productId,
+          },
+          data: {
+            images: {
+              delete: {
+                id: input.imageId,
+              },
+            },
+          },
+        })
+        return true
+      } catch (error) {
+        throw new trpc.TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete image',
+        })
       }
     }),
 })

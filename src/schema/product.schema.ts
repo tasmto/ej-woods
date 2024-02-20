@@ -17,6 +17,19 @@ const createProductSchema = z.object({
 })
 export type CreateProductInput = z.TypeOf<typeof createProductSchema>
 
+const updateProductSchema = z.object({
+  productId: z.number(),
+  name: z.string(),
+  description: z.string(),
+  type: z.enum(['WOOD', 'FURNITURE']),
+  weight: z.number(),
+  price: z.number(),
+  countInStock: z.number(),
+  hasInfiniteStock: z.boolean(),
+  published: z.boolean(),
+})
+export type UpdateProductInput = z.TypeOf<typeof updateProductSchema>
+
 const updateProductStockSchema = z.object({
   productId: z.number(),
   countInStock: z.number(),
@@ -31,6 +44,19 @@ const updateProductVisibilitySchema = z.object({
 export type UpdateProductVisibilityInput = z.TypeOf<
   typeof updateProductVisibilitySchema
 >
+const updateProductMainImageSchema = z.object({
+  productId: z.number(),
+  mainImageId: z.number(),
+})
+export type UpdateProductMainImageInput = z.TypeOf<
+  typeof updateProductMainImageSchema
+>
+
+const deleteProductImageSchema = z.object({
+  productId: z.number(),
+  imageId: z.number(),
+})
+export type DeleteProductImageInput = z.TypeOf<typeof deleteProductImageSchema>
 
 const getSingleProductSchema = z.object({
   productId: z.number().optional(),
@@ -80,4 +106,7 @@ export {
   getSingleProductSchema,
   updateProductStockSchema,
   updateProductVisibilitySchema,
+  updateProductMainImageSchema,
+  deleteProductImageSchema,
+  updateProductSchema,
 }

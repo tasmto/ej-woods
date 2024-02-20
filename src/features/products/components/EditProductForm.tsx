@@ -10,6 +10,7 @@ import CheckboxInput from '@/features/forms/components/CheckboxInput'
 import SelectInput from '@/features/forms/components/SelectInput'
 import SingleLineInput from '@/features/forms/components/SingleLineInput'
 import TextArea from '@/features/forms/components/TextArea'
+import { trpc } from '@/utils/trpc'
 
 type Props = {
   product?: Product & {
@@ -18,9 +19,11 @@ type Props = {
       images: ProductImage[]
     })[]
   }
+  onUpdateProductSuccess: () => void
 }
 
-const EditProductForm = ({ product }: Props) => {
+const EditProductForm = ({ product, onUpdateProductSuccess }: Props) => {
+  const mutation = trpc.products.updateProduct.useMutation()
   const formik = useFormik({
     initialValues: {
       name: product ? product.name : '',
@@ -43,24 +46,37 @@ const EditProductForm = ({ product }: Props) => {
         .oneOf(['WOOD', 'FURNITURE']),
       price: Yup.number().required('You need to give your product a price'),
       description: Yup.string().required(
-        'You need to give your product a description'
+        'You need to give your product a description',
       ),
       countInStock: Yup.number().required(
-        'You need to give your product a stock count'
+        'You need to give your product a stock count',
       ),
       hasInfiniteStock: Yup.boolean().required(
-        'You need to set if your product has infinite stock or not'
+        'You need to set if your product has infinite stock or not',
       ),
       published: Yup.boolean().required(
-        'Your product needs to be published or not'
+        'Your product needs to be published or not',
       ),
       slug: Yup.string().required(
-        'You need to give your product a unique url slug'
+        'You need to give your product a unique url slug',
       ),
     }),
     onSubmit: async (values) => {
       // eslint-disable-next-line no-console
       console.log(JSON.stringify(values, null, 2))
+      if (!product) return
+      await mutation.mutateAsync(
+        {
+          ...values,
+          productId: product?.id,
+        },
+        {
+          onSuccess(data, variables, context) {
+            // invalidate the query so the new data is fetched
+            onUpdateProductSuccess()
+          },
+        },
+      )
       // Todo return an error if the form is invalid
     },
   })
@@ -69,7 +85,7 @@ const EditProductForm = ({ product }: Props) => {
     <AnimatePresence mode='wait'>
       <motion.form
         onSubmit={formik.handleSubmit}
-        className='grid w-full gap-5'
+        className='flex w-full flex-col gap-5'
         layout
         initial={{ opacity: 0, x: -20 }}
         exit={{ opacity: 0, x: 20 }}
@@ -134,7 +150,7 @@ const EditProductForm = ({ product }: Props) => {
           type='number'
           placeholder='i.e. 20000'
         />
-        <fieldset className='flex flex-col gap-5 sm:flex-row'>
+        <fieldset className='flex flex-col flex-wrap gap-5 sm:flex-row lg:flex-nowrap'>
           <SingleLineInput
             formik={formik}
             label="Weight (in kg's)"
@@ -176,7 +192,7 @@ const EditProductForm = ({ product }: Props) => {
         </Button>
       </motion.form>
     </AnimatePresence>
-  );
+  )
 }
 
 export default EditProductForm

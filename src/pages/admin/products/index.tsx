@@ -14,9 +14,11 @@ import { createClientContext } from '@/pages/api/trpc/[trpc]'
 import { appRouter } from '@/server/api/routers/app.router'
 import { trpc } from '@/utils/trpc'
 
-const Page = ({
-  products: productsFromGSP,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Page = (
+  {
+    // products: productsFromGSP,
+  }: InferGetStaticPropsType<typeof getStaticProps>,
+) => {
   const [currentPage, setCurrentPage] = useState(1)
   const { data, isLoading, isError, error, refetch } =
     trpc.products.multipleProducts.useQuery(
@@ -30,9 +32,9 @@ const Page = ({
       },
       {
         staleTime: 1000 * 60 * 60 * 24 * 7,
-        initialData: productsFromGSP,
+        // initialData: productsFromGSP,
         keepPreviousData: true,
-      }
+      },
     )
 
   const handlePageChange = (page: number) => {
@@ -63,7 +65,7 @@ const Page = ({
                   handlePageChange((data?.page || 1) - 1)
                 }}
                 className={clsxm([
-                  'border-primary-100 hover:bg-primary-100 hover:text-primary-10 rounded-l-lg border border-r-0 py-2 px-3',
+                  'rounded-l-lg border border-r-0 border-primary-100 px-3 py-2 hover:bg-primary-100 hover:text-primary-10',
                   'disabled:bg-primary-20 disabled:text-primary-100',
                 ])}
               >
@@ -77,7 +79,7 @@ const Page = ({
                   handlePageChange((data?.page || 0) + 1)
                 }}
                 className={clsxm([
-                  'border-primary-100 hover:bg-primary-100   hover:text-primary-10 rounded-r-lg border py-2 px-3',
+                  'rounded-r-lg border   border-primary-100 px-3 py-2 hover:bg-primary-100 hover:text-primary-10',
                   'disabled:bg-primary-20 disabled:text-primary-100',
                 ])}
               >
@@ -104,28 +106,28 @@ const Page = ({
   )
 }
 
-export const getStaticProps = async () => {
-  const ssg = createServerSideHelpers({
-    router: appRouter,
-    transformer: superjson,
-    ctx: await createClientContext(),
-  })
+// export const getStaticProps = async () => {
+//   const ssg = createServerSideHelpers({
+//     router: appRouter,
+//     transformer: superjson,
+//     ctx: await createClientContext(),
+//   })
 
-  const products = await ssg.products.multipleProducts.fetch({
-    limit: 14,
-    page: 1,
-    type: null,
-    sortBy: 'random',
-    sortOrder: 'desc',
-    showArchived: true,
-  })
+//   const products = await ssg.products.multipleProducts.fetch({
+//     limit: 14,
+//     page: 1,
+//     type: null,
+//     sortBy: 'random',
+//     sortOrder: 'desc',
+//     showArchived: true,
+//   })
 
-  return {
-    props: {
-      products,
-    },
-    revalidate: 120,
-  }
-}
+//   return {
+//     props: {
+//       products,
+//     },
+//     revalidate: 120,
+//   }
+// }
 
 export default Page
