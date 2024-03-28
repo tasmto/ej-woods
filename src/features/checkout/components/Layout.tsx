@@ -6,8 +6,6 @@ import ArrowLink from '@/components/links/ArrowLink'
 import UnstyledLink from '@/components/links/UnstyledLink'
 import { P3 } from '@/components/typography/Typography'
 
-import EjWoodsLogo from '~/svg/ej-woods-logo.svg'
-
 const CheckoutLayout = ({
   children,
   backLink,
@@ -17,14 +15,14 @@ const CheckoutLayout = ({
   backLink: string
   backLinkText: string
 }) => (
-  <div className='min-h-screen bg-gray-50  bg-[url("/images/glow.png")] bg-auto bg-top  bg-no-repeat pt-4 pb-2 selection:bg-primary-500 selection:text-primary-50 '>
+  <div className='min-h-screen bg-gray-50  bg-[url("/images/glow.png")] bg-auto bg-top  bg-no-repeat pb-2 pt-4 selection:bg-primary-500 selection:text-primary-50 '>
     <Container level={1} className='relative grid  gap-4'>
       <header className=' flex items-center justify-between gap-4 '>
         <ArrowLink href={backLink} direction='left' className=' text-start'>
           {backLinkText}
         </ArrowLink>
         <UnstyledLink href='#' className=' text-start  hover:text-gray-600'>
-          <EjWoodsLogo className='h-auto w-24' />
+          <img src='/svg/ej-woods-logo.svg' className='h-auto w-24' />
         </UnstyledLink>
       </header>
       <main className='grid gap-16 overflow-x-hidden lg:gap-20'>

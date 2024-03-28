@@ -15,7 +15,7 @@ const CartTable = dynamic(
   () => import('@/features/cart/components/CartTable'),
   {
     ssr: false,
-  }
+  },
 )
 
 const CheckoutPage = () => {
