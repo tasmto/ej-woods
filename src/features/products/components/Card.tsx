@@ -58,7 +58,7 @@ const ProductCard = ({ product, position }: Props) => {
             useSkeleton
             width={400}
             height={400}
-            imgClassName='h-full w-full object-cover '
+            imgClassName='!h-full w-full object-cover '
           />
           <div className='absolute bottom-0 z-10 flex w-full items-end justify-between gap-4 p-8 sm:p-6 md:py-8'>
             <div className='flex-1'>
